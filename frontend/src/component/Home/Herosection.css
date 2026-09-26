@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f6f8;
+    color: #ffffff;
+  }
+  
+  .app {
+    width: 100%;
+    min-height: 100vh;
+    padding: 12px 32px 36px;
+  }
+  
+  /* NAVBAR */
+  
+  .navbar {
+    height: 50px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #c8cdd3;
+    border-radius: 10px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25);
+  
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  
+    color: #111111;
+  }
+  
+  .logo {
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 200px;
+  }
+  
+  .navbar nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 42px;
+    flex: 1;
+  }
+  
+  .navbar nav a {
+    color: #111111;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  
+  .navbar nav a:hover {
+    color: #e52b2f;
+  }
+  
+  .consultation-btn {
+    width: 180px;
+    height: 33px;
+    border: none;
+    border-radius: 7px;
+    background: #e52b2f;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .consultation-btn:hover {
+    background: #c92327;
+  }
+  
+  /* HERO */
+  
+  .hero-carousel {
+    position: relative;
+    margin-top: 32px;
+    height: 416px;
+    background: #171b21;
+    overflow: hidden;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hero-content {
+    height: 256px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 45px 20px;
+  }
+  
+  .hero-text {
+    width: 58%;
+  }
+  
+  .featured {
+    display: block;
+    font-size: 9px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #eeeeee;
+  }
+  
+  .hero-text h1 {
+    font-size: 29px;
+    line-height: 1.2;
+    margin-bottom: 25px;
+  }
+  
+  .hero-text h1 span {
+    font-weight: 400;
+  }
+  
+  .hero-text p {
+    font-size: 13px;
+    color: #eeeeee;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+  
+  /* MEDIA */
+  
+  .hero-media {
+    width: 272px;
+    height: 184px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid #68717c;
+    background: #2a3039;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-media img,
+  .hero-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .hero-media video {
+    display: block;
+  }
+  
+  /* ARROWS */
+  
+  .arrow {
+    position: absolute;
+    top: 235px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 38px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 5;
+  }
+  
+  .arrow.left {
+    left: 22px;
+  }
+  
+  .arrow.right {
+    right: 22px;
+  }
+  
+  .arrow:hover {
+    color: #e52b2f;
+  }
+  
+  /* BOTTOM */
+  
+  .hero-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 160px;
+    background: #322725;
+    padding: 14px 77px;
+  }
+  
+  .explore-btn {
+    width: 160px;
+    height: 38px;
+    border: none;
+    border-radius: 7px;
+    background: #e52b2f;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .explore-btn span {
+    margin-left: 5px;
+    font-size: 14px;
+  }
+  
+  .dots {
+    position: absolute;
+    left: 50%;
+    bottom: 26px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 7px;
+  }
+  
+  .dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background: #ffffff;
+  }
+  
+  .carousel-info {
+    position: absolute;
+    bottom: 8px;
+    left: 45px;
+    font-size: 9px;
+    color: #dddddd;
+  }
+  
+  /* RESPONSIVE */
+  
+  @media (max-width: 800px) {
+    .app {
+      padding: 10px 15px;
+    }
+  
+    .navbar {
+      padding: 0 15px;
+    }
+  
+    .logo {
+      min-width: auto;
+    }
+  
+    .navbar nav {
+      display: none;
+    }
+  
+    .consultation-btn {
+      margin-left: auto;
+      width: 150px;
+    }
+  
+    .hero-content {
+      padding: 40px 25px;
+    }
+  
+    .hero-text {
+      width: 52%;
+    }
+  
+    .hero-text h1 {
+      font-size: 23px;
+    }
+  
+    .hero-media {
+      width: 210px;
+      height: 150px;
+    }
+  
+    .hero-bottom {
+      padding-left: 25px;
+    }
+  
+    .carousel-info {
+      left: 25px;
+    }
+  }
