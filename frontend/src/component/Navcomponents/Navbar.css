@@ -1,0 +1,305 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .navbar-wrapper {
+    width: 100%;
+    background: #ffffff;
+    border-top: 3px solid #171b23;
+    border-bottom: 1px solid #e8ebf2;
+    position: relative;
+    z-index: 1000;
+  }
+  
+  .navbar {
+    width: 100%;
+    max-width: 1440px;
+    height: 78px;
+    margin: 0 auto;
+  
+    display: flex;
+    align-items: center;
+  
+    padding: 0 42px;
+    gap: 30px;
+  
+    background: #ffffff;
+  }
+  
+  
+  /* =========================
+     BRAND
+  ========================= */
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  
+    flex-shrink: 0;
+  }
+  
+  .logo-box {
+    width: 48px;
+    height: 48px;
+  
+    border-radius: 11px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    background: linear-gradient(
+      145deg,
+      #315bea 0%,
+      #182b75 100%
+    );
+  
+    box-shadow:
+      0 8px 18px rgba(24, 43, 117, 0.25);
+  
+    position: relative;
+  }
+  
+  .logo-box span {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+  }
+  
+  .brand-name {
+    display: flex;
+    align-items: center;
+  }
+  
+  .brand-name span {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: #9ba2b0;
+    white-space: nowrap;
+  }
+  
+  
+  /* =========================
+     NAVIGATION
+  ========================= */
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    gap: 30px;
+  
+    flex: 1;
+  }
+  
+  .nav-link {
+    position: relative;
+  
+    text-decoration: none;
+    color: #454b58;
+  
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  
+    padding: 29px 0;
+  
+    transition:
+      color 0.25s ease,
+      transform 0.25s ease;
+  }
+  
+  .nav-link:hover {
+    color: #2457d6;
+    transform: translateY(-1px);
+  }
+  
+  .nav-link.active {
+    color: #3457d5;
+  }
+  
+  .nav-link.active::after {
+    content: "";
+  
+    position: absolute;
+    left: 50%;
+    bottom: 17px;
+  
+    transform: translateX(-50%);
+  
+    width: 28px;
+    height: 3px;
+  
+    border-radius: 10px;
+  
+    background: #3457d5;
+  }
+  
+  
+  /* =========================
+     CONSULTATION BUTTON
+  ========================= */
+  
+  .consultation-btn {
+    height: 48px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    gap: 16px;
+  
+    padding: 5px 6px 5px 20px;
+  
+    border: none;
+    border-radius: 14px;
+  
+    cursor: pointer;
+  
+    color: #ffffff;
+  
+    background: linear-gradient(
+      100deg,
+      #101c3a 0%,
+      #172e69 48%,
+      #245be0 100%
+    );
+  
+    box-shadow:
+      0 8px 22px rgba(25, 61, 150, 0.25);
+  
+    font-size: 14px;
+    font-weight: 700;
+  
+    white-space: nowrap;
+  
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  
+  .consultation-btn:hover {
+    transform: translateY(-2px);
+  
+    box-shadow:
+      0 12px 28px rgba(25, 61, 150, 0.35);
+  }
+  
+  
+  /* Arrow */
+  
+  .arrow-circle {
+    width: 38px;
+    height: 38px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 50%;
+  
+    background: linear-gradient(
+      145deg,
+      #3f71ec,
+      #1b4fc9
+    );
+  
+    box-shadow:
+      inset 0 1px 2px rgba(255,255,255,0.2);
+  }
+  
+  .arrow-circle span {
+    font-size: 21px;
+    line-height: 1;
+  
+    transition: transform 0.25s ease;
+  }
+  
+  .consultation-btn:hover .arrow-circle span {
+    transform: translateX(3px);
+  }
+  
+  
+  /* =========================
+     RESPONSIVE
+  ========================= */
+  
+  @media (max-width: 1150px) {
+  
+    .navbar {
+      padding: 0 25px;
+      gap: 20px;
+    }
+  
+    .nav-links {
+      gap: 20px;
+    }
+  
+    .nav-link {
+      font-size: 13px;
+    }
+  
+    .brand-name {
+      display: none;
+    }
+  
+    .consultation-btn {
+      font-size: 13px;
+    }
+  }
+  
+  
+  @media (max-width: 850px) {
+  
+    .navbar {
+      height: 70px;
+      padding: 0 20px;
+    }
+  
+    .nav-links {
+      display: none;
+    }
+  
+    .brand {
+      flex: 1;
+    }
+  
+    .consultation-btn {
+      height: 44px;
+      padding-left: 15px;
+      gap: 10px;
+      font-size: 12px;
+    }
+  
+    .arrow-circle {
+      width: 34px;
+      height: 34px;
+    }
+  }
+  
+  
+  @media (max-width: 500px) {
+  
+    .navbar {
+      padding: 0 14px;
+    }
+  
+    .logo-box {
+      width: 44px;
+      height: 44px;
+    }
+  
+    .consultation-btn span:first-child {
+      display: none;
+    }
+  
+    .consultation-btn {
+      width: 44px;
+      padding: 5px;
+      justify-content: center;
+    }
+  }

@@ -1,0 +1,186 @@
+/* ================================
+   OUR CLIENTS SECTION
+================================ */
+
+.our-clients {
+    width: 100%;
+    background: #ffffff;
+    padding-top: 70px;
+    padding-bottom: 55px;
+    overflow: hidden;
+  }
+  
+  
+  /* ================================
+     HEADING
+  ================================ */
+  
+  .clients-heading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .clients-heading h2 {
+    margin: 0;
+    color: #29266f;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  
+  
+  /* ================================
+     MARQUEE CONTAINER
+  ================================ */
+  
+  .clients-marquee {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 82px;
+  }
+  
+  
+  /* ================================
+     MOVING TRACK
+  ================================ */
+  
+  .clients-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+  
+    animation: clientsSlide 28s linear infinite;
+  }
+  
+  
+  /* ================================
+     INDIVIDUAL LOGO
+  ================================ */
+  
+  .client-logo {
+    width: 200px;   /* pehle 150px tha */
+    height: 99px;
+  
+    flex-shrink: 0;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    margin: 0 48px;
+  }
+  
+  
+  /* Logo image */
+  
+  .client-logo img {
+    max-width: 200px;
+    max-height: 120px;
+  
+    width: auto;
+    height: auto;
+  
+    object-fit: contain;
+  
+    display: block;
+  }
+  
+  
+  /* ================================
+     SLIDING ANIMATION
+  ================================ */
+  
+  @keyframes clientsSlide {
+  
+    0% {
+      transform: translateX(0);
+    }
+  
+    100% {
+      transform: translateX(-50%);
+    }
+  
+  }
+  
+  
+  /* ================================
+     RESPONSIVE
+  ================================ */
+  
+  @media (max-width: 1024px) {
+  
+    .our-clients {
+      padding-top: 55px;
+      padding-bottom: 45px;
+    }
+  
+    .clients-heading h2 {
+      font-size: 44px;
+    }
+  
+    .clients-marquee {
+      margin-top: 65px;
+    }
+  
+    .client-logo {
+      margin: 0 35px;
+    }
+  
+  }
+  
+  
+  @media (max-width: 768px) {
+  
+    .our-clients {
+      padding-top: 53px;
+      padding-bottom: 40px;
+    }
+  
+    .clients-heading h2 {
+      font-size: 36px;
+      letter-spacing: -1px;
+    }
+  
+    .clients-marquee {
+      margin-top: 50px;
+    }
+  
+    .client-logo {
+      width: 125px;
+      height: 60px;
+      margin: 0 25px;
+    }
+  
+    .client-logo img {
+      max-width: 125px;
+      max-height: 50px;
+    }
+  
+  }
+  
+  
+  @media (max-width: 480px) {
+  
+    .clients-heading h2 {
+      font-size: 30px;
+    }
+  
+    .clients-marquee {
+      margin-top: 40px;
+    }
+  
+    .client-logo {
+      width: 110px;
+      margin: 0 20px;
+    }
+  
+    .client-logo img {
+      max-width: 110px;
+      max-height: 45px;
+    }
+  
+  }
