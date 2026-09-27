@@ -1,0 +1,424 @@
+/* ================================================================
+   PORTFOLIO SECTION
+   Dark navy text on a light gray background, with a violet accent.
+   ---------------------------------------------------------------
+   1.  Section and container
+   2.  Header
+   3.  Buttons
+   4.  Grid
+   5.  Card
+   6.  Project image
+   7.  Card details
+   8.  Services and technologies
+   9.  Challenge box
+   10. Tablet layout
+   11. Mobile layout
+   ================================================================ */
+
+
+/* ================================================================
+   1. SECTION AND CONTAINER
+   ================================================================ */
+
+.portfolio-section {
+    width: 100%;
+    padding: 80px 0 90px;
+    background: #f7f7f9;
+    border-top: 1px solid #e2e2e8;
+}
+
+.portfolio-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+
+/* ================================================================
+   2. HEADER
+   The whole heading area is centered, like the About Us heading.
+   ================================================================ */
+
+.portfolio-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 42px;
+    text-align: center;
+}
+
+/* Small blue to purple line above the title */
+.portfolio-header-line {
+    width: 76px;
+    height: 4px;
+    margin-bottom: 20px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2f6df6, #4f3ce0);
+}
+
+.portfolio-title {
+    margin: 0;
+    color: #071426;
+    font-size: clamp(32px, 26px + 2.4vw, 50px);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.portfolio-description {
+    max-width: 580px;
+    margin: 16px 0 26px;
+    color: #55617a;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* ================================================================
+   3. BUTTONS
+   Both buttons share the same size. Only the colours differ.
+   ================================================================ */
+
+.portfolio-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 20px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.portfolio-button span {
+    font-size: 15px;
+    line-height: 1;
+}
+
+/* Dark filled button, used at the top of the section */
+.portfolio-button-solid {
+    background: #071426;
+    border: 1px solid #071426;
+    color: #ffffff;
+}
+
+.portfolio-button-solid:hover {
+    background: #4f3ce0;
+    border-color: #4f3ce0;
+}
+
+/* Outlined button, used inside each card */
+.portfolio-button-outline {
+    width: 100%;
+    margin-top: 18px;
+    background: #ffffff;
+    border: 1px solid #e2e2e8;
+    color: #4f3ce0;
+}
+
+.portfolio-button-outline:hover {
+    background: #f4f2ff;
+    border-color: #d6d1f9;
+}
+
+.portfolio-button:focus-visible {
+    outline: 2px solid #4f3ce0;
+    outline-offset: 2px;
+}
+
+
+/* ================================================================
+   4. GRID
+   3 cards per row on desktop, 2 on tablet, 1 on mobile.
+   ================================================================ */
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+
+/* ================================================================
+   5. CARD
+   ================================================================ */
+
+.portfolio-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e2e2e8;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(7, 20, 38, 0.05);
+    transition:
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.portfolio-card:hover {
+    border-color: #d6d1f9;
+    box-shadow: 0 10px 28px rgba(7, 20, 38, 0.09);
+}
+
+
+/* ================================================================
+   6. PROJECT IMAGE
+   ================================================================ */
+
+.portfolio-image {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+    background: #e9e9f1;
+    border-bottom: 1px solid #e2e2e8;
+}
+
+.portfolio-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-card:hover .portfolio-image img {
+    transform: scale(1.05);
+}
+
+/* Dark label that fades in over the image on hover */
+.portfolio-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(7, 20, 38, 0.72);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-card:hover .portfolio-image-overlay {
+    opacity: 1;
+    animation: portfolio-fade-in 0.3s ease;
+}
+
+@keyframes portfolio-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* ================================================================
+   7. CARD DETAILS
+   ================================================================ */
+
+.portfolio-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    padding: 22px;
+}
+
+.portfolio-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+}
+
+.portfolio-category {
+    padding: 5px 9px;
+    background: #f4f2ff;
+    border: 1px solid #ded8ff;
+    border-radius: 4px;
+    color: #4f3ce0;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.portfolio-date {
+    color: #5c6577;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.portfolio-card-title {
+    margin: 16px 0 6px;
+    color: #071426;
+    font-size: 21px;
+    line-height: 1.25;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    overflow-wrap: break-word;
+}
+
+.portfolio-client {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 8px;
+    margin: 0 0 15px;
+    color: #071426;
+    font-size: 13px;
+    font-weight: 600;
+    overflow-wrap: break-word;
+}
+
+.portfolio-client-label {
+    color: #5c6577;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+/* ================================================================
+   8. SERVICES AND TECHNOLOGIES
+   ================================================================ */
+
+.portfolio-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.portfolio-tag {
+    padding: 5px 9px;
+    background: #f8f8fa;
+    border: 1px solid #e2e2e8;
+    border-radius: 4px;
+    color: #4a5568;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.portfolio-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.portfolio-technology {
+    padding: 4px 9px;
+    background: #f7f7f9;
+    border: 1px solid #e2e2e8;
+    border-radius: 4px;
+    color: #55617a;
+    font-size: 10px;
+}
+
+
+/* ================================================================
+   9. CHALLENGE BOX
+   ================================================================ */
+
+.portfolio-challenge {
+    margin-top: 18px;
+    border: 1px solid #e2e2e8;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.portfolio-challenge-label {
+    margin: 0;
+    padding: 12px 14px 0;
+    color: #5c6577;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.portfolio-challenge-text {
+    margin: 0;
+    padding: 8px 14px 14px;
+    color: #3f4c60;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+
+/* ================================================================
+   10. TABLET LAYOUT
+   2 cards per row.
+   ================================================================ */
+
+@media (max-width: 1050px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* ================================================================
+   11. MOBILE LAYOUT
+   1 card per row.
+   ================================================================ */
+
+@media (max-width: 680px) {
+    .portfolio-section {
+        padding: 56px 0 64px;
+    }
+
+    .portfolio-container {
+        padding: 0 16px;
+    }
+
+    .portfolio-header {
+        margin-bottom: 28px;
+    }
+
+    .portfolio-description {
+        font-size: 13px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .portfolio-image {
+        height: 190px;
+    }
+
+    .portfolio-card-body {
+        padding: 18px;
+    }
+
+    .portfolio-card-title {
+        font-size: 19px;
+    }
+
+    .portfolio-tag,
+    .portfolio-challenge-text,
+    .portfolio-button-outline {
+        font-size: 11px;
+    }
+}
