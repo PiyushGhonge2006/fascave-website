@@ -1,24 +1,26 @@
-import FeatureCard from '../Our_Services/FeatureCard'
-import { features } from '../Our_Services/data/features'
+import { features } from './data/features'
+import FeatureCard from './FeatureCard'
 import './ourservice.css'
 
 export default function Features() {
   return (
-    <main className="features-page">
+    <section className="our-services">
 
-      <section className="features-section">
+      <h2 className="services-title">
+        OUR SERVICES
+      </h2>
 
-        <div className="features-grid">
-          {features.map((feature) => (
-            <FeatureCard
-              key={feature.id}
-              feature={feature}
-            />
-          ))}
-        </div>
+      <div className="services-grid">
 
-      </section>
+        {features.map((feature) => (
+          <FeatureCard
+            key={feature.id}
+            feature={feature}
+          />
+        ))}
 
-    </main>
+      </div>
+
+    </section>
   )
 }

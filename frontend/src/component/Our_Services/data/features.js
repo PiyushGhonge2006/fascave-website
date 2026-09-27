@@ -1,67 +1,243 @@
-import fastLoading from 'src/assets/service_img/fast-loading.png'
-import fullyResponsive from 'src/assets/service_img/fast-loading.png'
-import readyToUse from 'src/assets/service_img/fast-loading.png'
-import proPlugins from 'src/assets/service_img/fast-loading.png'
-import updatedRegularly from 'src/assets/service_img/fast-loading.png'
+import webDevelopment from '../../../assets/service_img/fully-responsive.png'
+import appDevelopment from '../../../assets/service_img/app-development.png'
+import seoFriendly from '../../../assets/service_img/seo-friendly.png'
+import cloudDataAnalytics from '../../../assets/service_img/cloud-data-analytics.png'
+import powerBI from '../../../assets/service_img/power-bi-visualization.png'
+import digitalMarketing from '../../../assets/service_img/digital-marketing.png'
 
 export const features = [
-  {
-    id: 'fast-loading',
-    title: 'Fast loading',
-    image: fastLoading,
-    description:
-      'We can help you optimize your website by compressing CSS & Javascript.',
-    details:
-      'A fast-loading website creates a smoother experience for visitors. We optimize assets, code and page resources to reduce unnecessary loading time.',
-  },
 
   {
-    id: 'fully-responsive',
-    title: 'Fully Responsive',
-    image: fullyResponsive,
+    id: 'web-development',
+
+    title: 'Web Development',
+
+    image: webDevelopment,
+
     description:
-      'We help you build a fully responsive website for better speed and conversion.',
+      'We build modern, responsive and high-performance websites tailored to your business needs.',
+
     details:
-      'Your website adapts smoothly to desktop, tablet and mobile screens while maintaining a consistent and professional experience.',
+      'Our web development services include custom website design, responsive layouts, clean code and scalable solutions using modern technologies.',
+
+    today: [
+      'Manual website processes and outdated workflows.',
+      'Slow websites that affect customer experience.',
+      'Difficulty managing website content and updates.',
+      'Limited visibility into website performance.',
+      'Separate tools for different business requirements.',
+    ],
+
+    outcome: [
+      'A fast and responsive digital experience.',
+      'Modern websites optimized for all devices.',
+      'Easy content management and updates.',
+      'Better performance and user engagement.',
+      'A scalable platform ready for future growth.',
+    ],
+
+    points: [
+      'Modern & Responsive',
+      'Scalable Architecture',
+      'High Performance',
+      'Secure Development',
+      'Future Ready',
+    ],
   },
+
+
+  {
+    id: 'app-development',
+
+    title: 'App Development',
+
+    image: appDevelopment,
+
+    description:
+      'We develop powerful and user-friendly mobile applications for Android and iOS platforms.',
+
+    details:
+      'From concept to deployment, we create secure, scalable and feature-rich mobile applications designed to deliver great user experiences.',
+
+    today: [
+      'Customers depend heavily on websites or manual communication.',
+      'Limited mobile accessibility.',
+      'Disconnected customer experiences.',
+      'Manual service and support processes.',
+      'Limited access to real-time information.',
+    ],
+
+    outcome: [
+      'A dedicated mobile experience for customers.',
+      'Easy access to services from anywhere.',
+      'Connected and automated workflows.',
+      'Faster customer communication.',
+      'Real-time access to important information.',
+    ],
+
+    points: [
+      'User Focused',
+      'Cross Platform',
+      'Secure',
+      'Scalable',
+      'Future Ready',
+    ],
+  },
+
 
   {
     id: 'seo-friendly',
+
     title: 'SEO Friendly',
+
     image: seoFriendly,
+
     description:
-      'We make SEO friendly template with proper breadcrumbs, schema data included.',
+      'We make SEO friendly templates with proper breadcrumbs and structured data.',
+
     details:
       'We structure websites with search-engine-friendly layouts, semantic HTML, metadata, breadcrumbs and structured data.',
+
+    today: [
+      'Low visibility in search results.',
+      'Poor website structure for search engines.',
+      'Missing metadata and structured information.',
+      'Difficulty tracking organic growth.',
+      'Unoptimized website content.',
+    ],
+
+    outcome: [
+      'Search-friendly website architecture.',
+      'Better structured website content.',
+      'Improved search engine understanding.',
+      'Clearer organic performance tracking.',
+      'A stronger foundation for online visibility.',
+    ],
+
+    points: [
+      'Search Ready',
+      'Structured Data',
+      'Technical SEO',
+      'Better Visibility',
+      'Optimized Content',
+    ],
   },
 
-  {
-    id: 'ready-to-use',
-    title: 'Ready-to-use',
-    image: readyToUse,
-    description:
-      'Our website design is super professional and you can easily use the site.',
-    details:
-      'Our ready-to-use designs provide a professional foundation that can be customized according to your brand and requirements.',
-  },
 
   {
-    id: 'pro-plugins',
-    title: 'Pro Plugins',
-    image: proPlugins,
+    id: 'cloud-data-analytics',
+
+    title: 'Cloud & Data Analytics Services',
+
+    image: cloudDataAnalytics,
+
     description:
-      'Unique social sharing plugins, custom designs and contact page builds.',
+      'We help businesses leverage cloud technologies and data analytics for smarter decisions.',
+
     details:
-      'Extend your website functionality with carefully integrated plugins and custom components designed around your requirements.',
+      'Our services include cloud infrastructure, data processing, data visualization and analytics solutions tailored to your business requirements.',
+
+    today: [
+      'Data stored across disconnected systems.',
+      'Manual reporting and data collection.',
+      'Limited access to business information.',
+      'Slow decision-making processes.',
+      'Difficulty handling growing data volumes.',
+    ],
+
+    outcome: [
+      'Centralized and accessible business data.',
+      'Automated reporting and analytics.',
+      'Real-time business visibility.',
+      'Faster data-driven decisions.',
+      'Scalable cloud infrastructure.',
+    ],
+
+    points: [
+      'Cloud Ready',
+      'Data Driven',
+      'Scalable',
+      'Secure',
+      'Real-Time Insights',
+    ],
   },
 
+
   {
-    id: 'updated-regularly',
-    title: 'Updated regularly',
-    image: updatedRegularly,
+    id: 'power-bi-visualization',
+
+    title: 'Power & BI Visualization Services',
+
+    image: powerBI,
+
     description:
-      'We always update the template regularly and add features or fix some bugs that appear.',
+      'We create powerful dashboards and visual reports using modern business intelligence tools.',
+
     details:
-      'Regular improvements help keep the website secure, stable and compatible with modern browsers and technologies.',
+      'Transform your data into meaningful insights with interactive dashboards, reports and data visualization solutions.',
+
+    today: [
+      'Business reports are difficult to understand.',
+      'Important information is spread across files.',
+      'Manual report preparation takes time.',
+      'Decision makers lack real-time visibility.',
+      'Data trends are difficult to identify.',
+    ],
+
+    outcome: [
+      'Interactive business dashboards.',
+      'Clear and meaningful data visualization.',
+      'Automated reporting workflows.',
+      'Real-time business insights.',
+      'Better understanding of trends and performance.',
+    ],
+
+    points: [
+      'Interactive',
+      'Data Driven',
+      'Real-Time',
+      'Easy to Understand',
+      'Business Focused',
+    ],
   },
+
+
+  {
+    id: 'digital-marketing',
+
+    title: 'Digital Marketing Services',
+
+    image: digitalMarketing,
+
+    description:
+      'We help you grow your brand with result-driven digital marketing strategies.',
+
+    details:
+      'Our digital marketing services include social media marketing, SEO, content marketing, paid advertising and online brand promotion.',
+
+    today: [
+      'Limited online brand visibility.',
+      'Inconsistent social media presence.',
+      'Difficulty reaching the right audience.',
+      'Manual marketing activities.',
+      'Limited understanding of campaign performance.',
+    ],
+
+    outcome: [
+      'Stronger online brand presence.',
+      'Consistent digital communication.',
+      'Targeted audience engagement.',
+      'Data-driven marketing campaigns.',
+      'Clear visibility into campaign performance.',
+    ],
+
+    points: [
+      'Brand Growth',
+      'Audience Focused',
+      'Data Driven',
+      'Multi Channel',
+      'Performance Based',
+    ],
+  },
+
 ]

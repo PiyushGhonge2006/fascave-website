@@ -1,13 +1,16 @@
 import React from "react";
-import './navbar.css';
+import "./navbar.css";
+import { useContact } from "../contact/Contactbutton";
 
 const Navbarr = () => {
+  const { openContact } = useContact();
+
   const navItems = [
-    "Home" ,
-    "About" ,
-    "Services" ,
-    "Portfolio" ,
-    "Blog" ,
+    "Home",
+    "About",
+    "Services",
+    "Portfolio",
+    "Blog",
     "Contact us",
   ];
 
@@ -32,20 +35,24 @@ const Navbarr = () => {
             <a
               href={`#${item.toLowerCase()}`}
               key={item}
-              className={item === "Home" ? "nav-link active" : "nav-link"}
+              className={
+                item === "Home"
+                  ? "nav-link active"
+                  : "nav-link"
+              }
             >
               {item}
             </a>
           ))}
         </div>
 
-        {/* CTA */}
-        <button className="consultation-btn">
+        {/* Consultation Button */}
+        <button
+          type="button"
+          className="consultation-btn"
+          onClick={() => openContact("navbar")}
+        >
           <span>Book a Free Consultation</span>
-
-          <span className="arrow-circle">
-            <span>→</span>
-          </span>
         </button>
 
       </nav>
