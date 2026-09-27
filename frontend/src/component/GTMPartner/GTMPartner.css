@@ -1,0 +1,203 @@
+.gtm-partner-section {
+    width: 100%;
+    padding: 90px 0 100px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+/* ================================
+   HEADER - PORTFOLIO STYLE
+================================ */
+
+.gtm-partner-header {
+    text-align: center;
+    padding: 0 20px;
+    margin-bottom: 55px;
+}
+
+.gtm-partner-accent {
+    display: block;
+    width: 72px;
+    height: 5px;
+    margin: 0 auto 25px;
+    border-radius: 3px;
+    background: #4f46e5;
+}
+
+.gtm-partner-header h2 {
+    margin: 0;
+    color: #061b33;
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    text-align: center;
+}
+
+.gtm-partner-header p {
+    max-width: 850px;
+    margin: 20px auto 0;
+    color: #36506f;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* ================================
+   MARQUEE
+================================ */
+
+.gtm-partner-marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.gtm-partner-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: gtmPartnerScroll 24s linear infinite;
+}
+
+.gtm-partner-logo {
+    width: 200px;
+    height: 90px;
+    margin: 0 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.gtm-partner-logo img {
+    width: auto;
+    max-width: 155px;
+    max-height: 65px;
+
+    object-fit: contain;
+    display: block;
+
+    transition: transform 0.3s ease;
+}
+
+.gtm-partner-logo:hover img {
+    transform: scale(1.06);
+}
+
+/* ================================
+   INFINITE SCROLL
+================================ */
+
+@keyframes gtmPartnerScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 900px) {
+    .gtm-partner-section {
+        padding: 75px 0 80px;
+    }
+
+    .gtm-partner-header {
+        margin-bottom: 40px;
+    }
+
+    .gtm-partner-accent {
+        width: 60px;
+        height: 4px;
+        margin-bottom: 20px;
+    }
+
+    .gtm-partner-header h2 {
+        font-size: 48px;
+    }
+
+    .gtm-partner-header p {
+        font-size: 16px;
+    }
+
+    .gtm-partner-logo {
+        width: 165px;
+        height: 75px;
+        margin: 0 22px;
+    }
+
+    .gtm-partner-logo img {
+        max-width: 130px;
+        max-height: 55px;
+    }
+
+    .gtm-partner-track {
+        animation-duration: 20s;
+    }
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+    .gtm-partner-section {
+        padding: 60px 0 70px;
+    }
+
+    .gtm-partner-header {
+        padding: 0 20px;
+        margin-bottom: 35px;
+    }
+
+    .gtm-partner-accent {
+        width: 55px;
+        height: 4px;
+        margin-bottom: 18px;
+    }
+
+    .gtm-partner-header h2 {
+        font-size: 34px;
+        letter-spacing: -1px;
+    }
+
+    .gtm-partner-header p {
+        margin-top: 15px;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .gtm-partner-logo {
+        width: 135px;
+        height: 65px;
+        margin: 0 15px;
+    }
+
+    .gtm-partner-logo img {
+        max-width: 105px;
+        max-height: 45px;
+    }
+
+    .gtm-partner-track {
+        animation-duration: 17s;
+    }
+}
+
+/* ================================
+   REDUCE MOTION
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .gtm-partner-track {
+        animation: none;
+    }
+}
