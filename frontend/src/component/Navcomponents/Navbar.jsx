@@ -3,17 +3,18 @@ import { Link, useLocation } from "react-router-dom";
 import './navbar.css';
 
 const navItems = [
-  "Home" ,
-  "About" ,
-  "Services" ,
-  "Portfolio" ,
-  "Blog" ,
+  "Home",
+  "About",
+  "Services",
+  "Portfolio",
+  "Blog",
   "Contact us",
 ];
 
 const routes = {
   Home: "/",
   About: "/about-us",
+  Blog: "/blog",
 };
 
 const Navbarr = () => {

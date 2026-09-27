@@ -5,6 +5,7 @@ import Hero from "./component/Home/Hero/Hero";
 import OurClients from "./component/Home/Ourclient";
 
 import About from "./pages/About/About";
+import Blog from "./pages/Blog/Blog";
 import Portfolio from "./component/Portfolio/Portfolio";
 import GTMPartner from "./component/GTMPartner/GTMPartner";
 
@@ -31,6 +32,11 @@ function App() {
         <Route
           path="/about-us"
           element={<About />}
+        />
+
+        <Route
+          path="/blog"
+          element={<Blog />}
         />
       </Routes>
     </BrowserRouter>
