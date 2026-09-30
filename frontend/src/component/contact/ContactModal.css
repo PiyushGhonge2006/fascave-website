@@ -1,0 +1,276 @@
+/* ========================================
+   CONTACT OVERLAY
+======================================== */
+
+.contact-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.48);
+
+  box-sizing: border-box;
+}
+
+
+/* ========================================
+   CONTACT MODAL
+======================================== */
+
+.contact-modal {
+  width: 416px;
+  max-width: 100%;
+  max-height: calc(100vh - 40px);
+
+  overflow-y: auto;
+
+  padding: 20px 32px 34px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border-radius: 7px;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+}
+
+.contact-header h2 {
+  margin: 0;
+
+  color: #1c2868;
+
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+/* ========================================
+   CLOSE BUTTON
+======================================== */
+
+.contact-close {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #202b70;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.contact-close:hover {
+  transform: rotate(90deg);
+  color: #3158db;
+}
+
+
+/* ========================================
+   FORM
+======================================== */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 13px;
+}
+
+
+/* ========================================
+   FIRST + LAST NAME
+======================================== */
+
+.contact-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+}
+
+
+/* ========================================
+   INPUTS
+======================================== */
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 10px;
+
+  border: 1px solid #202b70;
+
+  border-radius: 5px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #17205d;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  transition: 0.2s ease;
+}
+
+
+/* Input height */
+
+.contact-form input {
+  height: 36px;
+}
+
+
+/* Textarea */
+
+.contact-form textarea {
+  min-height: 80px;
+
+  resize: vertical;
+}
+
+
+/* Placeholder */
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #9aa2b7;
+}
+
+
+/* Focus */
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #3158db;
+
+  box-shadow:
+    0 0 0 2px rgba(49, 88, 219, 0.12);
+}
+
+
+/* ========================================
+   FORM MESSAGE
+======================================== */
+
+.form-message {
+  padding: 9px 10px;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+
+/* Success */
+
+.form-message.success {
+  background: #eaf8ef;
+
+  color: #18743b;
+}
+
+
+/* Error */
+
+.form-message.error {
+  background: #fff0f0;
+
+  color: #b12626;
+}
+
+
+/* ========================================
+   SUBMIT BUTTON
+======================================== */
+
+.submit-form-btn {
+  height: 44px;
+
+  margin-top: 0;
+
+  border: 1px solid #202b70;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  color: #111111;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.submit-form-btn:hover:not(:disabled) {
+  background: #202b70;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 15px rgba(32, 43, 112, 0.2);
+}
+
+.submit-form-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 520px) {
+  .contact-modal {
+    padding: 20px;
+  }
+
+  .contact-row {
+    grid-template-columns: 1fr;
+  }
+}

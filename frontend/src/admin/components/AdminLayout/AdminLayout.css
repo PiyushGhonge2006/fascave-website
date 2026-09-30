@@ -1,0 +1,27 @@
+.admin-layout {
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+.admin-main-content {
+    margin-left: 260px;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .admin-main-content {
+        margin-left: 220px;
+        padding: 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-main-content {
+        margin-left: 0;
+        padding: 18px;
+    }
+}

@@ -1,28 +1,32 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import './navbar.css';
+import { Link, useNavigate } from "react-router-dom";
+import "./navbar.css";
+import { useContact } from "../contact/Contactbutton";
 
-const navItems = [
-  "Home",
-  "About",
-  "Services",
-  "Portfolio",
-  "Blog",
-  "Contact us",
-];
+const Navbar = () => {
+  const { openContact } = useContact();
+  const navigate = useNavigate();
 
-const routes = {
-  Home: "/",
-  About: "/about-us",
-  Blog: "/blog",
-};
+  const handlePortfolio = (event) => {
+    event.preventDefault();
 
-const Navbarr = () => {
-  const { pathname } = useLocation();
+    if (window.location.pathname === "/") {
+      document
+        .getElementById("portfolio")
+        ?.scrollIntoView({
+          behavior: "smooth",
+        });
+    } else {
+      navigate("/");
 
-  const isActive = (item) => {
-    if (item === "Home") return pathname === "/";
-    return routes[item] ? pathname === routes[item] : false;
+      setTimeout(() => {
+        document
+          .getElementById("portfolio")
+          ?.scrollIntoView({
+            behavior: "smooth",
+          });
+      }, 100);
+    }
   };
 
   return (
@@ -31,45 +35,81 @@ const Navbarr = () => {
 
         {/* Logo */}
         <div className="brand">
-          <div className="logo-box">
-            <span>F</span>
-          </div>
+          <Link to="/" className="brand">
+            <div className="logo-box">
+              <span>F</span>
+            </div>
 
-          <div className="brand-name">
-            <span>IT SOLUTIONS</span>
-          </div>
+            <div className="brand-name">
+              <span>IT SOLUTIONS</span>
+            </div>
+          </Link>
         </div>
 
         {/* Navigation */}
         <div className="nav-links">
-          {navItems.map((item) =>
-            routes[item] ? (
-              <Link
-                to={routes[item]}
-                key={item}
-                className={isActive(item) ? "nav-link active" : "nav-link"}
-              >
-                {item}
-              </Link>
-            ) : (
-              <a
-                href={`#${item.toLowerCase()}`}
-                key={item}
-                className="nav-link"
-              >
-                {item}
-              </a>
-            )
-          )}
+
+          {/* Home */}
+          <Link
+            to="/"
+            className="nav-link"
+          >
+            Home
+          </Link>
+
+          {/* About */}
+          <Link
+            to="/about-us"
+            className="nav-link"
+          >
+            About
+          </Link>
+
+          {/* Services */}
+          <Link
+            to="/features"
+            className="nav-link"
+          >
+            Services
+          </Link>
+
+          {/* Portfolio */}
+          <a
+            href="#portfolio"
+            className="nav-link"
+            onClick={handlePortfolio}
+          >
+            Portfolio
+          </a>
+
+          {/* Blog */}
+          <Link
+            to="/blog"
+            className="nav-link"
+          >
+            Blog
+          </Link>
+          {/* Contact */}
+          <a
+            href="#contact"
+            className="nav-link"
+            onClick={(event) => {
+              event.preventDefault();
+              openContact("navbar");
+            }}
+          >
+            Contact us
+          </a>
+
         </div>
 
-        {/* CTA */}
-        <button className="consultation-btn">
+        {/* Consultation */}
+        <button
+          type="button"
+          className="consultation-btn"
+          onClick={() => openContact("navbar")}
+        >
           <span>Book a Free Consultation</span>
-
-          <span className="arrow-circle">
-            <span>→</span>
-          </span>
         </button>
 
       </nav>
@@ -77,4 +117,4 @@ const Navbarr = () => {
   );
 };
 
-export default Navbarr;
+export default Navbar;

@@ -1,0 +1,134 @@
+.admin-sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #111827;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    border-right: 1px solid #1f2937;
+}
+
+.admin-sidebar-logo {
+    height: 82px;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #1f2937;
+}
+
+.admin-logo-box {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.admin-logo-text h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.admin-logo-text span {
+    display: block;
+    margin-top: 2px;
+    font-size: 9px;
+    color: #94a3b8;
+    letter-spacing: 1.5px;
+}
+
+.admin-menu-title {
+    padding: 28px 22px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 1.5px;
+}
+
+.admin-sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 12px;
+}
+
+.admin-menu-item {
+    height: 46px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-radius: 9px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.admin-menu-item:hover {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.admin-menu-item.active {
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.25);
+}
+
+.admin-menu-icon {
+    width: 22px;
+    text-align: center;
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+.admin-menu-label {
+    white-space: nowrap;
+}
+
+.admin-sidebar-bottom {
+    margin-top: auto;
+    padding: 18px;
+    border-top: 1px solid #1f2937;
+}
+
+.admin-sidebar-version {
+    color: #64748b;
+    font-size: 11px;
+    text-align: center;
+}
+
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .admin-sidebar {
+        width: 220px;
+    }
+
+    .admin-logo-text {
+        display: none;
+    }
+
+    .admin-sidebar-logo {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .admin-menu-label {
+        font-size: 13px;
+    }
+}
