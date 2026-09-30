@@ -83,13 +83,12 @@ const Navbar = () => {
           </a>
 
           {/* Blog */}
-          <a
-            href="#blog"
+          <Link
+            to="/blog"
             className="nav-link"
           >
             Blog
-          </a>
-
+          </Link>
           {/* Contact */}
           <a
             href="#contact"
