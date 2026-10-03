@@ -1,0 +1,669 @@
+/* =========================================================
+   FASCAVE — SHARED COMPONENTS
+   ------------------------------------------------------------
+   The small set of UI patterns that repeat across the site.
+   Pages keep their own layouts and content; they reach for
+   these classes (or the tokens behind them) instead of
+   re-declaring the same button / card / heading every time.
+
+   Load order: after tokens.css, before every page stylesheet.
+   Page CSS can still override deliberately.
+   ========================================================= */
+
+
+/* =========================================================
+   1. LAYOUT
+   ========================================================= */
+
+/* The one container width. */
+.fc-container {
+  width: min(var(--fc-container), 100% - (var(--fc-container-pad) * 2));
+  margin-inline: auto;
+}
+
+/* A block that follows the site-wide vertical rhythm. */
+.fc-section {
+  position: relative;
+  width: 100%;
+  padding-block: var(--fc-section-pad);
+}
+
+/* Softer rhythm, for stacked bands that already have a rhythm. */
+.fc-section--tight {
+  padding-block: var(--fc-section-pad-sm);
+}
+
+/* Alternating canvas, so consecutive sections stay readable. */
+.fc-canvas-alt {
+  background: var(--fc-surface-alt);
+}
+
+
+/* =========================================================
+   2. SECTION HEADING
+   ------------------------------------------------------------
+   eyebrow → title → subtitle. Centred by default; add
+   `.fc-head--start` to left-align against a grid.
+   ========================================================= */
+
+.fc-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 780px;
+  margin: 0 auto var(--fc-section-gap);
+  text-align: center;
+}
+
+.fc-head--start {
+  align-items: flex-start;
+  margin-inline: 0;
+  text-align: left;
+}
+
+.fc-head--narrow {
+  max-width: 620px;
+}
+
+/* The small label above a heading. */
+.fc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 8px 16px;
+  border: 1px solid var(--fc-border-strong);
+  border-radius: var(--fc-radius-pill);
+
+  background: rgba(92, 88, 205, 0.07);
+
+  color: var(--fc-accent-strong);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* The gradient rule that sits above a heading. */
+.fc-rule-accent {
+  display: block;
+  width: 72px;
+  height: 4px;
+  border-radius: var(--fc-radius-pill);
+  background: var(--fc-gradient-accent);
+}
+
+.fc-head__title {
+  font-size: var(--fc-text-display);
+  line-height: 1.1;
+}
+
+.fc-head__text {
+  max-width: 620px;
+  font-size: var(--fc-text-lead);
+  line-height: 1.7;
+  color: var(--fc-text-secondary);
+}
+
+
+/* =========================================================
+   3. BUTTONS
+   ------------------------------------------------------------
+   .fc-btn              base
+   .fc-btn--primary     filled, brand gradient
+   .fc-btn--solid       filled, ink (for dark canvases)
+   .fc-btn--ghost       outlined
+   .fc-btn--quiet       text only, for tertiary actions
+   ========================================================= */
+
+.fc-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 54px;
+  padding: 0 28px;
+
+  border: 1px solid transparent;
+  border-radius: var(--fc-radius-md);
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease),
+    box-shadow var(--fc-dur-hover) var(--fc-ease),
+    border-color var(--fc-dur-hover) var(--fc-ease),
+    background-color var(--fc-dur-hover) var(--fc-ease),
+    color var(--fc-dur-hover) var(--fc-ease);
+}
+
+.fc-btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fc-btn:hover {
+  transform: translateY(-3px);
+}
+
+.fc-btn:active {
+  transform: translateY(-1px);
+}
+
+/* A single sheen sweep, shared by both filled variants. */
+.fc-btn--primary,
+.fc-btn--solid {
+  color: #ffffff;
+  box-shadow: 0 10px 26px -12px rgba(41, 38, 99, 0.7);
+}
+
+.fc-btn--primary {
+  background: var(--fc-gradient-brand);
+}
+
+.fc-btn--solid {
+  background: var(--fc-navy-800);
+  box-shadow: 0 10px 26px -12px rgba(23, 23, 27, 0.7);
+}
+
+.fc-btn--primary::after,
+.fc-btn--solid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 34%,
+    rgba(255, 255, 255, 0.26) 50%,
+    transparent 66%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.72s var(--fc-ease);
+}
+
+.fc-btn--primary:hover {
+  box-shadow:
+    0 16px 34px -14px rgba(41, 38, 99, 0.8),
+    0 0 26px -12px var(--fc-glow-brand);
+}
+
+.fc-btn--solid:hover {
+  background: var(--fc-accent-strong);
+  box-shadow: 0 16px 34px -14px rgba(106, 68, 224, 0.75);
+}
+
+.fc-btn--primary:hover::after,
+.fc-btn--solid:hover::after {
+  transform: translateX(120%);
+}
+
+.fc-btn--ghost {
+  color: var(--fc-ink);
+  border-color: var(--fc-border);
+  background: var(--fc-surface);
+}
+
+.fc-btn--ghost:hover {
+  border-color: var(--fc-brand);
+  color: var(--fc-brand-strong);
+  box-shadow: var(--fc-shadow-md);
+}
+
+.fc-btn--quiet {
+  min-height: auto;
+  padding: 0;
+  color: var(--fc-brand-strong);
+  background: transparent;
+}
+
+.fc-btn--quiet:hover {
+  transform: none;
+  color: var(--fc-accent-strong);
+}
+
+/* The arrow inside a button nudges on hover, everywhere. */
+.fc-btn svg,
+.fc-btn .fc-btn__arrow {
+  transition: transform var(--fc-dur-hover) var(--fc-ease);
+}
+
+.fc-btn:hover svg,
+.fc-btn:hover .fc-btn__arrow {
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   4. CARDS
+   ------------------------------------------------------------
+   .fc-card            base surface + lift
+   .fc-card--flat      no lift, for dense grids
+   .fc-card--glass     dark-surface variant
+   ========================================================= */
+
+.fc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-lg);
+  box-shadow: var(--fc-shadow-sm);
+
+  overflow: hidden;
+
+  transition:
+    transform var(--fc-dur-card) var(--fc-ease),
+    box-shadow var(--fc-dur-card) var(--fc-ease),
+    border-color var(--fc-dur-card) var(--fc-ease);
+}
+
+.fc-card:hover {
+  transform: translateY(var(--fc-lift));
+  border-color: var(--fc-border-strong);
+  box-shadow:
+    var(--fc-shadow-lift),
+    0 0 32px -16px var(--fc-glow-accent);
+}
+
+.fc-card--flat:hover {
+  transform: none;
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.fc-card--glass {
+  background: var(--fc-glass);
+  border-color: var(--fc-dark-line);
+  border-radius: var(--fc-radius-lg);
+  box-shadow: none;
+}
+
+.fc-card--glass:hover {
+  transform: translateY(-4px);
+  border-color: rgba(110, 105, 225, 0.45);
+  background: var(--fc-glass-2);
+  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.9);
+}
+
+.fc-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: 26px 24px;
+}
+
+.fc-card__title {
+  font-size: var(--fc-text-title);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--fc-ink);
+}
+
+.fc-card__text {
+  font-size: var(--fc-text-sm);
+  line-height: 1.7;
+  color: var(--fc-text-secondary);
+}
+
+
+/* =========================================================
+   5. MEDIA
+   ------------------------------------------------------------
+   One image frame with one hover scale, reused by every
+   service / portfolio / blog card.
+   ========================================================= */
+
+.fc-media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--fc-surface-sunken);
+}
+
+.fc-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);
+  transition: transform 0.68s var(--fc-ease);
+}
+
+.fc-media:hover img,
+a:hover .fc-media img,
+button:hover .fc-media img {
+  transform: scale(1.06);
+}
+
+
+/* =========================================================
+   6. BADGES, TAGS AND CHIPS
+   ========================================================= */
+
+.fc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 12px;
+  border: 1px solid var(--fc-border-strong);
+  border-radius: var(--fc-radius-pill);
+
+  background: rgba(92, 88, 205, 0.07);
+
+  color: var(--fc-accent-strong);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.fc-tag {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 10px;
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-xs);
+
+  background: var(--fc-surface-alt);
+  color: var(--fc-text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+
+  transition:
+    background var(--fc-dur-micro) var(--fc-ease),
+    border-color var(--fc-dur-micro) var(--fc-ease),
+    color var(--fc-dur-micro) var(--fc-ease);
+}
+
+a:hover .fc-tag,
+.fc-card:hover .fc-tag {
+  background: rgba(92, 88, 205, 0.08);
+  border-color: var(--fc-border-strong);
+  color: var(--fc-accent-strong);
+}
+
+/* A larger, tappable pill — categories, filters. */
+.fc-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 11px 20px;
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-pill);
+
+  background: var(--fc-surface);
+  color: var(--fc-text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease),
+    border-color var(--fc-dur-hover) var(--fc-ease),
+    background var(--fc-dur-hover) var(--fc-ease),
+    color var(--fc-dur-hover) var(--fc-ease),
+    box-shadow var(--fc-dur-hover) var(--fc-ease);
+}
+
+.fc-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--fc-brand);
+  background: var(--fc-brand);
+  color: #ffffff;
+  box-shadow: 0 10px 24px -12px rgba(41, 38, 99, 0.8);
+}
+
+
+/* =========================================================
+   7. FORM CONTROLS
+   ========================================================= */
+
+.fc-input,
+.fc-select,
+.fc-textarea {
+  width: 100%;
+  padding: 13px 16px;
+
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-sm);
+
+  background: var(--fc-surface);
+  color: var(--fc-text-primary);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+
+  transition:
+    border-color var(--fc-dur-micro) var(--fc-ease),
+    box-shadow var(--fc-dur-micro) var(--fc-ease),
+    background var(--fc-dur-micro) var(--fc-ease);
+}
+
+.fc-input::placeholder,
+.fc-textarea::placeholder {
+  color: var(--fc-text-muted);
+}
+
+.fc-input:hover,
+.fc-select:hover,
+.fc-textarea:hover {
+  border-color: var(--fc-border-strong);
+}
+
+.fc-input:focus,
+.fc-select:focus,
+.fc-textarea:focus {
+  outline: none;
+  border-color: var(--fc-brand);
+  box-shadow: 0 0 0 4px rgba(41, 38, 99, 0.14);
+}
+
+.fc-textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+
+/* =========================================================
+   8. TOUCH + REDUCED MOTION
+   ------------------------------------------------------------
+   Lifts feel wrong without a pointer; motion can be unwanted
+   entirely. Both are handled once, here, for every component.
+   ========================================================= */
+
+@media (hover: none) {
+  .fc-btn:hover,
+  .fc-card:hover,
+  .fc-chip:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fc-btn,
+  .fc-card,
+  .fc-chip,
+  .fc-media img,
+  .fc-tag {
+    transition-duration: 0.01ms !important;
+  }
+
+  .fc-btn::after,
+  .fc-btn--primary::after,
+  .fc-btn--solid::after {
+    display: none;
+  }
+
+  .fc-btn:hover,
+  .fc-card:hover,
+  .fc-chip:hover,
+  .fc-btn:hover svg,
+  .fc-btn:hover .fc-btn__arrow {
+    transform: none;
+  }
+
+  .fc-media:hover img,
+  a:hover .fc-media img,
+  button:hover .fc-media img {
+    transform: scale(1.01);
+  }
+}
+
+
+/* =========================================================
+   8. DARK BANDS
+   ------------------------------------------------------------
+   One class flips a whole band to the FasCave dark canvas and
+   re-points the shared heading / button / card styles at the
+   dark tokens. Used by Hero, Services, Why Choose Us,
+   Testimonials, Careers and the Footer so all of them read as
+   the same brand surface instead of six bespoke backgrounds.
+   ========================================================= */
+
+.fc-section--dark,
+.fc-band-dark {
+  position: relative;
+  color: var(--fc-dark-text);
+  background:
+    radial-gradient(
+      1200px 620px at 82% -10%,
+      rgba(94, 89, 201, 0.16) 0%,
+      rgba(94, 89, 201, 0) 62%
+    ),
+    radial-gradient(
+      900px 560px at 6% 8%,
+      rgba(41, 38, 99, 0.55) 0%,
+      rgba(41, 38, 99, 0) 60%
+    ),
+    linear-gradient(
+      180deg,
+      var(--fc-dark-bg) 0%,
+      var(--fc-dark-bg-2) 48%,
+      var(--fc-dark-bg) 100%
+    );
+  color-scheme: dark;
+}
+
+/* Light band � the counterpart, for About, Portfolio, Partners,
+   FAQ and Contact. */
+.fc-section--light,
+.fc-band-light {
+  position: relative;
+  color: var(--fc-text-primary);
+  background: var(--fc-surface-alt);
+  color-scheme: light;
+}
+
+/* ---- Headings on a dark band ---- */
+
+.fc-section--dark .fc-head__title,
+.fc-band-dark .fc-head__title,
+.fc-section--dark h1,
+.fc-section--dark h2,
+.fc-section--dark h3,
+.fc-section--dark h4,
+.fc-band-dark h1,
+.fc-band-dark h2,
+.fc-band-dark h3,
+.fc-band-dark h4 {
+  color: var(--fc-dark-text);
+}
+
+.fc-section--dark .fc-head__text,
+.fc-section--dark p,
+.fc-band-dark p {
+  color: var(--fc-dark-text-soft);
+}
+
+.fc-section--dark .fc-eyebrow,
+.fc-band-dark .fc-eyebrow {
+  color: var(--fc-brand-soft);
+  border-color: var(--fc-dark-line);
+  background: var(--fc-glass);
+}
+
+/* ---- Cards on a dark band ---- */
+
+.fc-section--dark .fc-card,
+.fc-band-dark .fc-card,
+.fc-card--dark {
+  background: var(--fc-glass);
+  border-color: var(--fc-dark-line);
+  box-shadow: none;
+}
+
+.fc-section--dark .fc-card:hover,
+.fc-band-dark .fc-card:hover,
+.fc-card--dark:hover {
+  background: var(--fc-glass-2);
+  border-color: var(--fc-border-accent-strong);
+}
+
+.fc-section--dark .fc-card__title,
+.fc-band-dark .fc-card__title,
+.fc-card--dark .fc-card__title {
+  color: var(--fc-dark-text);
+}
+
+.fc-section--dark .fc-card__text,
+.fc-band-dark .fc-card__text,
+.fc-card--dark .fc-card__text {
+  color: var(--fc-dark-text-soft);
+}
+
+/* ---- Buttons on a dark band ---- */
+
+.fc-section--dark .fc-btn--ghost,
+.fc-band-dark .fc-btn--ghost,
+.fc-btn--dark-ghost {
+  color: var(--fc-dark-text);
+  border-color: var(--fc-dark-line);
+  background: var(--fc-glass);
+}
+
+.fc-section--dark .fc-btn--ghost:hover,
+.fc-band-dark .fc-btn--ghost:hover,
+.fc-btn--dark-ghost:hover {
+  border-color: var(--fc-border-accent-strong);
+  background: var(--fc-glass-2);
+}
+
+.fc-section--dark .fc-btn--quiet,
+.fc-band-dark .fc-btn--quiet {
+  color: var(--fc-brand-soft);
+}
+
+
+/* =========================================================
+   9. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .fc-section--dark,
+  .fc-band-dark {
+    background: var(--fc-dark-bg);
+  }
+}

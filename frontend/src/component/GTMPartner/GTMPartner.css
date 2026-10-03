@@ -1,18 +1,22 @@
+/* =========================================================
+   GTM PARTNERS
+   ========================================================= */
+
 .gtm-partner-section {
     width: 100%;
-    padding: 90px 0 100px;
-    background: #ffffff;
+    padding: var(--fc-section-pad) 0;
+    background: var(--fc-surface);
     overflow: hidden;
 }
 
 /* ================================
-   HEADER - PORTFOLIO STYLE
-================================ */
+   HEADER
+   ================================ */
 
 .gtm-partner-header {
     text-align: center;
-    padding: 0 20px;
-    margin-bottom: 55px;
+    padding: 0 var(--fc-container-pad);
+    margin-bottom: var(--fc-section-gap);
 }
 
 .gtm-partner-accent {
@@ -20,38 +24,54 @@
     width: 72px;
     height: 5px;
     margin: 0 auto 25px;
-    border-radius: 3px;
-    background: #4f46e5;
+    border-radius: var(--fc-radius-pill);
+    background: var(--fc-gradient-accent);
 }
 
 .gtm-partner-header h2 {
     margin: 0;
-    color: #061b33;
-    font-size: clamp(42px, 5vw, 64px);
+    color: var(--fc-ink);
+    font-size: var(--fc-text-display);
     font-weight: 800;
     line-height: 1.05;
-    letter-spacing: -2px;
+    letter-spacing: var(--fc-tracking-display);
     text-align: center;
 }
 
 .gtm-partner-header p {
-    max-width: 850px;
+    max-width: 820px;
     margin: 20px auto 0;
-    color: #36506f;
-    font-size: 16px;
+    color: var(--fc-text-secondary);
+    font-size: var(--fc-text-body);
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.7;
     text-align: center;
 }
 
 /* ================================
    MARQUEE
-================================ */
+   ================================ */
 
 .gtm-partner-marquee {
     width: 100%;
     overflow: hidden;
     position: relative;
+
+    /* Fades the track out at both edges instead of cutting it off. */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 10%,
+        #000 90%,
+        transparent
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 10%,
+        #000 90%,
+        transparent
+    );
 }
 
 .gtm-partner-track {
@@ -81,16 +101,25 @@
     object-fit: contain;
     display: block;
 
-    transition: transform 0.3s ease;
+    /* Greyed by default, full colour on hover. */
+    filter: grayscale(1);
+    opacity: 0.6;
+
+    transition:
+        filter var(--fc-dur-hover) var(--fc-ease),
+        opacity var(--fc-dur-hover) var(--fc-ease),
+        transform var(--fc-dur-hover) var(--fc-ease);
 }
 
 .gtm-partner-logo:hover img {
+    filter: grayscale(0);
+    opacity: 1;
     transform: scale(1.06);
 }
 
 /* ================================
    INFINITE SCROLL
-================================ */
+   ================================ */
 
 @keyframes gtmPartnerScroll {
     from {
@@ -103,16 +132,16 @@
 }
 
 /* ================================
-   TABLET
-================================ */
+   RESPONSIVE
+   ================================ */
 
 @media (max-width: 900px) {
     .gtm-partner-section {
-        padding: 75px 0 80px;
+        padding: var(--fc-section-pad-sm) 0;
     }
 
     .gtm-partner-header {
-        margin-bottom: 40px;
+        margin-bottom: 44px;
     }
 
     .gtm-partner-accent {
@@ -122,11 +151,7 @@
     }
 
     .gtm-partner-header h2 {
-        font-size: 48px;
-    }
-
-    .gtm-partner-header p {
-        font-size: 16px;
+        font-size: var(--fc-text-h1);
     }
 
     .gtm-partner-logo {
@@ -145,20 +170,7 @@
     }
 }
 
-/* ================================
-   MOBILE
-================================ */
-
 @media (max-width: 600px) {
-    .gtm-partner-section {
-        padding: 60px 0 70px;
-    }
-
-    .gtm-partner-header {
-        padding: 0 20px;
-        margin-bottom: 35px;
-    }
-
     .gtm-partner-accent {
         width: 55px;
         height: 4px;
@@ -166,14 +178,12 @@
     }
 
     .gtm-partner-header h2 {
-        font-size: 34px;
+        font-size: 32px;
         letter-spacing: -1px;
     }
 
     .gtm-partner-header p {
-        margin-top: 15px;
-        font-size: 15px;
-        line-height: 1.5;
+        margin-top: 16px;
     }
 
     .gtm-partner-logo {
@@ -193,11 +203,24 @@
 }
 
 /* ================================
-   REDUCE MOTION
-================================ */
+   REDUCED MOTION
+   ================================ */
 
 @media (prefers-reduced-motion: reduce) {
+    /* Stops sliding and lays the logos out in a static, wrapped row. */
     .gtm-partner-track {
         animation: none;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 12px;
+    }
+
+    .gtm-partner-logo img {
+        transition-duration: 0.01ms;
+    }
+
+    .gtm-partner-logo:hover img {
+        transform: none;
     }
 }

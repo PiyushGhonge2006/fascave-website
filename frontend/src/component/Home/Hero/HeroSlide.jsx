@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { useContact } from "../../contact/Contactbutton";
+import { useNavigate } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
+import { goToContactForm } from '../../../utils/contactNavigation'
 import Typewriter from './Typewriter'
 
 export default function HeroSlide({
@@ -8,11 +10,14 @@ export default function HeroSlide({
   instant = false
 }) {
 
-  const { openContact } = useContact();
+  const navigate = useNavigate()
 
+  /* The subtitle, the attribution and the buttons only
+     arrive once the headline has finished typing, so the
+     reader is never looking at three things at once. */
   const [titleDone, setTitleDone] = useState(
     exiting || instant
-  );
+  )
 
   return (
     <div
@@ -20,45 +25,40 @@ export default function HeroSlide({
         exiting ? ' hero-slide--exiting' : ''
       }`}
     >
-      <div
-        className="hero-slide__word"
-        aria-hidden="true"
+      <p className="hero-eyebrow">
+        <span className="hero-eyebrow__dot" aria-hidden="true" />
+        {slide.eyebrow}
+      </p>
+
+      <h1 className="hero-title">
+        <Typewriter
+          key={slide.id + String(exiting || instant)}
+          text={slide.title}
+          speed={80}
+          startDelay={
+            exiting || instant ? 0 : 350
+          }
+          instant={exiting || instant}
+          onComplete={() => setTitleDone(true)}
+        />
+      </h1>
+
+      <p
+        className={`hero-subtitle${
+          titleDone ? ' is-in' : ''
+        }`}
       >
-        {slide.backgroundWord}
-      </div>
+        {slide.subtitle}
+      </p>
 
-      <div className="hero-content">
+      <div
+        className={`hero-author${
+          titleDone ? ' is-in' : ''
+        }`}
+      >
+        <span className="hero-author__rule" aria-hidden="true" />
 
-        <p className="hero-eyebrow">
-          {slide.eyebrow}
-        </p>
-
-        <h1 className="hero-title">
-          <Typewriter
-            key={slide.id + String(exiting || instant)}
-            text={slide.title}
-            speed={80}
-            startDelay={
-              exiting || instant ? 0 : 350
-            }
-            instant={exiting || instant}
-            onComplete={() => setTitleDone(true)}
-          />
-        </h1>
-
-        <p
-          className={`hero-subtitle${
-            titleDone ? ' is-in' : ''
-          }`}
-        >
-          {slide.subtitle}
-        </p>
-
-        <div
-          className={`hero-author${
-            titleDone ? ' is-in' : ''
-          }`}
-        >
+        <div>
           <p className="hero-author__name">
             {slide.author}
           </p>
@@ -67,18 +67,38 @@ export default function HeroSlide({
             {slide.designation}
           </p>
         </div>
+      </div>
 
-        {/* Connect With Us */}
+      <div
+        className={`hero-actions${
+          titleDone ? ' is-in' : ''
+        }`}
+      >
+        {/* Primary — opens the consultation form. */}
         <button
           type="button"
-          className={`hero-cta${
-            titleDone ? ' is-in' : ''
-          }`}
-          onClick={() => openContact("hero")}
+          className="hero-cta"
+          onClick={() => goToContactForm(navigate)}
         >
-          {slide.cta}
+          <span className="hero-cta__label">{slide.cta}</span>
+          <ArrowRight
+            size={17}
+            strokeWidth={2}
+            className="hero-cta__arrow"
+            aria-hidden="true"
+          />
         </button>
 
+        {/* Secondary — quieter route into the site. */}
+        {slide.ctaSecondary && (
+          <button
+            type="button"
+            className="hero-cta hero-cta--ghost"
+            onClick={() => navigate(slide.ctaSecondaryHref)}
+          >
+            <span className="hero-cta__label">{slide.ctaSecondary}</span>
+          </button>
+        )}
       </div>
     </div>
   )

@@ -2,12 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { ContactProvider } from "./component/contact/Contactbutton.jsx"
+import ConsultationProvider from "./component/consultation/ConsultationProvider"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ContactProvider>
+    <ConsultationProvider>
       <App />
-    </ContactProvider>
+    </ConsultationProvider>
   </StrictMode>,
 )

@@ -1,3 +1,15 @@
+/* =========================================================
+   GLOBAL ENTRY STYLESHEET
+   ------------------------------------------------------------
+   Import order matters: tokens and motion load first, so every
+   page stylesheet can rely on the custom properties and opt into
+   the shared animation classes.
+   ========================================================= */
+
+@import "./styles/tokens.css";
+@import "./styles/components.css";
+@import "./styles/motion.css";
+
 * {
   box-sizing: border-box;
 }
@@ -11,6 +23,26 @@ body,
   min-height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--fc-font-sans);
+  overflow-x: hidden;
+}
+
+/* Anchor targets clear the fixed navbar. */
+:target {
+  scroll-margin-top: var(--fc-anchor-offset);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

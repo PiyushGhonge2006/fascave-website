@@ -1,0 +1,395 @@
+/* =========================================================
+   CONSULTATION MODAL
+   ------------------------------------------------------------
+   The "Book a Free Consultation" popup. It reuses the Contact
+   page's enquiry wizard verbatim, so it has to supply the
+   wizard's dark surface and the `--ct-*` variables the Contact
+   page normally declares on `.contact-page`.
+
+   Those variables are NOT copied by value: each one points at
+   the matching global token in `styles/tokens.css`, so there is
+   a single source of truth for the palette.
+   ========================================================= */
+
+.consultation-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: rgba(2, 4, 10, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  animation: consultationFadeIn 0.26s var(--fc-ease-out) backwards;
+}
+
+@keyframes consultationFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   PANEL
+   ========================================================= */
+
+.consultation-modal {
+  /* The wizard below reads these; map them onto the global tokens. */
+  --ct-text: var(--fc-dark-text);
+  --ct-text-soft: var(--fc-dark-text-soft);
+  --ct-text-dim: var(--fc-dark-text-dim);
+
+  --ct-blue: var(--fc-blue);
+  --ct-blue-soft: var(--fc-blue-soft);
+  --ct-violet: var(--fc-violet);
+  --ct-orange: var(--fc-orange);
+  --ct-danger: #ff7a7a;
+  --ct-success: #4ade80;
+
+  --ct-line: var(--fc-dark-line);
+  --ct-line-soft: var(--fc-dark-line-soft);
+
+  --ct-radius-lg: 28px;
+  --ct-radius: 20px;
+  --ct-radius-sm: 14px;
+
+  --ct-ease: var(--fc-ease);
+  --ct-fast: 0.32s;
+  --ct-slow: 0.85s;
+
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(720px, 100%);
+  max-height: min(880px, calc(100vh - 48px));
+
+  overflow: hidden;
+
+  border: 1px solid var(--fc-dark-line);
+  border-radius: 30px;
+
+  background:
+    linear-gradient(165deg, var(--fc-dark-bg-3), var(--fc-dark-bg-2) 55%, var(--fc-dark-bg));
+  color: var(--fc-dark-text);
+
+  box-shadow:
+    0 50px 110px -40px rgba(0, 0, 0, 0.95),
+    0 0 60px -30px var(--fc-glow-violet),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  animation: consultationPanelIn 0.44s var(--fc-ease-out) 60ms backwards;
+}
+
+@keyframes consultationPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Decorative layers, kept behind the content. */
+.consultation-modal__glow {
+  position: absolute;
+  inset: -10% -20% auto;
+  height: 70%;
+
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(42% 46% at 18% 10%, rgba(110, 105, 225, 0.28), transparent 70%),
+    radial-gradient(40% 42% at 84% 22%, rgba(78, 74, 190, 0.26), transparent 72%);
+  filter: blur(34px);
+}
+
+.consultation-modal__grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background-image:
+    linear-gradient(var(--fc-dark-line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--fc-dark-line-soft) 1px, transparent 1px);
+  background-size: 46px 46px;
+
+  opacity: 0.5;
+  mask-image: radial-gradient(72% 60% at 50% 0%, #000 20%, transparent 78%);
+  -webkit-mask-image: radial-gradient(72% 60% at 50% 0%, #000 20%, transparent 78%);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.consultation-modal__head {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+
+  padding: 30px 30px 22px;
+  border-bottom: 1px solid var(--fc-dark-line-soft);
+}
+
+.consultation-modal__head-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11px;
+
+  min-width: 0;
+}
+
+.consultation-modal__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 6px 13px;
+
+  border: 1px solid rgba(110, 105, 225, 0.32);
+  border-radius: 999px;
+
+  background: rgba(110, 105, 225, 0.12);
+
+  color: #cbbafd;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.consultation-modal__title {
+  margin: 0;
+  outline: none;
+
+  font-size: clamp(23px, 3.2vw, 31px);
+  line-height: 1.14;
+  /* `tokens.css` colours every heading `var(--fc-ink)` for the light
+     pages; the panel is dark, so the colour has to be restated. */
+  color: var(--fc-dark-text);
+}
+
+.consultation-modal__lead {
+  margin: 0;
+  max-width: 52ch;
+
+  color: var(--fc-dark-text-soft);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.consultation-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  border: 1px solid var(--fc-dark-line);
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--fc-dark-text-soft);
+
+  cursor: pointer;
+
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease),
+    background var(--fc-dur-hover) var(--fc-ease),
+    color var(--fc-dur-hover) var(--fc-ease),
+    border-color var(--fc-dur-hover) var(--fc-ease);
+}
+
+.consultation-modal__close:hover {
+  transform: rotate(90deg);
+
+  border-color: rgba(110, 105, 225, 0.5);
+  background: rgba(110, 105, 225, 0.16);
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+.consultation-modal__body {
+  position: relative;
+  z-index: 1;
+
+  flex: 1;
+  min-height: 0;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  padding: 4px 30px 8px;
+}
+
+/* Slim scrollbar, so the panel doesn't look like a default <div>. */
+.consultation-modal__body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.consultation-modal__body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.consultation-modal__body::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(167, 167, 176, 0.28);
+  background-clip: content-box;
+}
+
+.consultation-modal__body::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 167, 176, 0.45);
+  background-clip: content-box;
+}
+
+/*
+  The wizard renders its own card and glow. Inside the modal the panel is
+  already the card, so the extra chrome and the page-only blur are dropped.
+*/
+.consultation-modal .contact-enquiry__glow {
+  display: none;
+}
+
+.consultation-modal .contact-enquiry__card {
+  padding: 26px 0 30px;
+
+  border: 0;
+  border-radius: 0;
+
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  box-shadow: none;
+}
+
+.consultation-modal .contact-enquiry {
+  /* No page scroll target inside a modal. */
+  scroll-margin-top: 0;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.consultation-modal__foot {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 15px 30px 17px;
+
+  border-top: 1px solid var(--fc-dark-line-soft);
+
+  background: rgba(0, 0, 0, 0.18);
+
+  color: var(--fc-dark-text-dim);
+  font-size: 12.5px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+  .consultation-modal__overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .consultation-modal {
+    width: 100%;
+    max-height: 94vh;
+
+    border-radius: 26px 26px 0 0;
+    border-bottom: 0;
+  }
+
+  .consultation-modal__head {
+    padding: 22px 20px 18px;
+  }
+
+  .consultation-modal__body {
+    padding: 2px 20px 6px;
+  }
+
+  .consultation-modal__foot {
+    padding: 13px 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .consultation-modal__lead {
+    font-size: 13.5px;
+  }
+
+  .consultation-modal__badge {
+    font-size: 10.5px;
+    padding: 5px 11px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .consultation-modal__overlay,
+  .consultation-modal {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  .consultation-modal__close {
+    transition-duration: 0.01ms !important;
+  }
+
+  .consultation-modal__close:hover {
+    transform: none;
+  }
+}

@@ -8,12 +8,19 @@ const {
   deleteMessage,
 } = require("../controllers/msgcontrollers");
 
+const {
+  protect,
+} = require("../middleware/authMiddleware");
+
 
 const router = express.Router();
 
 
 // ======================================================
 // CREATE MESSAGE
+// POST /
+// The public entry point. /api/contact mounts this same
+// router, so both paths reach the same handler.
 // ======================================================
 
 router.post(
@@ -28,6 +35,7 @@ router.post(
 
 router.get(
   "/",
+  protect,
   getMessages
 );
 
@@ -38,6 +46,7 @@ router.get(
 
 router.get(
   "/:id",
+  protect,
   getMessageById
 );
 
@@ -48,6 +57,7 @@ router.get(
 
 router.patch(
   "/:id/status",
+  protect,
   updateMessageStatus
 );
 
@@ -58,6 +68,7 @@ router.patch(
 
 router.delete(
   "/:id",
+  protect,
   deleteMessage
 );
 

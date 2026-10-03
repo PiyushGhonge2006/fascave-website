@@ -1,166 +1,290 @@
+/* =========================================================
+   HERO
+   ------------------------------------------------------------
+   Two columns inside one container: copy on the left, the
+   canvas globe on the right. The globe persists across slides;
+   only the copy cross-fades, so changing slide never restarts
+   the canvas.
+
+   Colour comes from tokens.css. This file owns layout,
+   typography scale and the motion only.
+   ========================================================= */
+
 .hero {
   position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
-  height: 100vh;
-  min-height: 650px;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: calc(var(--fc-nav-height) + 40px) 132px;
   overflow: hidden;
   isolation: isolate;
-  background: #070606;
+  background:
+    radial-gradient(
+      90% 70% at 78% 42%,
+      rgba(41, 38, 99, 0.5) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      70% 60% at 8% 88%,
+      rgba(31, 29, 79, 0.55) 0%,
+      transparent 66%
+    ),
+    linear-gradient(180deg, #0b0b0e 0%, var(--fc-dark-bg) 46%, #0d0d11 100%);
 }
 
+/* The hero sits on a dark canvas, so it keeps the bright focus ring. */
 .hero :focus-visible {
-  outline: 2px solid #ff8a3d;
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline-color: var(--fc-brand-soft);
 }
 
-/* ---------------------------------- */
-/* Background                          */
-/* ---------------------------------- */
+
+/* =========================================================
+   1. BACKGROUND
+   ========================================================= */
 
 .hero-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  will-change: transform;
+  pointer-events: none;
 }
 
 .hero-bg__layer {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.2s ease;
+  transition: opacity 1200ms ease;
 }
 
 .hero-bg__layer.is-active {
   opacity: 1;
 }
 
-/* ---------------------------------- */
-/* Blue Background Themes              */
-/* ---------------------------------- */
-
-.theme-ember {
-  background-image:
-    linear-gradient(
-      102deg,
-      rgba(5, 20, 45, 0.92) 0%,
-      rgba(15, 55, 100, 0.72) 42%,
-      rgba(56, 145, 210, 0.48) 72%,
-      rgba(135, 205, 245, 0.38) 100%
-    ),
-    url("/assets/hero/hero-placeholder.jpg");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+/* One tint per slide. Very low contrast on purpose — the
+   globe is the subject, these only shift the temperature. */
+.hero-bg__layer--navy {
+  background: radial-gradient(
+    80% 65% at 74% 40%,
+    rgba(41, 38, 99, 0.42),
+    transparent 64%
+  );
 }
 
-.theme-steel {
-  background-image:
-    linear-gradient(
-      102deg,
-      rgba(6, 24, 52, 0.90) 0%,
-      rgba(20, 70, 115, 0.68) 42%,
-      rgba(70, 155, 215, 0.45) 72%,
-      rgba(170, 225, 250, 0.32) 100%
-    ),
-    url("/assets/hero/hero-placeholder.jpg");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.hero-bg__layer--indigo {
+  background: radial-gradient(
+    80% 65% at 74% 40%,
+    rgba(78, 74, 190, 0.34),
+    transparent 64%
+  );
 }
 
-.theme-crimson {
-  background-image:
-    linear-gradient(
-      102deg,
-      rgba(7, 25, 55, 0.92) 0%,
-      rgba(20, 67, 110, 0.70) 40%,
-      rgba(65, 145, 205, 0.48) 72%,
-      rgba(145, 215, 245, 0.35) 100%
-    ),
-    url("/assets/hero/hero-placeholder.jpg");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.hero-bg__layer--steel {
+  background: radial-gradient(
+    80% 65% at 74% 40%,
+    rgba(31, 60, 110, 0.34),
+    transparent 64%
+  );
 }
 
-.hero-bg__overlay {
+.hero-bg__layer--deep {
+  background: radial-gradient(
+    80% 65% at 74% 40%,
+    rgba(31, 29, 79, 0.5),
+    transparent 64%
+  );
+}
+
+/* Giant watermark word behind the globe column. */
+.hero-bg__words {
+  position: absolute;
+  top: 50%;
+  right: -4vw;
+  transform: translateY(-50%);
+}
+
+.hero-bg__word {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: rgba(168, 166, 232, 0.07);
+  font-size: clamp(140px, 20vw, 300px);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  user-select: none;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+
+.hero-bg__word.is-active {
+  opacity: 1;
+}
+
+/*
+  Two very slow, very soft colour fields drifting behind the
+  globe. They only ever animate `transform`, so they stay on
+  the compositor and cost nothing per frame.
+*/
+.hero-aurora {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      120% 120% at 50% 45%,
-      rgba(0, 0, 0, 0) 38%,
-      rgba(4, 20, 45, 0.32) 100%
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+.hero-aurora::before,
+.hero-aurora::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.hero-aurora::before {
+  top: -14%;
+  right: -4%;
+  width: min(620px, 74vw);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle,
+    rgba(94, 89, 201, 0.3),
+    transparent 66%
+  );
+  animation: heroAuroraDrift 26s ease-in-out infinite;
+}
+
+.hero-aurora::after {
+  bottom: -20%;
+  left: -8%;
+  width: min(520px, 66vw);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle,
+    rgba(31, 29, 79, 0.5),
+    transparent 70%
+  );
+  animation: heroAuroraDrift 32s ease-in-out infinite reverse;
+}
+
+@keyframes heroAuroraDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-5%, 5%, 0) scale(1.12);
+  }
+}
+
+/* Faint measurement grid across the whole hero. */
+.hero-bg__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(168, 166, 232, 0.05) 1px,
+      transparent 1px
     ),
     linear-gradient(
-      180deg,
-      rgba(8, 35, 70, 0.20) 0%,
-      transparent 30%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(5, 25, 55, 0.52) 0%,
-      rgba(10, 50, 90, 0.18) 46%,
-      rgba(60, 150, 210, 0.04) 72%
+      to bottom,
+      rgba(168, 166, 232, 0.05) 1px,
+      transparent 1px
     );
+  background-size: 84px 84px;
+  -webkit-mask-image: radial-gradient(
+    90% 70% at 70% 45%,
+    #000 0%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    90% 70% at 70% 45%,
+    #000 0%,
+    transparent 78%
+  );
 }
 
 .hero-bg__grain {
   position: absolute;
   inset: 0;
-  opacity: 0.06;
-  pointer-events: none;
+  opacity: 0.05;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
 }
 
-/* ---------------------------------- */
-/* Slide layers (word + content)       */
-/* ---------------------------------- */
+
+/* =========================================================
+   2. LAYOUT
+   ========================================================= */
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  align-items: center;
+  gap: clamp(32px, 4vw, 72px);
+  width: min(var(--fc-container), 100% - (var(--fc-container-pad) * 2));
+  margin-inline: auto;
+}
+
+/* Copy column is the positioning context for the slide
+   layers, so the cross-fade stays inside the left half. */
+.hero-copy {
+  position: relative;
+  min-height: 520px;
+}
+
+.hero-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: min(74vh, 640px);
+  margin-inline: auto;
+}
+
+
+/* =========================================================
+   3. SLIDE LAYERS
+   ========================================================= */
 
 @keyframes hero-slide-in {
   from {
     opacity: 0;
-    transform: translateX(-24px);
+    transform: translateY(22px);
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
-@keyframes hero-slide-out {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(28px);
-  }
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+@keyframes hero-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+}
+
 .hero-slide {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  animation: hero-slide-in 850ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: hero-slide-in 850ms var(--fc-ease-out) both;
 }
 
 .hero-slide--exiting {
@@ -169,69 +293,53 @@
   pointer-events: none;
 }
 
-.hero-slide__word {
-  position: absolute;
-  top: 35%;
-  left: 0;
-  z-index: 0;
-  font-size: clamp(100px, 18vw, 280px);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  color: rgba(210, 235, 250, 0.12);
-  white-space: nowrap;
-  user-select: none;
-  text-transform: uppercase;
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-}
 
-/* ---------------------------------- */
-/* Content                             */
-/* ---------------------------------- */
-
-.hero-content {
-  position: absolute;
-  left: 21%;
-  top: 16%;
-  z-index: 3;
-  max-width: 620px;
-}
+/* =========================================================
+   4. COPY
+   ========================================================= */
 
 .hero-eyebrow {
-  margin: 0 0 20px;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+  padding: 7px 15px;
+  border: 1px solid var(--fc-dark-line);
+  border-radius: var(--fc-radius-pill);
+  background: var(--fc-glass);
+  color: var(--fc-brand-soft);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.92);
-  animation: fade-up 700ms ease 150ms both;
+}
+
+.hero-eyebrow__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fc-brand-soft);
+  box-shadow: 0 0 10px rgba(168, 166, 232, 0.9);
 }
 
 .hero-title {
   margin: 0;
-  font-size: clamp(48px, 5vw, 76px);
-  font-weight: 300;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  color: #ffffff;
-  white-space: nowrap;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-}
-
-.hero-title .typewriter {
-  display: inline-block;
-  transform: translateX(-20px);
+  color: var(--fc-dark-text);
+  font-size: clamp(38px, 4.6vw, 66px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: var(--fc-tracking-display);
+  text-wrap: balance;
 }
 
 .typewriter__cursor {
   display: inline-block;
-  width: 0.06em;
-  height: 0.9em;
-  margin-left: 0.04em;
+  width: 0.055em;
+  height: 0.86em;
+  margin-left: 0.05em;
   vertical-align: baseline;
-  background: #69c7ff;
-  box-shadow: 0 0 12px rgba(70, 180, 255, 0.75);
+  background: var(--fc-brand-soft);
+  box-shadow: 0 0 14px rgba(168, 166, 232, 0.85);
   animation: tw-blink 0.9s steps(1) infinite;
 }
 
@@ -242,14 +350,16 @@
 }
 
 .hero-subtitle {
-  margin: 20px 0 0;
-  font-size: clamp(22px, 2vw, 30px);
-  font-weight: 300;
-  font-style: italic;
-  color: #f2f2f2;
+  max-width: 54ch;
+  margin-top: 26px;
+  color: var(--fc-dark-text-soft);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.75;
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 700ms ease, transform 700ms ease;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms var(--fc-ease-out),
+    transform 700ms var(--fc-ease-out);
 }
 
 .hero-subtitle.is-in {
@@ -258,10 +368,15 @@
 }
 
 .hero-author {
-  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 700ms ease 160ms, transform 700ms ease 160ms;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms var(--fc-ease-out) 160ms,
+    transform 700ms var(--fc-ease-out) 160ms;
 }
 
 .hero-author.is-in {
@@ -269,296 +384,548 @@
   transform: translateY(0);
 }
 
+.hero-author__rule {
+  width: 44px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--fc-gradient-accent);
+  flex-shrink: 0;
+}
+
 .hero-author__name {
   margin: 0;
-  font-size: clamp(24px, 2vw, 30px);
+  color: var(--fc-dark-text);
+  font-size: 1.0625rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  color: #ffffff;
+  letter-spacing: 0.12em;
 }
 
 .hero-author__role {
-  margin: 7px 0 0;
-  font-size: clamp(15px, 1.2vw, 18px);
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.85);
+  margin-top: 4px;
+  color: var(--fc-dark-text-dim);
+  font-size: 0.875rem;
 }
 
-.hero-cta {
+
+/* =========================================================
+   5. ACTIONS
+   ========================================================= */
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
   margin-top: 40px;
-  padding: 14px 34px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  background: #168fe8;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(14px);
   transition:
-    opacity 700ms ease 320ms,
-    transform 700ms ease 320ms,
-    background-color 0.25s ease,
-    box-shadow 0.25s ease;
+    opacity 700ms var(--fc-ease-out) 260ms,
+    transform 700ms var(--fc-ease-out) 260ms;
 }
 
-.hero-cta.is-in {
+.hero-actions.is-in {
   opacity: 1;
   transform: translateY(0);
 }
 
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  border: 1px solid transparent;
+  border-radius: var(--fc-radius-pill);
+  background: var(--fc-gradient-brand);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 14px 34px -16px var(--fc-glow-brand-deeper);
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease),
+    box-shadow var(--fc-dur-hover) var(--fc-ease);
+}
+
 .hero-cta:hover {
-  background: #39aaf2;
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 14px 34px rgba(30, 160, 235, 0.4);
+  transform: translateY(var(--fc-lift));
+  box-shadow:
+    0 20px 44px -16px var(--fc-glow-brand-deeper),
+    0 0 30px -14px var(--fc-glow-brand);
 }
 
 .hero-cta:active {
-  transform: translateY(0) scale(0.99);
+  transform: translateY(-1px);
 }
 
-/* ---------------------------------- */
-/* Figure + platform                   */
-/* ---------------------------------- */
+.hero-cta__arrow {
+  transition: transform var(--fc-dur-hover) var(--fc-ease);
+}
 
-.hero-fig {
+.hero-cta:hover .hero-cta__arrow {
+  transform: translateX(4px);
+}
+
+/* Secondary action: outline only, so the hierarchy is clear. */
+.hero-cta--ghost {
+  background: transparent;
+  border-color: var(--fc-dark-line);
+  color: var(--fc-dark-text);
+  box-shadow: none;
+}
+
+.hero-cta--ghost:hover {
+  border-color: var(--fc-border-accent-strong);
+  background: var(--fc-glass);
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   6. GLOBE
+   ========================================================= */
+
+.hero-earth {
   position: absolute;
-  right: 4%;
-  top: 11%;
-  z-index: 2;
-  width: min(30vw, 420px);
-  pointer-events: none;
-  will-change: transform;
+  inset: 0;
 }
 
-.silhouette {
+.hero-earth__canvas {
   display: block;
   width: 100%;
-  height: auto;
-  filter:
-    drop-shadow(-6px 0 16px rgba(80, 190, 255, 0.35))
-    drop-shadow(12px 16px 34px rgba(0, 35, 80, 0.5));
+  height: 100%;
 }
 
-.platform {
+/* Static glow behind the canvas halo, which stops the disc
+   from looking like a pasted circle. */
+.hero-earth__glow {
   position: absolute;
-  left: 50%;
-  bottom: -110px;
-  z-index: 1;
-  width: 78vw;
-  max-width: 1200px;
-  height: 210px;
-  transform: translateX(-38%);
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(41, 38, 99, 0.35) 0%,
+    transparent 68%
+  );
+  filter: blur(28px);
+  z-index: -1;
+}
+
+/* Three glass labels around the globe. Positions are fixed
+   per index so they do not jump when the slide changes. */
+.hero-callouts {
+  position: absolute;
+  inset: 0;
   pointer-events: none;
 }
 
-.platform__ring {
+.hero-callout {
   position: absolute;
-  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 17px;
+  border: 1px solid var(--fc-dark-line);
+  border-radius: var(--fc-radius-sm);
+  background: rgba(17, 17, 22, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: hero-callout-in 700ms var(--fc-ease-out) both;
 }
 
-.platform__ring--outer {
+.hero-callout--1 {
+  top: 6%;
+  left: -4%;
+}
+
+.hero-callout--2 {
+  top: 44%;
+  right: -6%;
+}
+
+.hero-callout--3 {
+  bottom: 6%;
+  left: 2%;
+}
+
+@keyframes hero-callout-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-callout__label {
+  color: var(--fc-dark-text-dim);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero-callout__value {
+  color: var(--fc-dark-text);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: var(--fc-tracking-tight);
+}
+
+
+/* =========================================================
+   7. CONTROLS
+   ========================================================= */
+
+.hero-controls {
+  position: absolute;
   left: 0;
+  right: 0;
   bottom: 0;
-  width: 78vw;
-  max-width: 1200px;
-  height: 210px;
-  border: 2px solid rgba(90, 200, 255, 0.55);
-  box-shadow:
-    0 0 40px rgba(50, 180, 245, 0.28),
-    inset 0 0 40px rgba(50, 180, 245, 0.10);
+  z-index: 4;
+  padding-bottom: 40px;
 }
 
-.platform__ring--inner {
-  left: 50%;
-  bottom: 24px;
-  width: 60vw;
-  max-width: 920px;
-  height: 150px;
-  border: 1px solid rgba(170, 225, 250, 0.35);
-  transform: translateX(-50%);
-  box-shadow: 0 0 26px rgba(80, 190, 255, 0.18) inset;
+.hero-controls__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(var(--fc-container), 100% - (var(--fc-container-pad) * 2));
+  margin-inline: auto;
 }
 
-.platform__glow {
-  position: absolute;
-  left: 50%;
-  bottom: -30px;
-  width: 90vw;
-  max-width: 1400px;
-  height: 220px;
-  transform: translateX(-50%);
-  background:
-    radial-gradient(
-      60% 100% at 50% 100%,
-      rgba(50, 180, 245, 0.28),
-      transparent 70%
-    );
-  filter: blur(24px);
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 22px;
 }
 
-/* ---------------------------------- */
-/* Carousel controls                   */
-/* ---------------------------------- */
+.carousel-arrows {
+  display: flex;
+  gap: 8px;
+}
 
 .carousel-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 4;
   display: grid;
   place-items: center;
-  padding: 14px;
-  background: transparent;
-  border: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--fc-dark-line);
+  border-radius: 50%;
+  background: var(--fc-glass);
+  color: var(--fc-dark-text-soft);
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.72);
-  opacity: 0.85;
   transition:
-    color 0.25s ease,
-    transform 0.25s ease,
-    opacity 0.25s ease;
-}
-
-.carousel-arrow--prev {
-  left: 35px;
-  transform: translateY(-50%);
-}
-
-.carousel-arrow--next {
-  right: 35px;
-  transform: translateY(-50%);
+    color var(--fc-dur-hover) var(--fc-ease),
+    border-color var(--fc-dur-hover) var(--fc-ease),
+    background-color var(--fc-dur-hover) var(--fc-ease),
+    transform var(--fc-dur-hover) var(--fc-ease);
 }
 
 .carousel-arrow:hover,
 .carousel-arrow:focus-visible {
-  color: #ffffff;
-  opacity: 1;
-  filter: drop-shadow(0 0 8px rgba(255, 150, 60, 0.5));
+  color: var(--fc-dark-text);
+  border-color: var(--fc-border-accent-strong);
+  background: var(--fc-glass-2);
 }
 
 .carousel-arrow--prev:hover {
-  transform: translateY(-50%) translateX(-4px);
+  transform: translateX(-3px);
 }
 
 .carousel-arrow--next:hover {
-  transform: translateY(-50%) translateX(4px);
+  transform: translateX(3px);
 }
 
-/* ---------------------------------- */
-/* Chat button                         */
-/* ---------------------------------- */
+/* Indicator pills: a rule per slide, filled left to right. */
+.carousel-indicators {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carousel-dot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 62px;
+  padding: 4px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.carousel-dot__track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--fc-dark-line);
+}
+
+.carousel-dot__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: var(--fc-gradient-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 520ms var(--fc-ease-out);
+}
+
+.carousel-dot.is-active .carousel-dot__fill {
+  transform: scaleX(1);
+}
+
+.carousel-dot__label {
+  color: var(--fc-dark-text-dim);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--fc-dur-hover) var(--fc-ease);
+}
+
+.carousel-dot:hover .carousel-dot__label,
+.carousel-dot.is-active .carousel-dot__label {
+  color: var(--fc-brand-soft);
+}
+
+.hero-counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  color: var(--fc-dark-text-dim);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.hero-counter__current {
+  color: var(--fc-dark-text);
+  font-size: 1.125rem;
+}
+
+.hero-counter__rule {
+  width: 40px;
+  height: 1px;
+  background: var(--fc-dark-line);
+}
+
+
+/* =========================================================
+   8. CHAT BUTTON
+   ========================================================= */
 
 .chat-button {
   position: absolute;
-  right: 35px;
-  bottom: 30px;
+  right: clamp(18px, 3vw, 40px);
+  bottom: 96px;
   z-index: 5;
   width: 58px;
   height: 58px;
   display: grid;
   place-items: center;
-  border: none;
+  border: 1px solid var(--fc-dark-line);
   border-radius: 50%;
   cursor: pointer;
-  background: #161ae8;
+  background: var(--fc-gradient-brand);
   color: #ffffff;
-  box-shadow: 0 12px 30px rgba(30, 160, 235, 0.40);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  box-shadow: 0 14px 34px -14px var(--fc-glow-brand-deeper);
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease),
+    box-shadow var(--fc-dur-hover) var(--fc-ease);
+
+  /* A single soft halo every few seconds: enough to draw the eye,
+     not enough to distract from the headline. */
+  animation: heroChatPulse 4.5s ease-in-out infinite;
+}
+
+@keyframes heroChatPulse {
+  0%,
+  100% {
+    box-shadow: 0 14px 34px -14px var(--fc-glow-brand-deeper);
+  }
+
+  50% {
+    box-shadow:
+      0 14px 34px -14px var(--fc-glow-brand-deeper),
+      0 0 0 10px rgba(41, 38, 99, 0.2);
+  }
 }
 
 .chat-button:hover {
-  transform: scale(1.08);
-  background: #39aaf2;
-  box-shadow: 0 16px 40px rgba(40, 175, 240, 0.50);
+  transform: translateY(-3px);
+  animation: none;
+  box-shadow:
+    0 18px 40px -14px var(--fc-glow-brand-deeper),
+    0 0 0 8px rgba(41, 38, 99, 0.18);
 }
 
-/* ---------------------------------- */
-/* Responsive                          */
-/* ---------------------------------- */
 
-@media (max-width: 1199px) {
-  .hero-content {
-    left: 9%;
-    top: 15%;
+/* =========================================================
+   9. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .hero {
+    padding-block: calc(var(--fc-nav-height) + 32px) 148px;
   }
 
-  .hero-fig {
-    right: 2%;
-    width: min(38vw, 380px);
+  .hero-copy {
+    min-height: 480px;
   }
 
-  .platform {
-    transform: translateX(-30%);
+  .hero-bg__word {
+    font-size: clamp(120px, 24vw, 220px);
+  }
+}
+
+/* Stack: copy on top, globe below, controls underneath. */
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .hero-copy {
+    min-height: 0;
+  }
+
+  .hero-slide {
+    position: relative;
+  }
+
+  .hero-visual {
+    order: 2;
+    max-height: 46vh;
+    width: min(100%, 440px);
+  }
+
+  .hero-bg__words {
+    top: 68%;
+  }
+
+  .hero-callout--1 {
+    left: 0;
+  }
+
+  .hero-callout--2 {
+    right: 0;
+  }
+
+  .hero-callout--3 {
+    left: 4%;
+  }
+
+  .carousel-dot__label {
+    display: none;
+  }
+
+  .carousel-dot {
+    min-width: 44px;
   }
 }
 
 @media (max-width: 767px) {
-  .hero-content {
-    left: 24px;
-    right: 24px;
-    top: 13%;
-    max-width: none;
+  .hero {
+    padding-block: calc(var(--fc-nav-height) + 24px) 168px;
   }
 
   .hero-title {
-    white-space: normal;
-    font-size: clamp(34px, 8.5vw, 50px);
-    letter-spacing: -0.02em;
+    font-size: clamp(32px, 8.4vw, 46px);
   }
 
-  .hero-slide__word {
-    top: 28%;
-    font-size: 34vw;
-    opacity: 0.85;
+  .hero-subtitle {
+    margin-top: 20px;
   }
 
-  .hero-fig {
-    right: -12%;
-    top: auto;
-    bottom: -4%;
-    width: 56vw;
-    opacity: 0.5;
+  .hero-actions {
+    width: 100%;
+    margin-top: 32px;
   }
 
-  .platform {
-    bottom: -120px;
-    width: 120vw;
-    height: 180px;
+  .hero-cta {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 
-  .platform__ring--outer {
-    width: 120vw;
-    height: 180px;
+  .hero-visual {
+    max-height: 38vh;
   }
 
-  .platform__ring--inner {
-    width: 90vw;
-    height: 120px;
+  .hero-callout {
+    padding: 10px 13px;
   }
 
-  .carousel-arrow--prev {
-    left: 14px;
+  .hero-callout__value {
+    font-size: 0.9375rem;
   }
 
-  .carousel-arrow--next {
-    right: 14px;
+  .hero-controls__inner {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 18px;
   }
 
-  .carousel-arrow svg {
-    width: 30px;
-    height: 30px;
+  .carousel-controls {
+    justify-content: space-between;
+  }
+
+  .hero-counter {
+    justify-content: center;
+  }
+
+  .carousel-arrows {
+    display: none;
+  }
+
+  .carousel-indicators {
+    width: 100%;
+  }
+
+  .carousel-dot {
+    flex: 1;
+    min-width: 0;
   }
 
   .chat-button {
-    right: 18px;
-    bottom: 22px;
-    width: 52px;
-    height: 52px;
+    right: 16px;
+    bottom: auto;
+    top: 84px;
+    width: 48px;
+    height: 48px;
   }
 }
+
+@media (max-width: 420px) {
+  .hero-callout--2 {
+    top: 40%;
+  }
+
+  .hero-callout--3 {
+    bottom: 2%;
+  }
+}
+
+
+/* =========================================================
+   10. REDUCED MOTION
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .hero *,
@@ -570,11 +937,11 @@
   }
 
   .hero-slide,
-  .hero-slide--exiting {
+  .hero-slide--exiting,
+  .hero-callout,
+  .hero-aurora::before,
+  .hero-aurora::after,
+  .chat-button {
     animation: none !important;
-  }
-
-  .hero-bg {
-    transform: none !important;
   }
 }

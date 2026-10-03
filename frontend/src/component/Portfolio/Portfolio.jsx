@@ -1,3 +1,6 @@
+import useRevealOnScroll from "../../hooks/useRevealOnScroll";
+import { useCollection } from "../../hooks/useContent";
+import { imageUrl } from "../../utils/apiBase";
 import "./Portfolio.css";
 
 import wakeUpWaterImage from "../../assets/images/Portfolio/Rectangle6.png";
@@ -8,12 +11,9 @@ import hilltopTuskiImage from "../../assets/images/Portfolio/Rectangle9.png";
 /* Where the "View All Projects" button sends the visitor. */
 const PROJECTS_PAGE_URL = "https://www.fascave.com/projects";
 
-/*
- * All project content lives in this one array.
- * To add a project: copy an object below, change its values, and that is it.
- * The card is drawn automatically from the list.
- */
-const portfolioData = [
+/* Used when the CMS has nothing to return, so the grid is
+   never empty. */
+const fallbackProjects = [
     {
         title: "Wake UP Water",
         image: wakeUpWaterImage,
@@ -69,16 +69,37 @@ const portfolioData = [
 ];
 
 function Portfolio() {
+    const [sectionRef] = useRevealOnScroll({ stagger: 120 });
+
+    const { items } = useCollection("/api/content/portfolio");
+
+    /* The CMS and the fallback do not use the same field
+       names, so CMS records are reshaped into the shape
+       the card below already draws. */
+    const portfolioData = items.length
+        ? items.map((project) => ({
+            id: project._id || project.slug,
+            title: project.title,
+            image: imageUrl(project.coverImage),
+            category: project.category,
+            client: project.clientName,
+            link: project.projectUrl,
+            challenge: project.description,
+            technologies: project.techStack || [],
+        }))
+        : fallbackProjects;
+
     return (
         <section
             className="portfolio-section"
             id="portfolio"
             aria-labelledby="portfolio-title"
+            ref={sectionRef}
         >
             <div className="portfolio-container">
 
                 {/* Short line, section title, text and the "View All Projects" button */}
-                <div className="portfolio-header">
+                <div className="portfolio-header" data-reveal>
                     <span className="portfolio-header-line" aria-hidden="true" />
 
                     <h2 className="portfolio-title" id="portfolio-title">
@@ -105,14 +126,20 @@ function Portfolio() {
                 {/* One card for every project in portfolioData */}
                 <div className="portfolio-grid">
                     {portfolioData.map((project) => (
-                        <article className="portfolio-card" key={project.title}>
+                        <article
+                            className="portfolio-card"
+                            key={project.title}
+                            data-reveal="scale"
+                        >
 
                             <div className="portfolio-image">
-                                <img
-                                    src={project.image}
-                                    alt={`${project.title} project by FasCave`}
-                                    loading="lazy"
-                                />
+                                {project.image ? (
+                                    <img
+                                        src={project.image}
+                                        alt={`${project.title} project by FasCave`}
+                                        loading="lazy"
+                                    />
+                                ) : null}
 
                                 {/* Shown when the card is hovered */}
                                 <div
@@ -126,74 +153,88 @@ function Portfolio() {
                             <div className="portfolio-card-body">
 
                                 <div className="portfolio-card-meta">
-                                    <span className="portfolio-category">
-                                        {project.category}
-                                    </span>
+                                    {project.category && (
+                                        <span className="portfolio-category">
+                                            {project.category}
+                                        </span>
+                                    )}
 
-                                    <span className="portfolio-date">
-                                        {project.year} &middot; {project.duration}
-                                    </span>
+                                    {(project.year || project.duration) && (
+                                        <span className="portfolio-date">
+                                            {[project.year, project.duration]
+                                                .filter(Boolean)
+                                                .join(" \u00b7 ")}
+                                        </span>
+                                    )}
                                 </div>
 
                                 <h3 className="portfolio-card-title">
                                     {project.title}
                                 </h3>
 
-                                <p className="portfolio-client">
-                                    <span className="portfolio-client-label">
-                                        Client
-                                    </span>
-                                    {project.client}
-                                </p>
-
-                                <div className="portfolio-tags">
-                                    {project.services.map((service) => (
-                                        <span
-                                            className="portfolio-tag"
-                                            key={service}
-                                        >
-                                            {service}
+                                {project.client && (
+                                    <p className="portfolio-client">
+                                        <span className="portfolio-client-label">
+                                            Client
                                         </span>
-                                    ))}
-                                </div>
-
-                                <div className="portfolio-challenge">
-                                    <p className="portfolio-challenge-label">
-                                        CHALLENGE
+                                        {project.client}
                                     </p>
+                                )}
 
-                                    <p className="portfolio-challenge-text">
-                                        {project.challenge}
-                                    </p>
-                                </div>
+                                {project.services?.length > 0 && (
+                                    <div className="portfolio-tags">
+                                        {project.services.map((service) => (
+                                            <span
+                                                className="portfolio-tag"
+                                                key={service}
+                                            >
+                                                {service}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
 
-                                <div className="portfolio-technologies">
-                                    {project.technologies.map((technology) => (
-                                        <span
-                                            className="portfolio-technology"
-                                            key={technology}
-                                        >
-                                            {technology}
-                                        </span>
-                                    ))}
-                                </div>
+                                {project.challenge && (
+                                    <div className="portfolio-challenge">
+                                        <p className="portfolio-challenge-label">
+                                            CHALLENGE
+                                        </p>
 
-                                <button
-                                    type="button"
-                                    className="portfolio-button portfolio-button-outline"
-                                    onClick={() => {
-                                        if (project.link) {
+                                        <p className="portfolio-challenge-text">
+                                            {project.challenge}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {project.technologies?.length > 0 && (
+                                    <div className="portfolio-technologies">
+                                        {project.technologies.map((technology) => (
+                                            <span
+                                                className="portfolio-technology"
+                                                key={technology}
+                                            >
+                                                {technology}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {project.link && (
+                                    <button
+                                        type="button"
+                                        className="portfolio-button portfolio-button-outline"
+                                        onClick={() => {
                                             window.open(
                                                 project.link,
                                                 "_blank",
                                                 "noopener"
                                             );
-                                        }
-                                    }}
-                                >
-                                    View Case Study
-                                    <span aria-hidden="true">&#8599;</span>
-                                </button>
+                                        }}
+                                    >
+                                        View Case Study
+                                        <span aria-hidden="true">&#8599;</span>
+                                    </button>
+                                )}
 
                             </div>
                         </article>

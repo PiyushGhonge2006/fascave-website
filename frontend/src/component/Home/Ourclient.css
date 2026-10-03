@@ -1,186 +1,232 @@
-/* ================================
-   OUR CLIENTS SECTION
-================================ */
+/* =========================================================
+   OUR CLIENTS
+   ------------------------------------------------------------
+   Logo marquee. Spacing and type come from the shared tokens.
+   ========================================================= */
 
 .our-clients {
-    width: 100%;
-    background: #ffffff;
-    padding-top: 70px;
-    padding-bottom: 55px;
-    overflow: hidden;
+  width: 100%;
+  background: var(--fc-surface);
+  padding: var(--fc-section-pad-sm) 0;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.clients-heading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.clients-heading h2 {
+  margin: 0;
+  color: var(--fc-ink);
+  font-size: var(--fc-text-display);
+  font-weight: 800;
+  letter-spacing: var(--fc-tracking-display);
+  line-height: 1.05;
+}
+
+
+/* =========================================================
+   MARQUEE CONTAINER
+   ========================================================= */
+
+.clients-marquee {
+  width: 100%;
+  overflow: hidden;
+  margin-top: var(--fc-section-gap);
+
+  /* Fades the track out at both edges instead of cutting it off. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+}
+
+
+/* =========================================================
+   MOVING TRACK
+   ========================================================= */
+
+.clients-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+
+  animation: clientsSlide 28s linear infinite;
+}
+
+
+/* =========================================================
+   INDIVIDUAL LOGO
+   ========================================================= */
+
+.client-logo {
+  width: 200px;
+  height: 99px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 48px;
+}
+
+.client-logo img {
+  max-width: 200px;
+  max-height: 120px;
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+
+  display: block;
+
+  /* Greyed by default, full colour on hover. */
+  filter: grayscale(1);
+  opacity: 0.62;
+
+  transition:
+    filter var(--fc-dur-hover) var(--fc-ease),
+    opacity var(--fc-dur-hover) var(--fc-ease),
+    transform var(--fc-dur-hover) var(--fc-ease);
+}
+
+.client-logo:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+
+/* =========================================================
+   SLIDING ANIMATION
+   ========================================================= */
+
+@keyframes clientsSlide {
+
+  0% {
+    transform: translateX(0);
   }
-  
-  
-  /* ================================
-     HEADING
-  ================================ */
-  
-  .clients-heading {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  100% {
+    transform: translateX(-50%);
   }
-  
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+  .our-clients {
+    padding: var(--fc-section-pad-sm) 0;
+  }
+
   .clients-heading h2 {
-    margin: 0;
-    color: #29266f;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 52px;
-    font-weight: 700;
-    letter-spacing: -1.5px;
-    line-height: 1;
+    font-size: var(--fc-text-h1);
   }
-  
-  
-  /* ================================
-     MARQUEE CONTAINER
-  ================================ */
-  
+
   .clients-marquee {
-    width: 100%;
-    overflow: hidden;
-    margin-top: 82px;
+    margin-top: var(--fc-section-gap-sm);
   }
-  
-  
-  /* ================================
-     MOVING TRACK
-  ================================ */
-  
-  .clients-track {
-    display: flex;
-    align-items: center;
-    width: max-content;
-  
-    animation: clientsSlide 28s linear infinite;
-  }
-  
-  
-  /* ================================
-     INDIVIDUAL LOGO
-  ================================ */
-  
+
   .client-logo {
-    width: 200px;   /* pehle 150px tha */
-    height: 99px;
-  
-    flex-shrink: 0;
-  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    margin: 0 48px;
+    margin: 0 35px;
   }
-  
-  
-  /* Logo image */
-  
+
+}
+
+@media (max-width: 768px) {
+
+  .clients-heading h2 {
+    font-size: var(--fc-text-h2);
+  }
+
+  .clients-marquee {
+    margin-top: 44px;
+  }
+
+  .client-logo {
+    width: 125px;
+    height: 60px;
+    margin: 0 25px;
+  }
+
   .client-logo img {
-    max-width: 200px;
-    max-height: 120px;
-  
-    width: auto;
-    height: auto;
-  
-    object-fit: contain;
-  
-    display: block;
+    max-width: 125px;
+    max-height: 50px;
   }
-  
-  
-  /* ================================
-     SLIDING ANIMATION
-  ================================ */
-  
-  @keyframes clientsSlide {
-  
-    0% {
-      transform: translateX(0);
-    }
-  
-    100% {
-      transform: translateX(-50%);
-    }
-  
+
+}
+
+@media (max-width: 480px) {
+
+  .clients-heading h2 {
+    font-size: 30px;
   }
-  
-  
-  /* ================================
-     RESPONSIVE
-  ================================ */
-  
-  @media (max-width: 1024px) {
-  
-    .our-clients {
-      padding-top: 55px;
-      padding-bottom: 45px;
-    }
-  
-    .clients-heading h2 {
-      font-size: 44px;
-    }
-  
-    .clients-marquee {
-      margin-top: 65px;
-    }
-  
-    .client-logo {
-      margin: 0 35px;
-    }
-  
+
+  .clients-marquee {
+    margin-top: 36px;
   }
-  
-  
-  @media (max-width: 768px) {
-  
-    .our-clients {
-      padding-top: 53px;
-      padding-bottom: 40px;
-    }
-  
-    .clients-heading h2 {
-      font-size: 36px;
-      letter-spacing: -1px;
-    }
-  
-    .clients-marquee {
-      margin-top: 50px;
-    }
-  
-    .client-logo {
-      width: 125px;
-      height: 60px;
-      margin: 0 25px;
-    }
-  
-    .client-logo img {
-      max-width: 125px;
-      max-height: 50px;
-    }
-  
+
+  .client-logo {
+    width: 110px;
+    margin: 0 20px;
   }
-  
-  
-  @media (max-width: 480px) {
-  
-    .clients-heading h2 {
-      font-size: 30px;
-    }
-  
-    .clients-marquee {
-      margin-top: 40px;
-    }
-  
-    .client-logo {
-      width: 110px;
-      margin: 0 20px;
-    }
-  
-    .client-logo img {
-      max-width: 110px;
-      max-height: 45px;
-    }
-  
+
+  .client-logo img {
+    max-width: 110px;
+    max-height: 45px;
   }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   =============================================
+   The track stops and the logos lay out in a static,
+   wrap-around row instead of sliding.
+   ================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .clients-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 12px;
+  }
+
+  .client-logo img {
+    transition-duration: 0.01ms;
+  }
+
+  .client-logo:hover img {
+    transform: none;
+  }
+}

@@ -18,8 +18,11 @@ import GTMPartner from "./component/GTMPartner/GTMPartner";
 
 import Blog from "./pages/Blog/Blog";
 import BlogDetails from "./pages/BlogDetails/BlogDetails";
+import Careers from "./pages/Careers/Careers";
+import Contact from "./pages/Contact/Contact";
 
 import AdminApp from "./admin/AdminApp";
+import RouteTransition from "./component/common/RouteTransition";
 
 import "./App.css";
 
@@ -66,27 +69,49 @@ function App() {
     <BrowserRouter>
       <Navbar />
 
-      <Routes>
-        {/* HOME */}
-        <Route path="/" element={<HomePage />} />
+      <RouteTransition>
+        <Routes>
+          {/* HOME */}
+          <Route path="/" element={<HomePage />} />
 
-        {/* SERVICES */}
-        <Route path="/features" element={<Features />} />
-        <Route
-          path="/features/:featureId"
-          element={<FeatureDetails />}
-        />
+          {/* SERVICES */}
+          {/* Wrapped so these two pages clear the fixed navbar. The
+              same component renders inside the Home stack, where the
+              offset already comes from .website-sections. */}
+          <Route
+            path="/features"
+            element={
+              <div className="page-root">
+                <Features />
+              </div>
+            }
+          />
+          <Route
+            path="/features/:featureId"
+            element={
+              <div className="page-root">
+                <FeatureDetails />
+              </div>
+            }
+          />
 
-        {/* ABOUT */}
-        <Route path="/about-us" element={<About />} />
+          {/* ABOUT */}
+          <Route path="/about-us" element={<About />} />
 
-        {/* BLOG */}
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogDetails />} />
+          {/* BLOG */}
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogDetails />} />
 
-        {/* ADMIN */}
-        <Route path="/admin/*" element={<AdminApp />} />
-      </Routes>
+          {/* CAREERS */}
+          <Route path="/careers" element={<Careers />} />
+
+          {/* CONTACT */}
+          <Route path="/contact" element={<Contact />} />
+
+          {/* ADMIN */}
+          <Route path="/admin/*" element={<AdminApp />} />
+        </Routes>
+      </RouteTransition>
     </BrowserRouter>
   );
 }

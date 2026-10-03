@@ -1,0 +1,215 @@
+/* =========================================================
+   BLOG DETAIL
+   ------------------------------------------------------------
+   Article reading view. Same tokens as the blog index (Blog.css):
+   same ink, same accent, same radii and shadow scale.
+   ========================================================= */
+
+.blog-details-page {
+  width: 100%;
+  background: var(--fc-surface);
+  color: var(--fc-text-secondary);
+  overflow-x: hidden;
+}
+
+.blog-details-container {
+  width: min(var(--fc-container-narrow), 100% - (var(--fc-container-pad) * 2));
+  margin: 0 auto;
+
+  /* Clears the fixed navbar, then the article's own rhythm. */
+  padding: calc(var(--fc-nav-offset) + var(--fc-section-pad-sm)) 0 var(--fc-section-pad);
+}
+
+
+/* =========================================================
+   BACK LINK
+   ========================================================= */
+
+.blog-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 34px;
+
+  color: var(--fc-accent-strong);
+  font-size: var(--fc-text-sm);
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    color var(--fc-dur-micro) var(--fc-ease),
+    transform var(--fc-dur-hover) var(--fc-ease);
+}
+
+.blog-back-link:hover,
+.blog-back-link:focus-visible {
+  color: var(--fc-brand-strong);
+  transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   ARTICLE HEADER
+   ========================================================= */
+
+.blog-details-category {
+  display: inline-block;
+  margin: 0 0 16px;
+
+  padding: 6px 13px;
+
+  border-radius: var(--fc-radius-pill);
+
+  background: var(--fc-accent-wash);
+  border: 1px solid var(--fc-border-accent);
+
+  color: var(--fc-accent-strong);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.blog-details-container h1 {
+  margin: 0 0 16px;
+
+  color: var(--fc-ink);
+  font-size: var(--fc-text-h1);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: var(--fc-tracking-display);
+}
+
+.blog-details-meta {
+  margin: 0 0 32px;
+
+  color: var(--fc-text-muted);
+  font-size: var(--fc-text-sm);
+}
+
+
+/* =========================================================
+   HERO IMAGE
+   ========================================================= */
+
+.blog-details-image {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 46px;
+
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-xl);
+
+  background: var(--fc-gradient-brand);
+
+  box-shadow: var(--fc-shadow-md);
+}
+
+.blog-details-image > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
+   ARTICLE BODY
+   ------------------------------------------------------------
+   Line length is capped at ~68ch, which is the comfortable
+   measure for 17px body copy.
+   ========================================================= */
+
+.blog-details-content {
+  max-width: 68ch;
+}
+
+.blog-details-content p {
+  margin: 0 0 22px;
+
+  color: var(--fc-text-secondary);
+  font-size: 17px;
+  line-height: 1.85;
+}
+
+.blog-details-content h2 {
+  margin: 44px 0 16px;
+
+  color: var(--fc-ink);
+  font-size: var(--fc-text-title);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: var(--fc-tracking-tight);
+}
+
+.blog-details-content > *:first-child {
+  margin-top: 0;
+}
+
+/* Links inside the body pick up the shared underline treatment. */
+
+.blog-details-content a {
+  color: var(--fc-accent-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--fc-dur-micro) var(--fc-ease);
+}
+
+.blog-details-content a:hover {
+  color: var(--fc-brand-strong);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .blog-details-container {
+    padding: calc(var(--fc-nav-offset) + 44px) 0 var(--fc-section-pad-sm);
+  }
+
+  .blog-details-image {
+    border-radius: var(--fc-radius-md);
+    margin-bottom: 34px;
+  }
+
+  .blog-details-content p {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .blog-details-content h2 {
+    margin: 34px 0 14px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .blog-back-link,
+  .blog-details-content a {
+    transition-duration: 0.01ms !important;
+  }
+
+  .blog-back-link:hover {
+    transform: none;
+  }
+}

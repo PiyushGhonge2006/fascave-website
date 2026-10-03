@@ -5,7 +5,9 @@ import cloudDataAnalytics from '../../../assets/service_img/cloud-data-analytics
 import powerBI from '../../../assets/service_img/power-bi-visualization.png'
 import digitalMarketing from '../../../assets/service_img/digital-marketing.png'
 
-export const features = [
+/* Used when the CMS has nothing to return, so the services
+   grid is never empty. */
+export const fallbackFeatures = [
 
   {
     id: 'web-development',

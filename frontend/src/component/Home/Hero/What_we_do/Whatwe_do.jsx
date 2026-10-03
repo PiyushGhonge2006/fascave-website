@@ -1,4 +1,5 @@
 import React from "react";
+import useRevealOnScroll from "../../../../hooks/useRevealOnScroll";
 import "./WhatWeDo.css";
 
 const services = [
@@ -33,8 +34,10 @@ const services = [
 ];
 
 const Whatwe_do = () => {
+  const [sectionRef] = useRevealOnScroll({ stagger: 110 });
+
   return (
-    <section className="what-we-do">
+    <section className="what-we-do" ref={sectionRef}>
       {/* Background dotted effects */}
       <div className="dots dots-left"></div>
       <div className="dots dots-right"></div>
@@ -45,7 +48,7 @@ const Whatwe_do = () => {
 
       <div className="what-container">
         {/* Heading */}
-        <div className="what-header">
+        <div className="what-header" data-reveal>
           <div className="eyebrow">
             <span>WHAT WE DO</span>
             <div className="eyebrow-line"></div>
@@ -66,7 +69,7 @@ const Whatwe_do = () => {
         {/* Cards */}
         <div className="what-services-grid">
           {services.map((service) => (
-            <div className="service-card" key={service.number}>
+            <div className="service-card" key={service.number} data-reveal="scale">
               <div className="card-top">
                 <div className="service-icon">
                   {service.icon}

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { apiUrl } from "../../utils/apiBase";
 import "./ContactModal.css";
-
-const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const initialForm = {
   firstName: "",
@@ -65,7 +63,7 @@ const ContactModal = ({ isOpen, onClose, source }) => {
 
     try {
       const response = await fetch(
-        `${API_URL}/api/messages`,
+        apiUrl("/api/messages"),
         {
           method: "POST",
           headers: {

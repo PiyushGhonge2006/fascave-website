@@ -1,0 +1,17 @@
+/* Careers admin uses shared admin styles, plus a heading for each
+   block of the page-content form. */
+
+.admin-subset-title {
+    margin: 26px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eae9e5;
+    color: #1a1a20;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.admin-subset-title:first-of-type {
+    margin-top: 4px;
+}

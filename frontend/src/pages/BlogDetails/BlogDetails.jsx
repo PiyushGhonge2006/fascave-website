@@ -1,64 +1,134 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+
+import useRevealOnScroll from "../../hooks/useRevealOnScroll";
+import { usePosts } from "../../hooks/usePosts";
+import "./BlogDetails.css";
 
 
 const BlogDetails = () => {
     const { id } = useParams();
 
+    const [pageRef] = useRevealOnScroll();
+
+    const posts = usePosts();
+
+    const post = posts.find((item) => item.id === id);
+
+    /* The browser tab follows the article title. */
+    useEffect(() => {
+
+        if (!post?.title) {
+            return;
+        }
+
+        const previous = document.title;
+        document.title = post.title;
+
+        return () => {
+            document.title = previous;
+        };
+
+    }, [post?.title]);
+
+
+    if (!post) {
+        return (
+            <main className="blog-details-page">
+
+                <div
+                    className="blog-details-container"
+                    data-reveal="blur"
+                >
+
+                    <Link
+                        to="/blog"
+                        className="blog-back-link"
+                    >
+                        ← Back to Blog
+                    </Link>
+
+                    <h1>Article not found</h1>
+
+                    <p>
+                        This article may have been unpublished or its link may
+                        have changed.
+                    </p>
+
+                    <Link
+                        to="/blog"
+                        className="blog-read-button"
+                    >
+                        Read other articles <span>→</span>
+                    </Link>
+
+                </div>
+
+            </main>
+        );
+    }
+
+
+    /* The body is plain text from the CMS, so paragraphs are
+       split on blank lines rather than injected as HTML. */
+    const paragraphs = post.content
+        .split(/\n\s*\n/)
+        .map((block) => block.trim())
+        .filter(Boolean);
+
+
     return (
-        <main className="blog-details-page">
+        <main className="blog-details-page" ref={pageRef}>
 
-            <div className="blog-details-container">
+            <div
+                className="blog-details-container"
+                data-reveal="blur"
+            >
 
-                <Link to="/blog" className="blog-back-link">
+                <Link
+                    to="/blog"
+                    className="blog-back-link"
+                >
                     ← Back to Blog
                 </Link>
 
-                <p className="blog-details-category">
-                    Technology
-                </p>
+                {post.category && (
+                    <p className="blog-details-category">
+                        {post.category}
+                    </p>
+                )}
 
                 <h1>
-                    Blog Article
+                    {post.title}
                 </h1>
 
                 <p className="blog-details-meta">
-                    September 2026
+                    {[
+                        post.date,
+                        post.author,
+                        `${post.readMinutes} min read`,
+                    ]
+                        .filter(Boolean)
+                        .join(" · ")}
                 </p>
 
-                <div className="blog-details-image">
-                    <div>
-                        Article {id}
+                {post.image && (
+                    <div className="blog-details-image">
+                        <img
+                            src={post.image}
+                            alt={post.title}
+                        />
                     </div>
-                </div>
+                )}
 
                 <article className="blog-details-content">
-                    <p>
-                        This is the detailed article page. Later, when we connect the
-                        backend and MongoDB, the title, image, content, category and
-                        other information will come dynamically from the database.
-                    </p>
 
-                    <h2>Introduction</h2>
+                    {paragraphs.map((paragraph, index) => (
+                        <p key={`${index}-${paragraph.slice(0, 12)}`}>
+                            {paragraph}
+                        </p>
+                    ))}
 
-                    <p>
-                        Technology continues to transform the way businesses operate,
-                        communicate and create experiences for their customers.
-                    </p>
-
-                    <h2>Why It Matters</h2>
-
-                    <p>
-                        Modern digital solutions can help organizations improve their
-                        workflows, reach their customers and build scalable products.
-                    </p>
-
-                    <h2>Conclusion</h2>
-
-                    <p>
-                        The right technology strategy can help businesses adapt to a
-                        rapidly changing digital environment.
-                    </p>
                 </article>
 
             </div>
