@@ -53,12 +53,35 @@ button {
    padding; this only governs the Home page stack.
    ========================================================= */
 
-.website-sections {
-  width: 100%;
-  min-height: 100vh;
-  padding-top: var(--fc-nav-offset);
-  overflow: hidden;
-}
+   .website-sections {
+    width: 100%;
+    min-height: 100vh;
+    padding-top: var(--fc-nav-offset);
+    overflow: hidden;
+  
+    /* Same bluish-white effect for section gaps */
+    background:
+      radial-gradient(
+        circle at 15% 20%,
+        rgba(105, 125, 255, 0.18),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at 85% 75%,
+        rgba(125, 105, 255, 0.14),
+        transparent 40%
+      ),
+      linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f1f3ff 45%,
+        #e9ecff 100%
+      );
+  }
+  
+  .website-sections > section {
+    width: 100%;
+  }
 
 .website-sections > section {
   width: 100%;

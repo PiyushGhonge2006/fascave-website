@@ -5,8 +5,46 @@
    .gtm-partner-section {
     width: 100%;
     padding: var(--fc-section-pad) 0 30px;
-    background: var(--fc-surface);
     overflow: hidden;
+
+    /* =====================================================
+       LIGHT BLUISH-WHITE BACKGROUND EFFECT
+       Change these HEX colors to customize from VS Code
+       color picker.
+       ===================================================== */
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            color-mix(in srgb, var(--gtm-blue-1) 18%, transparent),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            color-mix(in srgb, var(--gtm-blue-2) 14%, transparent),
+            transparent 40%
+        ),
+        linear-gradient(
+            135deg,
+            var(--gtm-white-1) 0%,
+            var(--gtm-white-2) 45%,
+            var(--gtm-white-3) 100%
+        );
+}
+
+
+/* =========================================================
+   GTM BACKGROUND COLORS
+   ---------------------------------------------------------
+   Click the color square in VS Code to change them.
+   ========================================================= */
+
+:root {
+    --gtm-blue-1: #697dff;
+    --gtm-blue-2: #725ef7;
+
+    --gtm-white-1: #ffffff;
+    --gtm-white-2: #f1f3ff;
+    --gtm-white-3: #e9ecff;
 }
 
 
@@ -59,7 +97,6 @@
     overflow: hidden;
     position: relative;
 
-    /* Fades the track out at both edges instead of cutting it off. */
     -webkit-mask-image: linear-gradient(
         to right,
         transparent,
@@ -119,11 +156,9 @@
     object-fit: contain;
     display: block;
 
-    /* Always show original logo */
     filter: none;
     opacity: 1;
 
-    /* Smooth hover animation */
     transition: transform var(--fc-dur-hover) var(--fc-ease);
 }
 
@@ -133,7 +168,6 @@
    ========================================================= */
 
 .gtm-partner-logo:hover img {
-    /* Slightly increase logo size on hover */
     transform: scale(1.12);
 }
 

@@ -10,8 +10,28 @@
 .our-clients {
   width: 100%;
   padding: 55px 0 35px;
-  background: var(--fc-surface);
   overflow: hidden;
+
+  /* =======================================================
+     BLUISH-WHITE BACKGROUND EFFECT
+     ======================================================= */
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(105, 125, 255, 0.18),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(125, 105, 255, 0.14),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f1f3ff 45%,
+      #e9ecff 100%
+    );
 }
 
 
