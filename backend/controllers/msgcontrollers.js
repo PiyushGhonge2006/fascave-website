@@ -1,38 +1,102 @@
 const Message = require("../model/msgbutton");
 
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const ALLOWED_SOURCES = [
+  "navbar",
+  "hero",
+  "contact",
+  "consultation",
+  "other",
+];
+
+
+const asText = (value) =>
+  typeof value === "string" ? value.trim() : "";
+
+
 // ======================================================
 // CREATE MESSAGE
-// POST /api/messages
+// POST /api/messages  and  POST /api/contact
+// ------------------------------------------------------------
+// Accepts both shapes the site posts:
+//   legacy   { firstName, lastName, email, phone, query }
+//   enquiry  { name, email, phone, company,
+//              projectType, budget, message }
 // ======================================================
 
 const createMessage = async (req, res) => {
   try {
     const {
+      name,
       firstName,
       lastName,
       email,
       phone,
+      company,
+      projectType,
+      budget,
+      message,
       query,
       source,
+      trap,
     } = req.body;
 
 
     // --------------------------------------------
-    // CHECK REQUIRED FIELDS
+    // HONEYPOT
+    // --------------------------------------------
+    // Answer with a normal-looking success so a bot gets
+    // no signal that it was caught, but store nothing.
+
+    if (asText(trap)) {
+      return res.status(201).json({
+        success: true,
+        message:
+          "Your message has been submitted successfully.",
+      });
+    }
+
+
+    // --------------------------------------------
+    // NORMALISE THE TWO SHAPES INTO ONE
     // --------------------------------------------
 
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !phone ||
-      !query
-    ) {
+    const fullName =
+      asText(name) ||
+      [asText(firstName), asText(lastName)]
+        .filter(Boolean)
+        .join(" ");
+
+    const body = asText(message) || asText(query);
+
+    const cleanedEmail =
+      asText(email).toLowerCase();
+
+
+    // --------------------------------------------
+    // REQUIRED FIELDS
+    // --------------------------------------------
+
+    if (!fullName) {
       return res.status(400).json({
         success: false,
-        message:
-          "First name, last name, email, phone and query are required.",
+        message: "Please tell us your name.",
+      });
+    }
+
+    if (!cleanedEmail) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required.",
+      });
+    }
+
+    if (!body) {
+      return res.status(400).json({
+        success: false,
+        message: "Please add a message.",
       });
     }
 
@@ -41,10 +105,7 @@ const createMessage = async (req, res) => {
     // EMAIL VALIDATION
     // --------------------------------------------
 
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
+    if (!EMAIL_REGEX.test(cleanedEmail)) {
       return res.status(400).json({
         success: false,
         message: "Please enter a valid email address.",
@@ -56,29 +117,35 @@ const createMessage = async (req, res) => {
     // CREATE MESSAGE
     // --------------------------------------------
 
-    const message = await Message.create({
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      email: email.trim().toLowerCase(),
-      phone: phone.trim(),
-      query: query.trim(),
-      source:
-        source === "navbar" ||
-        source === "hero"
-          ? source
-          : "other",
+    const record = await Message.create({
+      fullName,
+      email: cleanedEmail,
+      phone: asText(phone),
+      company: asText(company),
+      projectType: asText(projectType),
+      budget: asText(budget),
+      query: body,
+      source: ALLOWED_SOURCES.includes(source)
+        ? source
+        : "other",
+      ip: req.ip || "",
     });
 
 
     // --------------------------------------------
     // SUCCESS RESPONSE
     // --------------------------------------------
+    // No `_id`, no email, no ip — the sender does not
+    // need the stored record back.
 
     return res.status(201).json({
       success: true,
       message:
         "Your message has been submitted successfully.",
-      data: message,
+      data: {
+        id: record._id,
+        status: record.status,
+      },
     });
 
   } catch (error) {
@@ -87,6 +154,17 @@ const createMessage = async (req, res) => {
       "Create Message Error:",
       error
     );
+
+    // A Mongoose validation failure carries a useful
+    // message; anything else is ours, not the visitor's.
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        success: false,
+        message:
+          Object.values(error.errors)[0]?.message ||
+          "Please check the details you entered.",
+      });
+    }
 
     return res.status(500).json({
       success: false,

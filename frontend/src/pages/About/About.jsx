@@ -1,3 +1,8 @@
+import { useEffect } from "react";
+
+import useRevealOnScroll from "../../hooks/useRevealOnScroll";
+import { useSingleton } from "../../hooks/useContent";
+import { imageUrl } from "../../utils/apiBase";
 import "./About.css";
 
 const MAPS_URL =
@@ -47,6 +52,25 @@ const iconShapes = {
             <path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z" />
         </>
     ),
+    Compass: (
+        <>
+            <circle cx="12" cy="12" r="9" />
+            <path d="m15.4 8.6-2 4.8-4.8 2 2-4.8 4.8-2Z" />
+        </>
+    ),
+    Sparkles: (
+        <>
+            <path d="M12 3.2 13.7 8l4.8 1.7-4.8 1.7L12 16.2 10.3 11.4 5.5 9.7 10.3 8 12 3.2Z" />
+            <path d="M18.4 15.2l.8 2.1 2.1.8-2.1.8-.8 2.1-.8-2.1-2.1-.8 2.1-.8.8-2.1Z" />
+        </>
+    ),
+    Layers: (
+        <>
+            <path d="m12 3 8.4 4.4L12 11.8 3.6 7.4 12 3Z" />
+            <path d="m4.4 11 7.6 4 7.6-4" />
+            <path d="m4.4 14.8 7.6 4 7.6-4" />
+        </>
+    ),
 };
 
 function Icon({ name, className = "about-icon" }) {
@@ -68,51 +92,93 @@ function Icon({ name, className = "about-icon" }) {
 }
 
 function About() {
+    const [pageRef] = useRevealOnScroll({ stagger: 130 });
+
+    const { data: about } = useSingleton(
+        "/api/content/about",
+        {}
+    );
+
+    /* The office block below is still written in code, so
+       these act as the defaults whenever the CMS has not
+       been filled in yet. */
+    const heading = about?.heading || "About Us";
+    const introTitle = about?.eyebrow || "FasCave Information";
+    const intro = about?.description ||
+        "FasCave is a technology solutions company focused on building modern digital experiences and innovative solutions for businesses.";
+    const mission = about?.mission ||
+        "To deliver reliable, scalable and innovative technology solutions that help businesses grow and adapt to the digital world.";
+    const vision = about?.vision ||
+        "To become a trusted technology partner by creating impactful digital solutions that connect people, businesses and technology.";
+    const values = (about?.values || []).filter(
+        (value) => value?.title || value?.description
+    );
+    const heroImage = imageUrl(about?.image);
+
+    /* The admin panel can set the page title, so the tab
+       follows whatever is saved there. */
+    useEffect(() => {
+        if (!about?.seoTitle) {
+            return;
+        }
+
+        const previous = document.title;
+        document.title = about.seoTitle;
+
+        return () => {
+            document.title = previous;
+        };
+    }, [about?.seoTitle]);
+
     return (
-        <section className="about-page" aria-labelledby="about-heading-title">
+        <section className="about-page" aria-labelledby="about-heading-title" ref={pageRef}>
 
             <div className="about-container">
 
                 <header className="about-heading">
                     <span className="about-heading__rule" aria-hidden="true" />
-                    <h1 id="about-heading-title">About Us</h1>
+                    <h1 id="about-heading-title">{heading}</h1>
                 </header>
 
                 <section className="about-info-banner" aria-labelledby="about-info-title">
                     <span className="about-info-banner__sheen" aria-hidden="true" />
-                    <h2 id="about-info-title">FasCave Information</h2>
-                    <p>
-                        FasCave is a technology solutions company focused on building modern digital experiences and innovative solutions for businesses.
-                    </p>
+                    <h2 id="about-info-title">{introTitle}</h2>
+                    <p>{intro}</p>
                 </section>
+
+                {heroImage && (
+                    <div className="about-hero-image" data-reveal="scale">
+                        <img
+                            src={heroImage}
+                            alt="FasCave"
+                        />
+                    </div>
+                )}
 
                 <div className="mission-vision-grid">
 
-                    <article className="about-card">
+                    <article className="about-card" data-reveal="scale">
                         <span className="about-card__icon">
                             <Icon name="mission" />
                         </span>
                         <h2>Our Mission</h2>
-                        <p>
-                            To deliver reliable, scalable and innovative technology solutions that help businesses grow and adapt to the digital world.
-                        </p>
+                        <p>{mission}</p>
                     </article>
 
-                    <article className="about-card">
+                    <article className="about-card" data-reveal="scale">
                         <span className="about-card__icon">
                             <Icon name="vision" />
                         </span>
                         <h2>Our Vision</h2>
-                        <p>
-                            To become a trusted technology partner by creating impactful digital solutions that connect people, businesses and technology.
-                        </p>
+                        <p>{vision}</p>
                     </article>
 
                 </div>
 
+
                 <div className="office-section">
 
-                    <section className="office-details">
+                    <section className="office-details" data-reveal="left">
                         <h3 className="office-card__title">
                             <span className="office-card__icon">
                                 <Icon name="office" />
@@ -176,6 +242,7 @@ function About() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="View FasCave office location on Google Maps (opens in a new tab)"
+                        data-reveal="right"
                     >
                         <h3 className="office-card__title">
                             <span className="office-card__icon">
@@ -195,6 +262,25 @@ function About() {
                     </a>
 
                 </div>
+                {values.length > 0 && (
+                    <div className="mission-vision-grid">
+                        {values.map((value, index) => (
+                            <article
+                                className="about-card"
+                                key={`${value.title}-${index}`}
+                                data-reveal="scale"
+                            >
+                                {value.icon && (
+                                    <span className="about-card__icon">
+                                        <Icon name={value.icon} />
+                                    </span>
+                                )}
+                                <h2>{value.title}</h2>
+                                <p>{value.description}</p>
+                            </article>
+                        ))}
+                    </div>
+                )}
 
             </div>
 

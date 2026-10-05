@@ -1,23 +1,33 @@
-import { features } from './data/features'
 import FeatureCard from './FeatureCard'
-import './ourservice.css'
+import { useServices } from './useServices'
+import useRevealOnScroll from '../../hooks/useRevealOnScroll'
+import './features.css'
 
 export default function Features() {
+  /* One observer for the whole section; cards cascade in on their own. */
+  const [sectionRef] = useRevealOnScroll({ stagger: 90 })
+
+  const features = useServices()
+
   return (
-    <section className="our-services">
+    <section className="our-services" ref={sectionRef}>
 
-      <h2 className="services-title">
-        OUR SERVICES
-      </h2>
+      <div className="services-container">
 
-      <div className="services-grid">
+        <h2 className="services-title" data-reveal>
+          OUR SERVICES
+        </h2>
 
-        {features.map((feature) => (
-          <FeatureCard
-            key={feature.id}
-            feature={feature}
-          />
-        ))}
+        <div className="services-grid">
+
+          {features.map((feature) => (
+            <FeatureCard
+              key={feature.id}
+              feature={feature}
+            />
+          ))}
+
+        </div>
 
       </div>
 

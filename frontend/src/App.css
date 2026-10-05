@@ -1,6 +1,13 @@
 /* =========================================================
-   GLOBAL RESET
-========================================================= */
+   GLOBAL LAYOUT SHELL
+   ------------------------------------------------------------
+   The reset, the page wrapper, and the shared spacing rhythm
+   that every route inherits. Colour, type and components live
+   in styles/tokens.css and styles/components.css.
+
+   The only rule here that still needs a comment is the navbar
+   offset — see `.website-sections` below.
+   ========================================================= */
 
 * {
   margin: 0;
@@ -13,12 +20,8 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
   width: 100%;
-  background: #ffffff;
   overflow-x: hidden;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 #root {
@@ -26,100 +29,65 @@ body {
   min-height: 100vh;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
 
 /* =========================================================
    MAIN WEBSITE WRAPPER
-========================================================= */
+   ------------------------------------------------------------
+   The navbar is fixed, so the page starts below it. Inner pages
+   (About, Services, Blog, Careers, Contact) set their own top
+   padding; this only governs the Home page stack.
+   ========================================================= */
 
 .website-sections {
   width: 100%;
   min-height: 100vh;
-
-  /* FIXED NAVBAR → HERO GAP */
-  padding-top: 90px;
-
+  padding-top: var(--fc-nav-offset);
   overflow: hidden;
 }
 
-
-/* =========================================================
-   HOME PAGE SECTIONS
-========================================================= */
-
-/*
-   IMPORTANT:
-   No extra top/bottom padding here.
-   This prevents huge blank spaces between sections.
-*/
-
 .website-sections > section {
   width: 100%;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
 }
 
-
-/* =========================================================
-   GAP BETWEEN SECTIONS
-========================================================= */
-
+/*
+   Sections bring their own vertical rhythm, so the wrapper must
+   not add any — otherwise every band grows a second gap.
+*/
 .website-sections > section + section {
-  margin-top: 45px !important;
+  margin-top: var(--fc-section-gap);
 }
 
-
-/* =========================================================
-   HERO SECTION
-========================================================= */
-
-.website-sections > .home-hero-section {
-  width: 100%;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+.home-hero-section {
   margin-top: 0 !important;
 }
 
 
-/* Hero → Our Services / Next Section */
-
-.website-sections > .home-hero-section + section {
-  margin-top: 45px !important;
-}
-
-
 /* =========================================================
-   OTHER / INNER PAGES
-========================================================= */
-
-.page-section {
-  width: 100%;
-  padding: 0 !important;
-}
-
-.page-section + .page-section {
-  margin-top: 45px !important;
-}
-
-
-/* =========================================================
-   COMMON SECTION CONTAINER
-========================================================= */
-
-.section-container {
-  width: min(1200px, 92%);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* =========================================================
-   SECTION HEADINGS
-========================================================= */
+   SHARED SECTION HEADING
+   ------------------------------------------------------------
+   Kept for the existing `.section-heading` class. New work
+   should use the `.fc-head` block from components.css.
+   ========================================================= */
 
 .section-heading {
   width: 100%;
   text-align: center;
-  margin-bottom: 45px;
+  margin-bottom: var(--fc-section-gap);
 }
 
 .section-heading h1,
@@ -130,186 +98,23 @@ body {
 }
 
 .section-heading p {
-  margin-top: 15px;
+  max-width: 620px;
+  margin: 15px auto 0;
   line-height: 1.7;
+  color: var(--fc-text-secondary);
 }
 
 
 /* =========================================================
-   TYPOGRAPHY RESET
-========================================================= */
+   PAGE ROOTS
+   ------------------------------------------------------------
+   Inner pages clear the fixed navbar with a shared offset so
+   the value is not repeated per page. About, Blog, Careers and
+   Contact fold it into their own hero padding instead, so they
+   don't need this wrapper.
+   ========================================================= */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-top: 0;
-}
-
-
-/* =========================================================
-   IMAGES
-========================================================= */
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-
-/* =========================================================
-   LINKS
-========================================================= */
-
-a {
-  text-decoration: none;
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-button {
-  font-family: inherit;
-}
-
-
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media (min-width: 1200px) {
-
-  /* Navbar → Hero SAME */
-  .website-sections {
-    padding-top: 100px;
-  }
-
-  /* Sections have NO extra padding */
-  .website-sections > section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  /* Actual section gap */
-  .website-sections > section + section {
-    margin-top: 45px !important;
-  }
-
-  /* Hero */
-  .website-sections > .home-hero-section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-}
-
-
-/* =========================================================
-   LAPTOP / TABLET
-========================================================= */
-
-@media (max-width: 1199px) {
-
-  /* Navbar → Hero */
-  .website-sections {
-    padding-top: 80px;
-  }
-
-  /* No extra section padding */
-  .website-sections > section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  /* Section gap */
-  .website-sections > section + section {
-    margin-top: 40px !important;
-  }
-
-  .website-sections > .home-hero-section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  .section-container {
-    width: 92%;
-  }
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 768px) {
-
-  /* Navbar → Hero */
-  .website-sections {
-    padding-top: 65px;
-  }
-
-  /* No extra section padding */
-  .website-sections > section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  /* Section gap */
-  .website-sections > section + section {
-    margin-top: 30px !important;
-  }
-
-  .website-sections > .home-hero-section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  .section-container {
-    width: 90%;
-  }
-
-  .section-heading {
-    margin-bottom: 35px;
-  }
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 480px) {
-
-  /* Navbar → Hero */
-  .website-sections {
-    padding-top: 55px;
-  }
-
-  /* No extra section padding */
-  .website-sections > section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  /* Section gap */
-  .website-sections > section + section {
-    margin-top: 25px !important;
-  }
-
-  .website-sections > .home-hero-section {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  .section-container {
-    width: 92%;
-  }
-
-  .section-heading {
-    margin-bottom: 30px;
-  }
+.page-root {
+  width: 100%;
+  padding-top: var(--fc-nav-offset);
 }

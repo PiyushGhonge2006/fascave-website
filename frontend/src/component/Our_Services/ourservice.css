@@ -1,117 +1,13 @@
 /* =========================================================
-   MAIN SERVICES PAGE
-========================================================= */
-
-.our-services {
-  width: 100%;
-  padding: 65px 45px 80px;
-  box-sizing: border-box;
-  background: #fff;
-}
-
-.services-title {
-  margin: 0 0 50px;
-  text-align: center;
-  font-size: 44px;
-  font-weight: 700;
-  color: #172b7a;
-}
-
-
-/* =========================================================
-   3 × 3 SERVICES GRID
-========================================================= */
-
-.services-grid {
-  width: 100%;
-  max-width: 1250px;
-  margin: 0 auto;
-
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-
-  column-gap: 28px;
-  row-gap: 32px;
-
-  align-items: stretch;
-}
-
-.feature-card {
-  width: 100%;
-  min-width: 0;
-
-  background: #fff;
-  border-radius: 14px;
-  overflow: hidden;
-
-  box-shadow:
-    0 6px 22px rgba(0, 0, 0, 0.10);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-6px);
-
-  box-shadow:
-    0 14px 30px rgba(0, 0, 0, 0.15);
-}
-
-.feature-image-wrapper {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-}
-
-.feature-image {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-  object-position: center;
-}
-
-.feature-content {
-  padding: 22px 24px 26px;
-}
-
-.feature-content h3 {
-  margin: 0 0 11px;
-
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.3;
-
-  color: #111;
-}
-
-.feature-content p {
-  margin: 0;
-
-  font-size: 15px;
-  line-height: 1.65;
-
-  color: #666;
-}
-
-.feature-card-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-
-/* =========================================================
-   CLICKED SERVICE DETAIL PAGE
-========================================================= */
+   SERVICE DETAIL PAGE
+   ---------------------------------------------------------
+   Original Service Detail design.
+   Is file ko FeatureDetails.jsx me import karo.
+   ========================================================= */
 
 .service-hero {
   width: 100%;
-  min-height: 620px;
+  min-height: 560px;
 
   display: grid;
 
@@ -123,17 +19,17 @@
 
   gap: 50px;
 
-  padding: 65px 6% 75px;
+  padding: var(--fc-section-pad) 6%;
 
   box-sizing: border-box;
 
-  background: #ffffff;
+  background: var(--fc-surface);
 }
 
 
 /* =========================================================
-   IMAGE CONTAINER - FIXED
-========================================================= */
+   IMAGE CONTAINER
+   ========================================================= */
 
 .service-hero-image {
   width: 100% !important;
@@ -146,18 +42,30 @@
 
   overflow: hidden;
 
-  border-radius: 18px;
+  border-radius: var(--fc-radius-lg);
 
-  background: #ffffff;
+  background: var(--fc-surface-sunken);
+
+  box-shadow: var(--fc-shadow-md);
+
+  transition:
+    box-shadow var(--fc-dur-card) var(--fc-ease),
+    transform var(--fc-dur-card) var(--fc-ease);
+}
+
+
+.service-hero-image:hover {
+  transform: translateY(var(--fc-lift));
 
   box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.13);
+    var(--fc-shadow-lift),
+    0 0 40px -18px var(--fc-glow-accent);
 }
 
 
 /* =========================================================
-   ACTUAL IMAGE INSIDE CONTAINER
-========================================================= */
+   ACTUAL IMAGE
+   ========================================================= */
 
 .service-hero-image img {
   width: 100% !important;
@@ -178,10 +86,18 @@
   object-position: center center !important;
 
   border: none !important;
+
+  transform: scale(1.01);
+
+  transition:
+    transform 0.8s var(--fc-ease);
 }
 
 
-/* If image has feature-image class */
+.service-hero-image:hover img {
+  transform: scale(1.06);
+}
+
 
 .service-hero-image .feature-image {
   width: 100% !important;
@@ -192,14 +108,13 @@
 }
 
 
-/* If there is an extra wrapper */
-
 .service-hero-image > div {
   width: 100% !important;
   height: 100% !important;
 
   overflow: hidden !important;
 }
+
 
 .service-hero-image > div img {
   width: 100% !important;
@@ -214,44 +129,50 @@
 
 /* =========================================================
    DETAIL CONTENT
-========================================================= */
+   ========================================================= */
 
 .service-hero-content {
   width: 100%;
   max-width: 700px;
 
-  padding: 10px 20px;
-
   box-sizing: border-box;
 }
 
+
 .service-hero-content > span {
-  display: block;
+  display: inline-flex;
+  align-items: center;
 
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  padding: 7px 15px;
 
-  font-family: Arial, sans-serif;
+  border: 1px solid var(--fc-border-strong);
+  border-radius: var(--fc-radius-pill);
 
-  font-size: 14px;
+  background: var(--fc-accent-wash);
+
+  font-size: 12px;
   font-weight: 700;
 
-  letter-spacing: 2px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 
-  color: #e63946;
+  color: var(--fc-accent-strong);
 }
+
 
 .service-hero-content h1 {
-  margin: 0 0 26px;
+  margin: 0 0 24px;
 
-  font-family: Georgia, serif;
+  font-size: var(--fc-text-display);
+  line-height: 1.1;
+  font-weight: 800;
 
-  font-size: 48px;
-  line-height: 1.15;
-  font-weight: 700;
+  letter-spacing: var(--fc-tracking-display);
 
-  color: #172b7a;
+  color: var(--fc-ink);
 }
+
 
 .service-hero-content p {
   width: 100%;
@@ -259,18 +180,16 @@
 
   margin: 0 0 20px;
 
-  font-family: Arial, sans-serif;
+  font-size: var(--fc-text-lead);
+  line-height: 1.8;
 
-  font-size: 18px;
-  line-height: 1.85;
-
-  color: #444;
+  color: var(--fc-text-secondary);
 }
 
 
 /* =========================================================
    BACK BUTTON
-========================================================= */
+   ========================================================= */
 
 .service-hero-content a,
 .service-hero-content button {
@@ -279,19 +198,21 @@
   align-items: center;
   justify-content: center;
 
+  gap: 10px;
+
+  min-height: 52px;
   margin-top: 12px;
 
-  padding: 13px 25px;
+  padding: 0 26px;
 
   border: none;
-  border-radius: 28px;
+  border-radius: var(--fc-radius-md);
 
-  background: #20378f;
-  color: #fff;
+  background: var(--fc-gradient-brand);
+
+  color: #ffffff;
 
   text-decoration: none;
-
-  font-family: Arial, sans-serif;
 
   font-size: 15px;
   font-weight: 600;
@@ -299,68 +220,84 @@
   cursor: pointer;
 
   box-shadow:
-    0 7px 18px rgba(32, 55, 143, 0.22);
+    0 10px 26px -12px var(--fc-glow-brand-deep);
 
-  transition: all 0.3s ease;
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease),
+    box-shadow var(--fc-dur-hover) var(--fc-ease);
 }
+
 
 .service-hero-content a:hover,
 .service-hero-content button:hover {
-  background: #142567;
-
   transform: translateY(-3px);
 
   box-shadow:
-    0 10px 24px rgba(32, 55, 143, 0.30);
+    0 16px 34px -14px var(--fc-glow-brand-deeper),
+    0 0 26px -12px var(--fc-glow-brand);
 }
 
 
 /* =========================================================
    BUSINESS TRANSFORMATION
-========================================================= */
+   ========================================================= */
 
 .service-comparison {
   width: 100%;
 
-  padding: 100px 6% 115px;
+  padding: var(--fc-section-pad) 6%;
 
   box-sizing: border-box;
 
-  background: #f7f8fa;
+  background: var(--fc-surface-alt);
 }
+
 
 .comparison-heading {
   width: 100%;
   max-width: 900px;
 
-  margin: 0 auto 55px;
+  margin: 0 auto var(--fc-section-gap);
 
   text-align: center;
 }
 
+
 .comparison-heading span {
-  display: block;
+  display: inline-flex;
+  align-items: center;
 
-  margin-bottom: 15px;
+  margin-bottom: 18px;
+  padding: 7px 15px;
 
-  font-family: Arial, sans-serif;
+  border: 1px solid var(--fc-border-strong);
+  border-radius: var(--fc-radius-pill);
 
-  font-size: 14px;
+  background: var(--fc-accent-wash);
+
+  font-size: 12px;
   font-weight: 700;
 
-  letter-spacing: 2px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 
-  color: #d52f35;
+  color: var(--fc-accent-strong);
 }
+
 
 .comparison-heading h2 {
-  margin: 0 0 20px;
+  margin: 0 0 18px;
 
-  font-size: 44px;
-  line-height: 1.2;
+  font-size: var(--fc-text-display);
+  font-weight: 800;
 
-  color: #172b7a;
+  line-height: 1.12;
+
+  letter-spacing: var(--fc-tracking-display);
+
+  color: var(--fc-ink);
 }
+
 
 .comparison-heading p {
   width: 100%;
@@ -368,20 +305,19 @@
 
   margin: 0 auto;
 
-  font-size: 17px;
-  line-height: 1.8;
+  font-size: var(--fc-text-lead);
+  line-height: 1.75;
 
-  color: #666;
+  color: var(--fc-text-secondary);
 }
 
 
 /* =========================================================
-   TODAY / BUSINESS OUTCOME
-========================================================= */
+   COMPARISON GRID
+   ========================================================= */
 
 .comparison-grid {
-  width: 100%;
-  max-width: 1250px;
+  width: min(var(--fc-container), 100%);
 
   margin: 0 auto;
 
@@ -393,40 +329,45 @@
   gap: 45px;
 }
 
+
+/* =========================================================
+   COLUMN HEADINGS
+   ========================================================= */
+
 .comparison-column h3 {
   margin: 0 0 20px;
 
-  font-family: Arial, sans-serif;
-
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
 
-  letter-spacing: 2px;
+  letter-spacing: 0.16em;
 
   text-transform: uppercase;
 }
 
+
 .today h3 {
-  color: #dc3339;
+  color: #c0392f;
 }
 
+
 .outcome h3 {
-  color: #0aaf79;
+  color: #0f8f66;
 }
 
 
 /* =========================================================
-   COMPARISON BOXES
-========================================================= */
+   COMPARISON ITEMS
+   ========================================================= */
 
 .comparison-item {
   width: 100%;
 
-  min-height: 78px;
+  min-height: 76px;
 
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 
-  padding: 21px 24px;
+  padding: 20px 24px;
 
   box-sizing: border-box;
 
@@ -436,46 +377,51 @@
 
   gap: 12px;
 
-  border-radius: 12px;
+  border-radius: var(--fc-radius-md);
 
-  font-size: 16px;
+  font-size: var(--fc-text-body);
   line-height: 1.65;
 
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--fc-shadow-sm);
 
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    transform var(--fc-dur-hover) var(--fc-ease),
+    box-shadow var(--fc-dur-hover) var(--fc-ease),
+    border-color var(--fc-dur-hover) var(--fc-ease);
 }
+
 
 .comparison-item:hover {
   transform: translateY(-3px);
 
-  box-shadow:
-    0 11px 25px rgba(0, 0, 0, 0.13);
+  box-shadow: var(--fc-shadow-md);
 }
+
 
 .today .comparison-item {
   background: #fffafa;
 
-  border: 1px solid #ffcaca;
+  border: 1px solid #f5c9c9;
 }
+
 
 .outcome .comparison-item {
-  background: #f8fffc;
+  background: #f7fdfa;
 
-  border: 1px solid #bce9da;
+  border: 1px solid #b6e6d3;
 }
+
 
 .comparison-item p {
   margin: 0;
 
-  font-size: 16px;
+  font-size: var(--fc-text-body);
+
   line-height: 1.65;
 
-  color: #222;
+  color: var(--fc-text-primary);
 }
+
 
 .bullet {
   flex-shrink: 0;
@@ -485,19 +431,19 @@
 
 
 /* =========================================================
-   THIRD COMMON SECTION
-========================================================= */
+   SERVICE POINTS
+   ========================================================= */
 
 .service-points {
   width: 100%;
 
   min-height: 620px;
 
-  padding: 90px 40px;
+  padding: var(--fc-section-pad) 40px;
 
   box-sizing: border-box;
 
-  background: #ffffff;
+  background: var(--fc-surface);
 
   display: flex;
 
@@ -506,6 +452,7 @@
 
   overflow: hidden;
 }
+
 
 .points-wrapper {
   position: relative;
@@ -516,8 +463,8 @@
 
 
 /* =========================================================
-   CENTER LOGO
-========================================================= */
+   CENTER CORE
+   ========================================================= */
 
 .service-core {
   position: absolute;
@@ -536,19 +483,20 @@
   align-items: center;
 }
 
+
 .core-glow {
   position: absolute;
 
   width: 250px;
   height: 250px;
 
-  border-radius: 30px;
+  border-radius: var(--fc-radius-xl);
 
-  background:
-    rgba(32, 55, 143, 0.10);
+  background: var(--fc-brand-wash-hover);
 
   filter: blur(25px);
 }
+
 
 .core-circle {
   position: relative;
@@ -561,19 +509,35 @@
   justify-content: center;
   align-items: center;
 
-  background: #ffffff;
+  background: var(--fc-surface);
 
   border: 2px dashed #cbd3e3;
 
-  border-radius: 24px;
+  border-radius: var(--fc-radius-lg);
 
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--fc-shadow-md);
 
   overflow: hidden;
 
   z-index: 2;
+
+  animation:
+    servicesCoreSpin 34s linear infinite;
 }
+
+
+.core-circle > * {
+  animation:
+    servicesCoreSpin 34s linear infinite reverse;
+}
+
+
+@keyframes servicesCoreSpin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 
 .core-circle img {
   width: 82%;
@@ -584,39 +548,38 @@
   object-fit: contain;
 }
 
-.core-circle span {
-  font-family: Arial, sans-serif;
 
+.core-circle span {
   font-size: 14px;
   font-weight: 700;
 
   letter-spacing: 1.5px;
 
-  color: #172b7a;
+  color: var(--fc-ink);
 }
 
 
 /* =========================================================
-   THIRD SECTION POINTS
-========================================================= */
+   POINTS
+   ========================================================= */
 
 .point {
   position: absolute;
 
   z-index: 5;
 
-  font-family: Arial, sans-serif;
-
   font-size: 20px;
 
   line-height: 1.5;
 
-  color: #222;
+  color: var(--fc-text-primary);
 }
+
 
 .point strong {
   font-weight: 700;
 }
+
 
 .point-top {
   top: 15px;
@@ -625,20 +588,24 @@
   transform: translateX(-50%);
 }
 
+
 .point-left-top {
   top: 105px;
   left: 0;
 }
+
 
 .point-right-top {
   top: 105px;
   right: 0;
 }
 
+
 .point-left-bottom {
   bottom: 70px;
   left: 0;
 }
+
 
 .point-right-bottom {
   bottom: 70px;
@@ -648,7 +615,7 @@
 
 /* =========================================================
    TABLET
-========================================================= */
+   ========================================================= */
 
 @media (max-width: 1000px) {
 
@@ -662,11 +629,13 @@
     gap: 40px;
   }
 
+
   .service-hero-image {
     width: 100% !important;
 
     height: 400px !important;
   }
+
 
   .service-hero-image img {
     width: 100% !important;
@@ -675,15 +644,18 @@
     object-fit: cover !important;
   }
 
+
   .service-hero-content {
     max-width: 100%;
 
     padding: 0;
   }
 
+
   .comparison-grid {
     grid-template-columns: 1fr;
   }
+
 
   .points-wrapper {
     transform: scale(0.85);
@@ -693,44 +665,23 @@
 
 /* =========================================================
    MOBILE
-========================================================= */
+   ========================================================= */
 
-@media (max-width: 650px) {
-
-  .our-services {
-    padding: 45px 18px 60px;
-  }
-
-  .services-title {
-    font-size: 34px;
-
-    margin-bottom: 35px;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr !important;
-
-    gap: 24px;
-  }
-
-  .feature-image-wrapper {
-    height: 190px;
-  }
-
-
-  /* DETAIL */
+@media (max-width: 680px) {
 
   .service-hero {
-    padding: 40px 18px 60px;
+    padding: var(--fc-section-pad-sm) 18px;
 
     gap: 30px;
   }
+
 
   .service-hero-image {
     width: 100% !important;
 
     height: 300px !important;
   }
+
 
   .service-hero-image img {
     width: 100% !important;
@@ -739,43 +690,36 @@
     object-fit: cover !important;
   }
 
-  .service-hero-content h1 {
-    font-size: 34px;
-  }
 
   .service-hero-content p {
-    font-size: 16px;
-
-    line-height: 1.75;
+    font-size: var(--fc-text-body);
   }
 
 
   /* COMPARISON */
 
   .service-comparison {
-    padding: 70px 18px 80px;
+    padding: var(--fc-section-pad-sm) 18px;
   }
 
-  .comparison-heading h2 {
-    font-size: 32px;
-  }
 
   .comparison-item {
     min-height: 72px;
 
     padding: 18px 20px;
 
-    font-size: 15px;
+    font-size: var(--fc-text-sm);
   }
 
 
-  /* THIRD SECTION */
+  /* POINTS */
 
   .service-points {
     min-height: 520px;
 
-    padding: 60px 18px;
+    padding: var(--fc-section-pad-sm) 18px;
   }
+
 
   .points-wrapper {
     transform: scale(0.62);
@@ -785,7 +729,7 @@
 
 /* =========================================================
    SMALL MOBILE
-========================================================= */
+   ========================================================= */
 
 @media (max-width: 420px) {
 
@@ -794,9 +738,11 @@
     padding-right: 15px;
   }
 
+
   .service-hero-image {
     height: 260px !important;
   }
+
 
   .service-hero-image img {
     width: 100% !important;
@@ -805,19 +751,35 @@
     object-fit: cover !important;
   }
 
-  .service-hero-content h1 {
-    font-size: 30px;
-  }
-
-  .comparison-heading h2 {
-    font-size: 28px;
-  }
 
   .comparison-item {
     padding: 16px 17px;
   }
 
+
   .point {
     font-size: 17px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .core-circle,
+  .core-circle > * {
+    animation: none !important;
+  }
+
+
+  .service-hero-image,
+  .service-hero-image img,
+  .service-hero-content a,
+  .service-hero-content button,
+  .comparison-item {
+    transition-duration: 0.01ms !important;
   }
 }

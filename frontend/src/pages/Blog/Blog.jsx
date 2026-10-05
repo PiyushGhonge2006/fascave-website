@@ -1,73 +1,18 @@
-import React from "react";
+﻿import React from "react";
+import useRevealOnScroll from "../../hooks/useRevealOnScroll";
+import { usePosts } from "../../hooks/usePosts";
 import "./Blog.css";
 import { Link } from "react-router-dom";
 
-const blogPosts = [
-    {
-        id: 1,
-        category: "Web Development",
-        date: "September 2026",
-        title: "How Modern Web Development Helps Businesses Grow",
-        description:
-            "Discover how modern web technologies can help businesses build faster, scalable and engaging digital experiences.",
-        image:
-            "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
-    },
-    {
-        id: 2,
-        category: "Artificial Intelligence",
-        date: "September 2026",
-        title: "The Role of AI in Modern Business Solutions",
-        description:
-            "Explore how artificial intelligence is transforming workflows, customer experiences and business decision-making.",
-        image:
-            "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
-    },
-    {
-        id: 3,
-        category: "Digital Marketing",
-        date: "August 2026",
-        title: "Building a Strong Digital Presence for Your Brand",
-        description:
-            "Learn how a strong digital strategy can improve visibility, engagement and long-term brand growth.",
-        image:
-            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-    },
-    {
-        id: 4,
-        category: "Cloud & Data",
-        date: "August 2026",
-        title: "Why Cloud Solutions Matter for Growing Businesses",
-        description:
-            "Understand how cloud technologies can improve scalability, flexibility and data-driven business operations.",
-        image:
-            "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
-    },
-    {
-        id: 5,
-        category: "Mobile App Development",
-        date: "July 2026",
-        title: "Creating Better Experiences Through Mobile Apps",
-        description:
-            "A look at how thoughtful mobile application development can create useful and engaging customer experiences.",
-        image:
-            "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&q=80",
-    },
-    {
-        id: 6,
-        category: "Technology",
-        date: "July 2026",
-        title: "Technology Trends Shaping the Digital Future",
-        description:
-            "Explore some of the technologies helping businesses adapt to an increasingly digital world.",
-        image:
-            "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
-    },
-];
+
 
 const Blog = () => {
+    const [pageRef] = useRevealOnScroll({ stagger: 110 });
+
+    const blogPosts = usePosts();
+
     return (
-        <main className="blog-page">
+        <main className="blog-page" ref={pageRef}>
 
             {/* =========================
           BLOG HERO
@@ -94,12 +39,12 @@ const Blog = () => {
           FEATURED ARTICLE
       ========================= */}
             <section className="blog-featured-section">
-                <div className="blog-section-heading">
+                <div className="blog-section-heading" data-reveal>
                     <p className="blog-small-label">FEATURED</p>
                     <h2>Featured Article</h2>
                 </div>
 
-                <article className="blog-featured-card">
+                <article className="blog-featured-card" data-reveal="scale">
                     <div className="blog-featured-image">
                         <img
                             src={blogPosts[0].image}
@@ -128,7 +73,7 @@ const Blog = () => {
           LATEST ARTICLES
       ========================= */}
             <section className="blog-latest-section">
-                <div className="blog-section-heading blog-latest-heading">
+                <div className="blog-section-heading blog-latest-heading" data-reveal>
                     <p className="blog-small-label">LATEST INSIGHTS</p>
                     <h2>Latest Articles</h2>
 
@@ -140,7 +85,7 @@ const Blog = () => {
 
                 <div className="blog-grid">
                     {blogPosts.slice(1).map((post) => (
-                        <article className="blog-card" key={post.id}>
+                        <article className="blog-card" key={post.id} data-reveal="scale">
 
                             <div className="blog-card-image">
                                 <img src={post.image} alt={post.title} />
@@ -175,12 +120,12 @@ const Blog = () => {
       ========================= */}
             <section className="blog-category-section">
 
-                <div className="blog-section-heading">
+                <div className="blog-section-heading" data-reveal>
                     <p className="blog-small-label">EXPLORE</p>
                     <h2>Browse by Category</h2>
                 </div>
 
-                <div className="blog-category-list">
+                <div className="blog-category-list" data-reveal="scale">
                     <button>Web Development</button>
                     <button>Mobile Apps</button>
                     <button>Artificial Intelligence</button>
@@ -196,7 +141,7 @@ const Blog = () => {
       ========================= */}
             <section className="blog-cta">
 
-                <div className="blog-cta-content">
+                <div className="blog-cta-content" data-reveal="scale">
 
                     <p className="blog-small-label">LET'S BUILD TOGETHER</p>
 

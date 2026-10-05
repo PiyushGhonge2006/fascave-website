@@ -1,0 +1,399 @@
+/* =========================================================
+   FASCAVE — DESIGN TOKENS
+   ------------------------------------------------------------
+   The single source of truth for the whole site.
+
+   The palette is taken from the official FasCave IT Solutions
+   logo: deep navy, indigo, black and white, with a subtle
+   warm off-white for the light sections. Nothing here is a
+   "tech blue" or a "purple gradient" — the indigo is the brand
+   colour and it is deliberately quiet.
+
+   Load order: imported from index.css, before every page
+   stylesheet, so page CSS can still override deliberately.
+
+   How to use
+   ----------
+   Colour      var(--fc-brand) / var(--fc-accent) / var(--fc-ink)
+   Surface     var(--fc-surface) / var(--fc-surface-alt)
+   Text        var(--fc-text-primary) / --fc-text-secondary
+   Shape       var(--fc-radius-sm|md|lg|xl|pill)
+   Elevation   var(--fc-shadow-sm|md|lift)
+   Layout      var(--fc-container) / var(--fc-section-pad)
+   Type        var(--fc-text-display|title|lead|body|sm)
+   Motion      var(--fc-ease) / var(--fc-dur-*)
+
+   Shared component classes live in styles/components.css.
+   ========================================================= */
+
+:root {
+  /* =========================================================
+     1. COLOUR — BRAND
+     ------------------------------------------------------------
+     Navy = ink and structure. Indigo = the brand accent.
+     Black = the dark canvas. White = the light canvas.
+     ========================================================= */
+
+  --fc-navy-950: #0b0b0e;
+  --fc-navy-900: #111116;
+  --fc-navy-850: #16161b;
+  --fc-navy-800: #19191f;
+  --fc-navy-700: #1f1d4f;
+  --fc-navy-600: #23215c;
+  --fc-navy-500: #292663;
+
+  --fc-brand: #292663;
+  --fc-brand-strong: #1f1d4f;
+  --fc-brand-soft: #a8a6e8;
+
+  /* Indigo accent, tuned to stay readable on near-black. */
+  --fc-accent: #5e59c9;
+  --fc-accent-strong: #292663;
+
+  --fc-cyan: #5eb0e0;
+  --fc-orange: #d6823e;
+
+  /* Historic aliases — kept so older selectors keep working. */
+  --fc-blue: var(--fc-brand);
+  --fc-blue-strong: var(--fc-brand-strong);
+  --fc-blue-soft: var(--fc-brand-soft);
+  --fc-violet: var(--fc-accent);
+  --fc-indigo: var(--fc-accent);
+  --fc-purple: var(--fc-accent);
+
+  /* Soft tints of the brand pair — for chips, icon wells, ghost buttons. */
+  --fc-brand-wash: rgba(41, 38, 99, 0.06);
+  --fc-brand-wash-hover: rgba(41, 38, 99, 0.11);
+  --fc-accent-wash: rgba(94, 89, 201, 0.08);
+  --fc-accent-wash-hover: rgba(94, 89, 201, 0.15);
+
+  --fc-border-accent: rgba(94, 89, 201, 0.24);
+  --fc-border-accent-strong: rgba(94, 89, 201, 0.45);
+
+  /* Semantic pair for before/after comparisons. Deliberately muted
+     so they sit beside the brand palette without shouting. */
+  --fc-negative: #a8322a;
+  --fc-negative-wash: #fdf6f5;
+  --fc-negative-line: #efcfcc;
+  --fc-positive: #1c6b52;
+  --fc-positive-wash: #f4faf7;
+  --fc-positive-line: #c3ded3;
+
+  /* The one gradient that pairs a heading rule or accent bar. */
+  --fc-gradient-accent: linear-gradient(
+    90deg,
+    var(--fc-brand) 0%,
+    var(--fc-accent) 100%
+  );
+
+  /* The one gradient used for filled primary surfaces. */
+  --fc-gradient-brand: linear-gradient(
+    120deg,
+    var(--fc-navy-700) 0%,
+    var(--fc-navy-500) 55%,
+    var(--fc-navy-600) 100%
+  );
+
+
+  /* =========================================================
+     2. COLOUR — LIGHT SURFACES
+     ------------------------------------------------------------
+     Warm off-white, never a cold blue-grey.
+     ========================================================= */
+
+  --fc-background: #ffffff;
+  --fc-surface: #ffffff;
+  --fc-surface-alt: #f6f5f2;
+  --fc-surface-soft: #f2f1ed;
+  --fc-surface-sunken: #edebe6;
+
+
+  /* =========================================================
+     3. COLOUR — BORDERS
+     ========================================================= */
+
+  --fc-border: #e3e2de;
+  --fc-border-soft: #efeeea;
+  --fc-border-strong: #cfcec8;
+  --fc-border-focus: rgba(94, 176, 224, 0.7);
+
+
+  /* =========================================================
+     4. COLOUR — TEXT
+     ------------------------------------------------------------
+     Three levels only. Ink for headings, secondary for body,
+     muted for captions and meta.
+     ========================================================= */
+
+  --fc-ink: #17171b;
+  --fc-text-primary: #17171b;
+  --fc-text-secondary: #4a4a53;
+  --fc-text-muted: #66666f;
+
+  /* Historic aliases. */
+  --fc-text: var(--fc-text-primary);
+  --fc-text-soft: var(--fc-text-secondary);
+  --fc-text-dim: var(--fc-text-muted);
+
+
+  /* =========================================================
+     5. COLOUR — DARK SURFACE
+     ------------------------------------------------------------
+     Careers, Contact, Services, Hero, Why Choose Us, Testimonials
+     and the Footer share one dark canvas so those bands read as
+     the same "technology" environment.
+     ========================================================= */
+
+  --fc-dark-bg: #111116;
+  --fc-dark-bg-2: #16161b;
+  --fc-dark-bg-3: #19191f;
+
+  --fc-dark-blue: #4e4abe;
+  --fc-dark-violet: #6e69e1;
+  --fc-dark-blue-soft: #a8a6e8;
+
+  --fc-dark-danger: #e2776f;
+  --fc-dark-success: #4f9c78;
+
+  --fc-dark-text: #ffffff;
+  --fc-dark-text-soft: #b4b4bd;
+  --fc-dark-text-dim: #85858f;
+
+  --fc-dark-line: rgba(255, 255, 255, 0.1);
+  --fc-dark-line-soft: rgba(255, 255, 255, 0.06);
+
+  --fc-glass: rgba(255, 255, 255, 0.03);
+  --fc-glass-2: rgba(255, 255, 255, 0.06);
+
+
+  /* =========================================================
+     6. GLOW
+     ------------------------------------------------------------
+     Hover states and focus rings only. Never a large fill.
+     ========================================================= */
+
+  --fc-glow-brand: rgba(94, 89, 201, 0.35);
+  --fc-glow-accent: rgba(94, 89, 201, 0.3);
+  --fc-glow-cyan: rgba(94, 176, 224, 0.35);
+  --fc-glow-orange: rgba(214, 130, 62, 0.28);
+
+  /* Deeper variants, for shadows that need a long soft falloff. */
+  --fc-glow-brand-deep: rgba(94, 89, 201, 0.65);
+  --fc-glow-brand-deeper: rgba(94, 89, 201, 0.8);
+  --fc-glow-accent-deep: rgba(94, 89, 201, 0.65);
+  --fc-glow-accent-deeper: rgba(94, 89, 201, 0.8);
+
+  /* Historic aliases. */
+  --fc-glow-blue: var(--fc-glow-brand);
+  --fc-glow-violet: var(--fc-glow-accent);
+
+
+  /* =========================================================
+     7. SHADOW
+     ------------------------------------------------------------
+     Three steps, all tinted so light sections stay warm.
+     ========================================================= */
+
+  --fc-shadow-sm: 0 2px 8px rgba(23, 23, 27, 0.05);
+  --fc-shadow-md: 0 12px 28px -12px rgba(23, 23, 27, 0.16);
+  --fc-shadow-lift: 0 24px 48px -20px rgba(23, 23, 27, 0.24);
+
+  /* Dark-surface equivalent — deeper, softer, never a grey box. */
+  --fc-shadow-dark: 0 24px 60px -30px rgba(0, 0, 0, 0.85);
+
+
+  /* =========================================================
+     8. RADIUS
+     ------------------------------------------------------------
+     Five steps. Nothing in the project should use a raw pixel
+     radius outside this scale.
+     ========================================================= */
+
+  --fc-radius-xs: 8px;
+  --fc-radius-sm: 10px;
+  --fc-radius-md: 16px;
+  --fc-radius-lg: 22px;
+  --fc-radius-xl: 28px;
+  --fc-radius-pill: 999px;
+
+  /* Historic alias. */
+  --fc-radius: var(--fc-radius-md);
+
+
+  /* =========================================================
+     9. LAYOUT
+     ------------------------------------------------------------
+     One container width and one section rhythm for the site.
+     ========================================================= */
+
+  --fc-container: 1240px;
+  --fc-container-narrow: 920px;
+  --fc-container-pad: 24px;
+
+  --fc-section-pad: clamp(72px, 8vw, 120px);
+  --fc-section-pad-sm: clamp(48px, 5vw, 72px);
+  --fc-section-gap: clamp(50px, 6vw, 75px);
+  --fc-section-gap-sm: 48px;
+
+  /* Height of the fixed navbar — pages offset themselves by this. */
+  --fc-nav-height: 93px;
+  --fc-nav-offset: clamp(72px, 8vw, 100px);
+  --fc-anchor-offset: 120px;
+
+
+  /* =========================================================
+     10. MOTION
+     ------------------------------------------------------------
+     One easing curve and a five-step timing scale, matching the
+     durations already proven on Careers and Contact.
+     ========================================================= */
+
+  --fc-ease: cubic-bezier(0.22, 0.68, 0.28, 1);
+  --fc-ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Micro interactions: links, icons, focus */
+  --fc-dur-micro: 0.24s;
+  /* Buttons, chips, small hovers */
+  --fc-dur-hover: 0.34s;
+  /* Card lifts and image scale */
+  --fc-dur-card: 0.42s;
+  /* Scroll reveals */
+  --fc-dur-reveal: 0.78s;
+  /* Hero entrances */
+  --fc-dur-hero: 0.95s;
+
+  /* Grid stagger step — deliberately small. */
+  --fc-stagger: 80ms;
+
+  /* How far a card travels on reveal / hover. One value. */
+  --fc-lift: -6px;
+
+
+  /* =========================================================
+     11. TYPOGRAPHY
+     ------------------------------------------------------------
+     One family, one weight scale (400 / 500 / 600 / 700 / 800),
+     one line-height scale, two tracking values.
+     ========================================================= */
+
+  --fc-font-sans: "Inter", "Inter var", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --fc-tracking-display: -0.03em;
+  --fc-tracking-tight: -0.02em;
+
+  /* Type scale — clamp() so headings breathe with the viewport. */
+  --fc-text-display: clamp(32px, 4.2vw, 52px);
+  --fc-text-h1: clamp(34px, 4.6vw, 56px);
+  --fc-text-h2: clamp(30px, 3.6vw, 44px);
+  --fc-text-title: clamp(24px, 2.4vw, 34px);
+  --fc-text-lead: clamp(16px, 1.5vw, 19px);
+  --fc-text-body: 1rem;
+  --fc-text-sm: 0.9375rem;
+  --fc-text-xs: 0.8125rem;
+
+  --fc-leading-body: 1.7;
+  --fc-leading-tight: 1.15;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY — GLOBAL DEFAULTS
+   ========================================================= */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#root,
+button,
+input,
+textarea,
+select,
+optgroup,
+label {
+  font-family: var(--fc-font-sans);
+}
+
+body {
+  font-size: var(--fc-text-body);
+  font-weight: 400;
+  line-height: var(--fc-leading-body);
+  letter-spacing: 0;
+  color: var(--fc-text-primary);
+  background: var(--fc-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Heading hierarchy ---------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 700;
+  line-height: var(--fc-leading-tight);
+  letter-spacing: var(--fc-tracking-tight);
+  color: var(--fc-ink);
+  text-wrap: balance;
+}
+
+h1 {
+  font-weight: 800;
+  letter-spacing: var(--fc-tracking-display);
+}
+
+h3,
+h4 {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+p {
+  margin: 0;
+  line-height: var(--fc-leading-body);
+  color: var(--fc-text-secondary);
+}
+
+/* ---------- Controls inherit the same type system ---------- */
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+button {
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FOCUS
+   One visible focus treatment across the whole site.
+   ========================================================= */
+
+:focus-visible {
+  outline: 2px solid var(--fc-brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Dark surfaces brighten the ring so it stays visible. */
+.careers-page :focus-visible,
+.contact-page :focus-visible,
+.hero :focus-visible,
+.why-section :focus-visible {
+  outline-color: var(--fc-brand-soft);
+}

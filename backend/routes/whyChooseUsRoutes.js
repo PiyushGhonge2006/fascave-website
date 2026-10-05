@@ -6,6 +6,10 @@ const {
   updateWhyChooseUs,
 } = require("../controllers/whyChooseUsController");
 
+const {
+  protect,
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
 
@@ -14,11 +18,19 @@ router.get("/", getWhyChooseUs);
 
 
 // CREATE
-router.post("/", createWhyChooseUs);
+router.post(
+  "/",
+  protect,
+  createWhyChooseUs
+);
 
 
 // UPDATE
-router.put("/", updateWhyChooseUs);
+router.put(
+  "/",
+  protect,
+  updateWhyChooseUs
+);
 
 
 module.exports = router;

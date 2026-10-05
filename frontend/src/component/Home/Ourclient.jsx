@@ -1,93 +1,127 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useRevealOnScroll from "../../hooks/useRevealOnScroll";
+import { imageUrl } from "../../utils/apiBase";
 import "./Ourclient.css";
 
-const clientLogos = [
-  {
-    id: 1,
-    name: "Client 1",
-    image: "src/assets/homeing/clientsimg/APVA_logo.png",
-  },
-  {
-    id: 2,
-    name: "Client 2",
-    image: "src/assets/homeing/clientsimg/foodlex.png",
-  },
-  {
-    id: 3,
-    name: "Client 3",
-    image: "src/assets/homeing/clientsimg/hiltopTusuki.png",
-  },
-  {
-    id: 4,
-    name: "Client 4",
-    image: "src/assets/homeing/clientsimg/ikontech.png",
-  },
-  {
-    id: 5,
-    name: "Client 5",
-    image: "src/assets/homeing/clientsimg/Piotex-Ventures.png",
-  },
-  {
-    id: 6,
-    name: "Client 6",
-    image: "src/assets/homeing/clientsimg/PiotexIndustries.png",
-  },
-  {
-    id: 7,
-    name: "Client 7",
-    image: "src/assets/homeing/clientsimg/shetkari.png",
-  },
-  {
-    id: 8,
-    name: "Client 8",
-    image: "src/assets/homeing/clientsimg/shipdartexpress.png",
-  },
-  {
-    id: 9,
-    name: "Client 9",
-    image: "src/assets/homeing/clientsimg/WakeUp.jpg",
-  },
+import apvaLogo from "../../assets/homeing/clientsimg/APVA_logo.png";
+import foodlexLogo from "../../assets/homeing/clientsimg/foodlex.png";
+import hilltopTuskiLogo from "../../assets/homeing/clientsimg/hiltopTusuki.png";
+import ikontechLogo from "../../assets/homeing/clientsimg/ikontech.png";
+import piotexVenturesLogo from "../../assets/homeing/clientsimg/Piotex-Ventures.png";
+import piotexIndustriesLogo from "../../assets/homeing/clientsimg/PiotexIndustries.png";
+import shetkariLogo from "../../assets/homeing/clientsimg/shetkari.png";
+import shipdartLogo from "../../assets/homeing/clientsimg/shipdartexpress.png";
+import wakeUpLogo from "../../assets/homeing/clientsimg/WakeUp.jpg";
 
+const fallbackClients = [
+  { id: 1, name: "APVA Association", image: apvaLogo },
+  { id: 2, name: "Foodlex", image: foodlexLogo },
+  { id: 3, name: "Hilltop Tuski", image: hilltopTuskiLogo },
+  { id: 4, name: "IkonTech", image: ikontechLogo },
+  { id: 5, name: "Piotex Ventures", image: piotexVenturesLogo },
+  { id: 6, name: "Piotex Industries", image: piotexIndustriesLogo },
+  { id: 7, name: "Shetkari", image: shetkariLogo },
+  { id: 8, name: "ShipDart Express", image: shipdartLogo },
+  { id: 9, name: "Wake UP Water", image: wakeUpLogo },
 ];
 
 const Ourclients = () => {
+  const [sectionRef] = useRevealOnScroll();
+  const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const response = await fetch("/api/clients");
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch clients: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const clientList = Array.isArray(data)
+          ? data
+          : data?.clients || data?.data || [];
+
+        const formattedClients = clientList
+          .filter((client) => client?.logo)
+          .map((client, index) => ({
+            id: client._id || index,
+            name: client.name || "Client",
+            image: imageUrl(client.logo),
+            link: client.link || "",
+          }));
+
+        setClients(
+          formattedClients.length
+            ? formattedClients
+            : fallbackClients
+        );
+      } catch (error) {
+        console.error("Error fetching clients:", error);
+        setClients(fallbackClients);
+      }
+    };
+
+    fetchClients();
+  }, []);
+
+  const logos = clients.length ? clients : fallbackClients;
+
   return (
-    <section className="our-clients">
+    <section className="our-clients" ref={sectionRef}>
 
       {/* Heading */}
-      <div className="clients-heading">
+      <div className="clients-heading" data-reveal>
         <h2>OUR CLIENTS</h2>
       </div>
 
       {/* Logo viewport */}
-      <div className="clients-marquee">
+      <div
+        className="clients-marquee fc-marquee"
+        data-reveal="fade"
+      >
 
         {/* Moving track */}
-        <div className="clients-track">
+        <div className="clients-track fc-marquee-track">
 
           {/* First set */}
-          {clientLogos.map((client) => (
-            <div className="client-logo" key={`first-${client.id}`}>
+          {logos.map((client) => (
+            <div
+              className="client-logo"
+              key={`first-${client.id}`}
+            >
               <img
                 src={client.image}
                 alt={client.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = apvaLogo;
+                }}
               />
             </div>
           ))}
 
           {/* Duplicate set for seamless animation */}
-          {clientLogos.map((client) => (
-            <div className="client-logo" key={`second-${client.id}`}>
+          {logos.map((client) => (
+            <div
+              className="client-logo"
+              key={`second-${client.id}`}
+            >
               <img
                 src={client.image}
                 alt={client.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = apvaLogo;
+                }}
               />
             </div>
           ))}
 
         </div>
       </div>
-
     </section>
   );
 };

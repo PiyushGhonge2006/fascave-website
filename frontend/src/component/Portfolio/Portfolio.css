@@ -1,7 +1,6 @@
 /* ================================================================
    PORTFOLIO SECTION
-   Dark navy text on a light gray background, with a violet accent.
-   ---------------------------------------------------------------
+   ------------------------------------------------------------
    1.  Section and container
    2.  Header
    3.  Buttons
@@ -11,8 +10,7 @@
    7.  Card details
    8.  Services and technologies
    9.  Challenge box
-   10. Tablet layout
-   11. Mobile layout
+   10. Responsive
    ================================================================ */
 
 
@@ -22,16 +20,16 @@
 
 .portfolio-section {
     width: 100%;
-    padding: 80px 0 90px;
-    background: #f7f7f9;
-    border-top: 1px solid #e2e2e8;
+    padding: var(--fc-section-pad) 0;
+    background: var(--fc-surface-alt);
+    border-top: 1px solid var(--fc-border);
 }
 
 .portfolio-container {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--fc-container-pad);
 }
 
 
@@ -44,40 +42,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 42px;
+    margin-bottom: var(--fc-section-gap);
     text-align: center;
 }
 
-/* Small blue to purple line above the title */
+/* Accent rule above the title — same primitive as the shared .fc-rule-accent. */
+
 .portfolio-header-line {
     width: 76px;
     height: 4px;
     margin-bottom: 20px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #2f6df6, #4f3ce0);
+    border-radius: var(--fc-radius-pill);
+    background: var(--fc-gradient-accent);
 }
 
 .portfolio-title {
     margin: 0;
-    color: #071426;
-    font-size: clamp(32px, 26px + 2.4vw, 50px);
+    color: var(--fc-ink);
+    font-size: var(--fc-text-display);
     line-height: 1.1;
     font-weight: 800;
-    letter-spacing: -1.5px;
+    letter-spacing: var(--fc-tracking-display);
 }
 
 .portfolio-description {
-    max-width: 580px;
-    margin: 16px 0 26px;
-    color: #55617a;
-    font-size: 14px;
-    line-height: 1.7;
+    max-width: 620px;
+    margin: 18px 0 26px;
+    color: var(--fc-text-secondary);
+    font-size: var(--fc-text-body);
+    line-height: 1.75;
 }
 
 
 /* ================================================================
    3. BUTTONS
-   Both buttons share the same size. Only the colours differ.
+   Both buttons share the same shape. Only the colours differ.
    ================================================================ */
 
 .portfolio-button {
@@ -85,51 +84,67 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 13px 20px;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: 12px;
+    min-height: 50px;
+    padding: 0 24px;
+    border-radius: var(--fc-radius-md);
+    font-size: var(--fc-text-sm);
     font-weight: 600;
     cursor: pointer;
+
     transition:
-        background 0.25s ease,
-        border-color 0.25s ease,
-        color 0.25s ease;
+        background var(--fc-dur-hover) var(--fc-ease),
+        border-color var(--fc-dur-hover) var(--fc-ease),
+        color var(--fc-dur-hover) var(--fc-ease),
+        transform var(--fc-dur-hover) var(--fc-ease),
+        box-shadow var(--fc-dur-hover) var(--fc-ease);
 }
 
 .portfolio-button span {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1;
 }
 
-/* Dark filled button, used at the top of the section */
+/* Solid button, used at the top of the section */
+
 .portfolio-button-solid {
-    background: #071426;
-    border: 1px solid #071426;
+    background: var(--fc-gradient-brand);
+    border: 1px solid transparent;
     color: #ffffff;
+    box-shadow: 0 10px 26px -12px var(--fc-glow-brand-deep);
 }
 
 .portfolio-button-solid:hover {
-    background: #4f3ce0;
-    border-color: #4f3ce0;
+    background: var(--fc-gradient-accent);
+    border-color: transparent;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 16px 34px -14px var(--fc-glow-accent-deeper),
+        0 0 26px -12px var(--fc-glow-accent);
 }
 
 /* Outlined button, used inside each card */
+
 .portfolio-button-outline {
     width: 100%;
     margin-top: 18px;
-    background: #ffffff;
-    border: 1px solid #e2e2e8;
-    color: #4f3ce0;
+    background: var(--fc-surface);
+    border: 1px solid var(--fc-border-strong);
+    color: var(--fc-accent-strong);
 }
 
 .portfolio-button-outline:hover {
-    background: #f4f2ff;
-    border-color: #d6d1f9;
+    background: var(--fc-accent-wash);
+    border-color: var(--fc-accent);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px -10px rgba(92, 88, 205, 0.6);
 }
 
 .portfolio-button:focus-visible {
-    outline: 2px solid #4f3ce0;
+    outline: 2px solid var(--fc-accent);
     outline-offset: 2px;
 }
 
@@ -155,18 +170,25 @@
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
-    background: #ffffff;
-    border: 1px solid #e2e2e8;
-    border-radius: 8px;
-    box-shadow: 0 4px 14px rgba(7, 20, 38, 0.05);
+    background: var(--fc-surface);
+    border: 1px solid var(--fc-border);
+    border-radius: var(--fc-radius-lg);
+    box-shadow: var(--fc-shadow-sm);
+
     transition:
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        box-shadow var(--fc-dur-card) var(--fc-ease),
+        border-color var(--fc-dur-card) var(--fc-ease),
+        transform var(--fc-dur-card) var(--fc-ease);
 }
 
 .portfolio-card:hover {
-    border-color: #d6d1f9;
-    box-shadow: 0 10px 28px rgba(7, 20, 38, 0.09);
+    border-color: var(--fc-border-accent-strong);
+
+    transform: translateY(var(--fc-lift));
+
+    box-shadow:
+        var(--fc-shadow-lift),
+        0 0 30px -14px var(--fc-glow-accent);
 }
 
 
@@ -179,8 +201,8 @@
     width: 100%;
     height: 210px;
     overflow: hidden;
-    background: #e9e9f1;
-    border-bottom: 1px solid #e2e2e8;
+    background: var(--fc-surface-sunken);
+    border-bottom: 1px solid var(--fc-border);
 }
 
 .portfolio-image img {
@@ -188,31 +210,30 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.62s var(--fc-ease);
 }
 
 .portfolio-card:hover .portfolio-image img {
-    transform: scale(1.05);
+    transform: scale(1.06);
 }
 
 /* Dark label that fades in over the image on hover */
+
 .portfolio-image-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(7, 20, 38, 0.72);
+    padding: 0 24px;
+    background: rgba(23, 23, 27, 0.74);
     color: #ffffff;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.16em;
     text-align: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--fc-dur-hover) var(--fc-ease);
 }
 
 .portfolio-card:hover .portfolio-image-overlay {
@@ -240,7 +261,7 @@
     flex: 1;
     flex-direction: column;
     min-width: 0;
-    padding: 22px;
+    padding: 24px;
 }
 
 .portfolio-card-meta {
@@ -252,29 +273,30 @@
 }
 
 .portfolio-category {
-    padding: 5px 9px;
-    background: #f4f2ff;
-    border: 1px solid #ded8ff;
-    border-radius: 4px;
-    color: #4f3ce0;
+    padding: 6px 11px;
+    background: var(--fc-accent-wash);
+    border: 1px solid var(--fc-border-accent);
+    border-radius: var(--fc-radius-xs);
+    color: var(--fc-accent-strong);
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .portfolio-date {
-    color: #5c6577;
-    font-size: 11px;
+    color: var(--fc-text-muted);
+    font-size: 12px;
     white-space: nowrap;
 }
 
 .portfolio-card-title {
     margin: 16px 0 6px;
-    color: #071426;
-    font-size: 21px;
+    color: var(--fc-ink);
+    font-size: var(--fc-text-title);
     line-height: 1.25;
     font-weight: 700;
-    letter-spacing: -0.4px;
+    letter-spacing: var(--fc-tracking-tight);
     overflow-wrap: break-word;
 }
 
@@ -284,17 +306,17 @@
     align-items: baseline;
     gap: 4px 8px;
     margin: 0 0 15px;
-    color: #071426;
-    font-size: 13px;
+    color: var(--fc-ink);
+    font-size: 14px;
     font-weight: 600;
     overflow-wrap: break-word;
 }
 
 .portfolio-client-label {
-    color: #5c6577;
+    color: var(--fc-text-muted);
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
@@ -306,33 +328,44 @@
 .portfolio-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 7px;
     margin-bottom: 18px;
 }
 
 .portfolio-tag {
-    padding: 5px 9px;
-    background: #f8f8fa;
-    border: 1px solid #e2e2e8;
-    border-radius: 4px;
-    color: #4a5568;
-    font-size: 11px;
+    padding: 6px 11px;
+    background: var(--fc-surface-alt);
+    border: 1px solid var(--fc-border);
+    border-radius: var(--fc-radius-xs);
+    color: var(--fc-text-secondary);
+    font-size: 12px;
     font-weight: 500;
+
+    transition:
+        background var(--fc-dur-micro) var(--fc-ease),
+        border-color var(--fc-dur-micro) var(--fc-ease),
+        color var(--fc-dur-micro) var(--fc-ease);
+}
+
+.portfolio-card:hover .portfolio-tag {
+    background: var(--fc-accent-wash);
+    border-color: var(--fc-border-accent);
+    color: var(--fc-accent-strong);
 }
 
 .portfolio-technologies {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 7px;
 }
 
 .portfolio-technology {
-    padding: 4px 9px;
-    background: #f7f7f9;
-    border: 1px solid #e2e2e8;
-    border-radius: 4px;
-    color: #55617a;
-    font-size: 10px;
+    padding: 5px 11px;
+    background: var(--fc-surface-sunken);
+    border: 1px solid var(--fc-border);
+    border-radius: var(--fc-radius-xs);
+    color: var(--fc-text-muted);
+    font-size: 11px;
 }
 
 
@@ -342,32 +375,32 @@
 
 .portfolio-challenge {
     margin-top: 18px;
-    border: 1px solid #e2e2e8;
-    border-radius: 6px;
-    background: #ffffff;
+    border: 1px solid var(--fc-border);
+    border-radius: var(--fc-radius-md);
+    background: var(--fc-surface-alt);
 }
 
 .portfolio-challenge-label {
     margin: 0;
-    padding: 12px 14px 0;
-    color: #5c6577;
+    padding: 13px 16px 0;
+    color: var(--fc-text-muted);
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .portfolio-challenge-text {
     margin: 0;
-    padding: 8px 14px 14px;
-    color: #3f4c60;
-    font-size: 12px;
-    line-height: 1.65;
+    padding: 8px 16px 15px;
+    color: var(--fc-text-secondary);
+    font-size: 13px;
+    line-height: 1.7;
 }
 
 
 /* ================================================================
-   10. TABLET LAYOUT
-   2 cards per row.
+   10. RESPONSIVE
    ================================================================ */
 
 @media (max-width: 1050px) {
@@ -376,15 +409,9 @@
     }
 }
 
-
-/* ================================================================
-   11. MOBILE LAYOUT
-   1 card per row.
-   ================================================================ */
-
 @media (max-width: 680px) {
     .portfolio-section {
-        padding: 56px 0 64px;
+        padding: var(--fc-section-pad-sm) 0;
     }
 
     .portfolio-container {
@@ -392,11 +419,7 @@
     }
 
     .portfolio-header {
-        margin-bottom: 28px;
-    }
-
-    .portfolio-description {
-        font-size: 13px;
+        margin-bottom: 36px;
     }
 
     .portfolio-grid {
@@ -409,16 +432,33 @@
     }
 
     .portfolio-card-body {
-        padding: 18px;
+        padding: 20px;
+    }
+}
+
+
+/* ================================================================
+   11. REDUCED MOTION
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .portfolio-button,
+    .portfolio-card,
+    .portfolio-image img,
+    .portfolio-image-overlay,
+    .portfolio-tag {
+        transition-duration: 0.01ms !important;
     }
 
-    .portfolio-card-title {
-        font-size: 19px;
+    .portfolio-button-solid:hover,
+    .portfolio-button-outline:hover,
+    .portfolio-card:hover,
+    .portfolio-card:hover .portfolio-image img {
+        transform: none;
     }
 
-    .portfolio-tag,
-    .portfolio-challenge-text,
-    .portfolio-button-outline {
-        font-size: 11px;
+    .portfolio-card:hover .portfolio-image-overlay {
+        animation: none !important;
     }
 }

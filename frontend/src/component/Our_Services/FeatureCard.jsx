@@ -4,7 +4,8 @@ export default function FeatureCard({ feature }) {
   return (
     <Link
       to={`/features/${feature.id}`}
-      className="feature-card-link"
+      className="feature-card-link fc-glow-hover"
+      data-reveal="scale"
     >
       <article className="feature-card">
 

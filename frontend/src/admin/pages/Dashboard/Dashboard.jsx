@@ -1,171 +1,491 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import { api } from "../../lib/apiClient";
+
+import {
+    Alert,
+    LoadingState,
+    PageHeader,
+    StatusBadge,
+    Toast,
+    useToast,
+} from "../../components";
+
+import { useAdminAuth } from "../../context/AdminAuthContext";
+
 import "./Dashboard.css";
 
-const stats = [
-    {
-        title: "Website Pages",
-        value: "8",
-        label: "Manageable pages",
-        icon: "▦",
-    },
-    {
-        title: "Services",
-        value: "12",
-        label: "Active services",
-        icon: "▣",
-    },
-    {
-        title: "Portfolio",
-        value: "4",
-        label: "Featured projects",
-        icon: "▤",
-    },
-    {
-        title: "Blog Posts",
-        value: "6",
-        label: "Published articles",
-        icon: "✎",
-    },
-];
 
-const contentItems = [
+const CONTENT_LINKS = [
     {
         name: "Home",
-        description: "Hero, clients, portfolio, partners and other sections",
-        status: "Ready",
+        description:
+            "Hero, stats and client logos",
+        path: "/admin/home",
+        key: null,
     },
     {
         name: "About Us",
-        description: "Company information, mission, vision and office details",
-        status: "Ready",
+        description:
+            "Story, mission, vision and values",
+        path: "/admin/about",
+        key: null,
     },
     {
         name: "Services",
-        description: "Manage website services and service details",
-        status: "Manage",
+        description:
+            "Service list and feature bullets",
+        path: "/admin/services",
+        key: "services",
     },
     {
         name: "Portfolio",
-        description: "Manage projects, images, technologies and case studies",
-        status: "Manage",
+        description:
+            "Case studies, images and tech stack",
+        path: "/admin/portfolio",
+        key: "portfolioItems",
     },
     {
         name: "GTM Partners",
-        description: "Manage strategic partner logos and information",
-        status: "Manage",
+        description:
+            "Partner logos and tiers",
+        path: "/admin/gtm-partners",
+        key: "partners",
     },
     {
         name: "FAQ",
-        description: "Manage frequently asked questions and answers",
-        status: "Manage",
+        description:
+            "Questions and answers",
+        path: "/admin/faq",
+        key: "faqs",
     },
     {
         name: "Testimonials",
-        description: "Manage customer testimonials and reviews",
-        status: "Manage",
+        description:
+            "Customer quotes and ratings",
+        path: "/admin/testimonials",
+        key: "testimonials",
     },
     {
         name: "Blog",
-        description: "Create, edit and manage blog articles",
-        status: "Manage",
+        description:
+            "Articles and publishing",
+        path: "/admin/blog",
+        key: null,
     },
 ];
 
+
+const formatDate = (value) => {
+
+    if (!value) {
+        return "—";
+    }
+
+    return new Date(value).toLocaleDateString(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+        }
+    );
+
+};
+
+
 const Dashboard = () => {
-    return (
-        <div className="dashboard-page">
 
-            {/* Header */}
-            <div className="dashboard-header">
-                <div>
-                    <h1>Dashboard</h1>
-                    <p>
-                        Manage and update your FasCave website content from one place.
-                    </p>
-                </div>
+    const { admin } = useAdminAuth();
 
-                <div className="dashboard-welcome">
-                    Welcome back, Admin 👋
-                </div>
+    const [stats, setStats] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const { toast, closeToast } = useToast();
+
+
+    const load = async () => {
+
+        setLoading(true);
+        setError("");
+
+        try {
+
+            const data = await api.get(
+                "/api/admin/stats"
+            );
+
+            setStats(data);
+
+        } catch (loadError) {
+
+            setError(
+                loadError.message ||
+                    "Could not load dashboard."
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
+    };
+
+    useEffect(() => {
+
+        load();
+
+    }, []);
+
+
+    const statCards = stats
+        ? [
+              {
+                  title: "Total Messages",
+                  value: stats.messages.total,
+                  label: "All enquiries",
+                  icon: "✉",
+              },
+              {
+                  title: "Unread",
+                  value: stats.messages.new,
+                  label: "Need a reply",
+                  icon: "●",
+              },
+              {
+                  title: "Services",
+                  value: stats.content.services,
+                  label: "Published services",
+                  icon: "▣",
+              },
+              {
+                  title: "Portfolio",
+                  value:
+                      stats.content.portfolioItems,
+                  label: "Case studies",
+                  icon: "▤",
+              },
+          ]
+        : [];
+
+    const contentRows = stats
+        ? CONTENT_LINKS.map((item) => {
+              if (!item.key) {
+
+                  return {
+                      ...item,
+                      count: null,
+                      path: item.path,
+                  };
+
+              }
+
+              return {
+                  ...item,
+                  count:
+                      stats.content[item.key] ?? 0,
+              };
+
+          })
+        : [];
+
+
+    if (loading) {
+
+        return (
+            <div className="admin-page">
+                <LoadingState label="Loading dashboard" />
             </div>
+        );
 
-            {/* Stats */}
-            <div className="dashboard-stats">
-                {stats.map((stat) => (
-                    <div className="dashboard-stat-card" key={stat.title}>
+    }
 
-                        <div className="stat-top">
-                            <div className="stat-icon">
+    return (
+        <div className="admin-page">
+
+            <PageHeader
+                title="Dashboard"
+                description="Manage and update your FasCave website content from one place."
+                actions={
+                    <div className="dashboard-welcome">
+                        Welcome back,{" "}
+                        {admin?.name || "Admin"}
+                    </div>
+                }
+            />
+
+            <Alert message={error} />
+
+            {/* STATS */}
+            <div className="admin-stats-grid">
+
+                {statCards.map((stat) => (
+                    <div
+                        className="admin-stat-card"
+                        key={stat.title}
+                    >
+
+                        <div className="admin-stat-top">
+                            <div className="admin-stat-icon">
                                 {stat.icon}
                             </div>
-
-                            <span className="stat-arrow">↗</span>
                         </div>
 
-                        <div className="stat-value">
+                        <div className="admin-stat-value">
                             {stat.value}
                         </div>
 
-                        <h3>{stat.title}</h3>
+                        <div className="admin-stat-label">
+                            {stat.title}
+                        </div>
 
-                        <p>{stat.label}</p>
+                        <div className="admin-stat-sub">
+                            {stat.label}
+                        </div>
+
                     </div>
                 ))}
+
             </div>
 
-            {/* Content Management */}
-            <div className="content-management">
+            <div className="admin-two-col">
 
-                <div className="section-heading">
-                    <div>
-                        <h2>Website Content</h2>
-                        <p>
-                            Manage the content displayed across the FasCave website.
-                        </p>
-                    </div>
-                </div>
+                {/* CONTENT */}
+                <div className="admin-card">
 
-                <div className="content-list">
-
-                    {contentItems.map((item) => (
-                        <div className="content-row" key={item.name}>
-
-                            <div className="content-info">
-                                <div className="content-icon">
-                                    {item.name.charAt(0)}
-                                </div>
-
-                                <div>
-                                    <h3>{item.name}</h3>
-                                    <p>{item.description}</p>
-                                </div>
-                            </div>
-
-                            <div className="content-action">
-                                <span
-                                    className={
-                                        item.status === "Ready"
-                                            ? "content-status ready"
-                                            : "content-status"
-                                    }
-                                >
-                                    {item.status}
-                                </span>
-
-                                <button>
-                                    Manage
-                                    <span>→</span>
-                                </button>
-                            </div>
-
+                    <div className="admin-card-header">
+                        <div>
+                            <h2>Website content</h2>
+                            <p>
+                                Every section you
+                                can manage.
+                            </p>
                         </div>
-                    ))}
+                    </div>
+
+                    <div>
+                        {contentRows.map((item) => (
+                            <div
+                                className="admin-list-row"
+                                key={item.name}
+                            >
+
+                                <div className="admin-list-main">
+
+                                    <div className="admin-list-title">
+                                        {item.name}
+                                    </div>
+
+                                    <div className="admin-list-sub">
+                                        {item.description}
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    style={{
+                                        display:
+                                            "flex",
+                                        alignItems:
+                                            "center",
+                                        gap:
+                                            "12px",
+                                    }}
+                                >
+
+                                    {item.count !==
+                                        null && (
+                                        <span className="admin-badge admin-badge-info">
+                                            {
+                                                item.count
+                                            }
+                                        </span>
+                                    )}
+
+                                    <a
+                                        className="admin-btn admin-btn-secondary admin-btn-sm"
+                                        href={item.path}
+                                    >
+                                        Manage →
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
 
                 </div>
+
+                {/* RECENT */}
+                <div>
+                    <div className="admin-card dashboard-side-card">
+
+                        <div className="admin-card-header">
+                            <div>
+                                <h2>Recent messages</h2>
+                                <p>
+                                    Latest enquiries
+                                    received.
+                                </p>
+                            </div>
+                        </div>
+
+                        {stats?.recentMessages?.length ? (
+                            <div>
+                                {stats.recentMessages.map(
+                                    (message) => (
+                                        <div
+                                            className="admin-recent-item"
+                                            key={
+                                                message._id
+                                            }
+                                        >
+
+                                            <span
+                                                className={`admin-recent-dot ${
+                                                    message.status ===
+                                                    "replied"
+                                                        ? "admin-recent-dot-replied"
+                                                        : message.status ===
+                                                            "read"
+                                                            ? "admin-recent-dot-read"
+                                                            : ""
+                                                }`}
+                                            />
+
+                                            <div
+                                                style={{
+                                                    minWidth: 0,
+                                                    flex: 1,
+                                                }}
+                                            >
+
+                                                <div className="admin-list-title">
+                                                    {[
+                                                        message.displayName,
+                                                        message.fullName,
+                                                        message.firstName,
+                                                    ]
+                                                        .filter(Boolean)
+                                                        .join(" ") ||
+                                                        "—"}
+                                                </div>
+
+                                                <div className="admin-list-sub">
+                                                    {formatDate(
+                                                        message.createdAt
+                                                    )}
+                                                </div>
+
+                                            </div>
+
+                                            <StatusBadge
+                                                status={
+                                                    message.status
+                                                }
+                                            />
+
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        ) : (
+                            <div
+                                style={{
+                                    padding:
+                                        "26px 20px",
+                                    color: "#6b6b74",
+                                    fontSize: "13px",
+                                    textAlign:
+                                        "center",
+                                }}
+                            >
+                                No messages yet.
+                            </div>
+                        )}
+
+                        <div
+                            style={{
+                                padding: "14px 20px",
+                                borderTop:
+                                    "1px solid #f4f3f0",
+                            }}
+                        >
+                            <a
+                                className="admin-btn admin-btn-secondary admin-btn-sm admin-btn-block"
+                                href="/admin/messages"
+                            >
+                                View all messages
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div className="admin-card dashboard-side-card">
+
+                        <div className="admin-card-header">
+                            <div>
+                                <h2>Blog activity</h2>
+                                <p>
+                                    Drafts vs
+                                    published.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="admin-list-row">
+                            <div className="admin-list-main">
+                                <div className="admin-stat-value">
+                                    {
+                                        stats?.blog
+                                            ?.published ??
+                                        0
+                                    }
+                                </div>
+                                <div className="admin-list-sub">
+                                    Published posts
+                                </div>
+                            </div>
+
+                            <StatusBadge
+                                status="published"
+                            />
+                        </div>
+
+                        <div className="admin-list-row">
+                            <div className="admin-list-main">
+                                <div className="admin-stat-value">
+                                    {
+                                        stats?.blog
+                                            ?.drafts ?? 0
+                                    }
+                                </div>
+                                <div className="admin-list-sub">
+                                    Drafts waiting
+                                </div>
+                            </div>
+
+                            <StatusBadge
+                                status="draft"
+                            />
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
+
+            <Toast
+                toast={toast}
+                onClose={closeToast}
+            />
 
         </div>
     );
+
 };
 
 export default Dashboard;

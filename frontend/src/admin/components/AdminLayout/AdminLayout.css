@@ -3,25 +3,44 @@
     background: #f5f7fb;
 }
 
-.admin-main-content {
-    margin-left: 260px;
+.admin-shell {
     min-height: 100vh;
+
+    margin-left: 260px;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.admin-main-content {
+    flex: 1;
+
     padding: 30px;
+
+    min-width: 0;
+
 }
 
 
 /* Responsive */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
+
+    .admin-shell {
+        margin-left: 0;
+    }
+
     .admin-main-content {
-        margin-left: 220px;
         padding: 24px;
     }
+
 }
 
 @media (max-width: 600px) {
+
     .admin-main-content {
-        margin-left: 0;
         padding: 18px;
     }
+
 }

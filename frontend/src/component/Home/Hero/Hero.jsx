@@ -1,62 +1,94 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MessageCircle } from 'lucide-react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+
 import { slides } from '../data/heroslides'
 import HeroSlide from './HeroSlide'
 import HeroCarousel from './HeroCarousel'
-import Silhouette from './Silhouette'
+
+import robotAnimation from '../../../assets/Robo/Robot.json'
+
+import usePrefersReducedMotion from '../../../hooks/usePrefersReducedMotion'
+import { useSingleton } from '../../../hooks/useContent'
+import { goToContactForm } from '../../../utils/contactNavigation'
+
 import './Herosection.css'
 
 const AUTOPLAY_MS = 8500
 const EXIT_MS = 800
-const PARALLAX_MAX = 10
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(
-    () =>
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  )
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const handler = () => setReduced(mq.matches)
-    mq.addEventListener?.('change', handler)
-    return () => mq.removeEventListener?.('change', handler)
-  }, [])
-
-  return reduced
-}
 
 export default function Hero() {
   const [current, setCurrent] = useState(0)
   const [exiting, setExiting] = useState(null)
   const [paused, setPaused] = useState(false)
-  const reduced = usePrefersReducedMotion()
 
-  const bgRef = useRef(null)
-  const figRef = useRef(null)
-  const rafRef = useRef(null)
+  const reduced = usePrefersReducedMotion()
+  const navigate = useNavigate()
+
+  const { data: home } = useSingleton('/api/content/home', {})
+
+  /* The CMS holds one hero, not the four-slide carousel.
+     The first slide takes its text from the database.
+     The artwork, theme and background word remain in code. */
+  const heroSlides = useMemo(() => {
+    const hero = home?.hero
+
+    if (!hero?.heading && !hero?.description) {
+      return slides
+    }
+
+    return slides.map((slide, index) =>
+      index === 0
+        ? {
+            ...slide,
+            eyebrow: hero.eyebrow || slide.eyebrow,
+            title: hero.heading || slide.title,
+            subtitle: hero.description || slide.subtitle,
+            cta: hero.ctaLabel || slide.cta,
+          }
+        : slide
+    )
+  }, [home])
+
+  const activeSlide = heroSlides[current] || heroSlides[0]
+
   const exitTimer = useRef(null)
 
   const goTo = useCallback(
     (nextIndex) => {
-      const total = slides.length
+      const total = heroSlides.length
       const next = ((nextIndex % total) + total) % total
+
       if (next === current) return
+
       clearTimeout(exitTimer.current)
+
       setExiting(current)
       setCurrent(next)
-      exitTimer.current = setTimeout(() => setExiting(null), EXIT_MS)
+
+      exitTimer.current = setTimeout(() => {
+        setExiting(null)
+      }, EXIT_MS)
     },
-    [current],
+    [current, heroSlides.length]
   )
 
-  const goNext = useCallback(() => goTo(current + 1), [goTo, current])
-  const goPrev = useCallback(() => goTo(current - 1), [goTo, current])
+  const goNext = useCallback(
+    () => goTo(current + 1),
+    [goTo, current]
+  )
+
+  const goPrev = useCallback(
+    () => goTo(current - 1),
+    [goTo, current]
+  )
 
   useEffect(() => {
     if (paused || reduced) return undefined
+
     const timer = setTimeout(goNext, AUTOPLAY_MS)
+
     return () => clearTimeout(timer)
   }, [paused, reduced, goNext])
 
@@ -64,27 +96,7 @@ export default function Hero() {
     () => () => {
       clearTimeout(exitTimer.current)
     },
-    [],
-  )
-
-  const handleMouseMove = useCallback(
-    (event) => {
-      if (reduced) return
-      if (window.matchMedia('(max-width: 767px)').matches) return
-      if (rafRef.current !== null) return
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null
-        const nx = (event.clientX / window.innerWidth - 0.5) * 2
-        const ny = (event.clientY / window.innerHeight - 0.5) * 2
-        if (bgRef.current) {
-          bgRef.current.style.transform = `translate3d(${(-nx * PARALLAX_MAX).toFixed(2)}px, ${(-ny * PARALLAX_MAX).toFixed(2)}px, 0) scale(1.03)`
-        }
-        if (figRef.current) {
-          figRef.current.style.transform = `translate3d(${(nx * PARALLAX_MAX * 0.5).toFixed(2)}px, ${(ny * PARALLAX_MAX * 0.5).toFixed(2)}px, 0)`
-        }
-      })
-    },
-    [reduced],
+    []
   )
 
   const handleKeyDown = useCallback(
@@ -97,78 +109,166 @@ export default function Hero() {
         goNext()
       }
     },
-    [goPrev, goNext],
+    [goPrev, goNext]
   )
 
   return (
     <section
       className="hero"
       aria-roledescription="carousel"
-      aria-label="Featured insight carousel"
+      aria-label="FasCave services"
       aria-live="polite"
       tabIndex={0}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       onKeyDown={handleKeyDown}
     >
-      <div className="hero-bg" ref={bgRef} aria-hidden="true">
-        {slides.map((slide, index) => (
+      {/* =====================================================
+          BACKGROUND
+          ===================================================== */}
+
+      <div className="hero-bg" aria-hidden="true">
+        {heroSlides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`hero-bg__layer theme-${slide.theme}${
+            className={`hero-bg__layer hero-bg__layer--${slide.theme}${
               index === current ? ' is-active' : ''
             }`}
           />
         ))}
-        <div className="hero-bg__overlay" />
+
+        <div className="hero-bg__words">
+          {heroSlides.map((slide, index) => (
+            <span
+              key={`word-${slide.id}`}
+              className={`hero-bg__word${
+                index === current ? ' is-active' : ''
+              }`}
+            >
+              {slide.backgroundWord}
+            </span>
+          ))}
+        </div>
+
+        <div className="hero-aurora" />
+        <div className="hero-bg__grid" />
         <div className="hero-bg__grain" />
       </div>
 
-      {slides.map((slide, index) => {
-        if (index === current) {
-          return (
-            <HeroSlide
-              key={slide.id}
-              slide={slide}
-              exiting={false}
-              instant={reduced}
-            />
-          )
-        }
-        if (index === exiting) {
-          return (
-            <HeroSlide
-              key={`exit-${slide.id}`}
-              slide={slide}
-              exiting
-              instant
-            />
-          )
-        }
-        return null
-      })}
+      {/* =====================================================
+          MAIN HERO
+          ===================================================== */}
 
-      <div className="hero-fig" ref={figRef} aria-hidden="true">
-        <Silhouette />
+      <div className="hero-inner">
+
+        {/* LEFT CONTENT */}
+        <div className="hero-copy">
+          {heroSlides.map((slide, index) => {
+            if (index === current) {
+              return (
+                <HeroSlide
+                  key={slide.id}
+                  slide={slide}
+                  instant={reduced}
+                />
+              )
+            }
+
+            if (index === exiting) {
+              return (
+                <HeroSlide
+                  key={`exit-${slide.id}`}
+                  slide={slide}
+                  exiting
+                  instant
+                />
+              )
+            }
+
+            return null
+          })}
+        </div>
+
+        {/* RIGHT ROBOT */}
+        <div className="hero-visual">
+
+          <div className="hero-robot" aria-hidden="true">
+            <DotLottieReact
+              data={JSON.stringify(robotAnimation)}
+              loop={!reduced}
+              autoplay={!reduced}
+              backgroundColor="transparent"
+            />
+          </div>
+
+          {/* Existing callouts are preserved */}
+          <div className="hero-callouts">
+            {(activeSlide?.callouts || []).map((callout, index) => (
+              <div
+                key={`${callout.label}-${index}`}
+                className={`hero-callout hero-callout--${index + 1}`}
+              >
+                <span className="hero-callout__label">
+                  {callout.label}
+                </span>
+
+                <span className="hero-callout__value">
+                  {callout.value}
+                </span>
+              </div>
+            ))}
+          </div>
+
+        </div>
       </div>
 
-      <div className="platform" aria-hidden="true">
-        <span className="platform__glow" />
-        <span className="platform__ring platform__ring--outer" />
-        <span className="platform__ring platform__ring--inner" />
+      {/* =====================================================
+          CAROUSEL CONTROLS
+          ===================================================== */}
+
+      <div className="hero-controls">
+        <div className="hero-controls__inner">
+
+          <HeroCarousel
+            slides={heroSlides}
+            current={current}
+            onSelect={goTo}
+            onPrev={goPrev}
+            onNext={goNext}
+          />
+
+          <p className="hero-counter" aria-hidden="true">
+            <span className="hero-counter__current">
+              {String(current + 1).padStart(2, '0')}
+            </span>
+
+            <span className="hero-counter__rule" />
+
+            <span className="hero-counter__total">
+              {String(heroSlides.length).padStart(2, '0')}
+            </span>
+          </p>
+
+        </div>
       </div>
 
-      <HeroCarousel onPrev={goPrev} onNext={goNext} />
+      {/* =====================================================
+          CHAT BUTTON
+          ===================================================== */}
 
       <button
         type="button"
         className="chat-button"
         aria-label="Send us a message"
+        onClick={() => goToContactForm(navigate)}
       >
-        <MessageCircle size={26} strokeWidth={1.75} aria-hidden="true" />
+        <MessageCircle
+          size={26}
+          strokeWidth={1.75}
+          aria-hidden="true"
+        />
       </button>
     </section>
   )

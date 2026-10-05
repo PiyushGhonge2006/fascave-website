@@ -1,10 +1,26 @@
 import { Link, useParams } from 'react-router-dom'
-import { features } from './data/features'
+import { useServices } from './useServices'
+import useRevealOnScroll from '../../hooks/useRevealOnScroll'
 import './ourservice.css'
+
+/* The five points sit at fixed positions around the core, so
+   the list is rendered into those slots and any extras are
+   dropped rather than breaking the layout. */
+const POINT_POSITIONS = [
+  'point-top',
+  'point-left-top',
+  'point-right-top',
+  'point-left-bottom',
+  'point-right-bottom',
+]
 
 export default function FeatureDetails() {
 
   const { featureId } = useParams()
+
+  const [pageRef] = useRevealOnScroll({ stagger: 90 })
+
+  const features = useServices()
 
   const feature = features.find(
     (item) => item.id === featureId
@@ -30,19 +46,19 @@ export default function FeatureDetails() {
   }
 
   return (
-    <main className="details-page">
+    <main className="details-page" ref={pageRef}>
 
       {/* HERO / MAIN SERVICE */}
       <section className="service-hero">
 
-        <div className="service-hero-image">
+        <div className="service-hero-image" data-reveal="left">
           <img
             src={feature.image}
             alt={feature.title}
           />
         </div>
 
-        <div className="service-hero-content">
+        <div className="service-hero-content" data-reveal="right">
 
           <span className="details-label">
             OUR SERVICES
@@ -73,7 +89,7 @@ export default function FeatureDetails() {
       {/* SECOND SECTION */}
       <section className="service-comparison">
 
-        <div className="comparison-heading">
+        <div className="comparison-heading" data-reveal>
 
           <span>BUSINESS TRANSFORMATION</span>
 
@@ -95,11 +111,11 @@ export default function FeatureDetails() {
 
           {/* TODAY */}
 
-          <div className="comparison-column today">
+          <div className="comparison-column today" data-reveal="scale">
 
             <h3>TODAY</h3>
 
-            {feature.today.map((item, index) => (
+          {feature.today?.map((item, index) => (
 
               <div
                 className="comparison-item"
@@ -114,18 +130,18 @@ export default function FeatureDetails() {
 
               </div>
 
-            ))}
+          ))}
 
           </div>
 
 
           {/* OUTCOME */}
 
-          <div className="comparison-column outcome">
+          <div className="comparison-column outcome" data-reveal="scale">
 
             <h3>BUSINESS OUTCOME</h3>
 
-            {feature.outcome.map((item, index) => (
+            {feature.outcome?.map((item, index) => (
 
               <div
                 className="comparison-item"
@@ -154,25 +170,16 @@ export default function FeatureDetails() {
 
         <div className="points-wrapper">
 
-          <div className="point point-top">
-            <strong>{feature.points[0]}</strong>
-          </div>
-
-          <div className="point point-left-top">
-            <strong>{feature.points[1]}</strong>
-          </div>
-
-          <div className="point point-right-top">
-            <strong>{feature.points[2]}</strong>
-          </div>
-
-          <div className="point point-left-bottom">
-            <strong>{feature.points[3]}</strong>
-          </div>
-
-          <div className="point point-right-bottom">
-            <strong>{feature.points[4]}</strong>
-          </div>
+          {feature.points?.map((point, index) => (
+            POINT_POSITIONS[index] ? (
+              <div
+                className={`point ${POINT_POSITIONS[index]}`}
+                key={`${point}-${index}`}
+              >
+                <strong>{point}</strong>
+              </div>
+            ) : null
+          ))}
 
 
           <div className="service-core">

@@ -1,186 +1,239 @@
-/* ================================
-   OUR CLIENTS SECTION
-================================ */
+/* =========================================================
+   OUR CLIENTS
+   ---------------------------------------------------------
+   IMPORTANT:
+   All selectors are scoped specifically to the clients
+   section so this stylesheet does not affect Services
+   or any other page/section.
+   ========================================================= */
 
 .our-clients {
-    width: 100%;
-    background: #ffffff;
-    padding-top: 70px;
-    padding-bottom: 55px;
-    overflow: hidden;
+  width: 100%;
+  padding: 55px 0 35px;
+  background: var(--fc-surface);
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   CLIENTS HEADING
+   ========================================================= */
+
+.our-clients .clients-heading {
+  width: 100%;
+  padding: 0 var(--fc-container-pad);
+  margin: 0 0 35px;
+  text-align: center;
+}
+
+.our-clients .clients-heading h2 {
+  margin: 0;
+  padding: 0;
+
+  color: var(--fc-ink);
+
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: var(--fc-tracking-display);
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   CLIENTS MARQUEE
+   ========================================================= */
+
+.our-clients .clients-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+
+/* =========================================================
+   CLIENTS MOVING TRACK
+   ========================================================= */
+
+.our-clients .clients-track {
+  display: flex;
+  align-items: center;
+
+  width: max-content;
+
+  animation: ourClientsScroll 24s linear infinite;
+}
+
+
+/* =========================================================
+   CLIENT LOGO BOX
+   ========================================================= */
+
+.our-clients .client-logo {
+  width: 190px;
+  height: 100px;
+
+  margin: 0 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   CLIENT LOGO IMAGE
+   ========================================================= */
+
+.our-clients .client-logo img {
+  display: block;
+
+  width: auto;
+  max-width: 155px;
+  max-height: 75px;
+
+  object-fit: contain;
+
+  opacity: 1;
+
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease),
+    opacity var(--fc-dur-hover) var(--fc-ease);
+}
+
+
+/* =========================================================
+   CLIENT LOGO HOVER
+   ========================================================= */
+
+.our-clients .client-logo:hover img {
+  transform: scale(1.08);
+}
+
+
+/* =========================================================
+   INFINITE CLIENT LOGO ANIMATION
+   ========================================================= */
+
+@keyframes ourClientsScroll {
+  from {
+    transform: translateX(0);
   }
-  
-  
-  /* ================================
-     HEADING
-  ================================ */
-  
-  .clients-heading {
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .our-clients {
+    padding: 45px 0 30px;
+  }
+
+  .our-clients .clients-heading {
+    margin-bottom: 30px;
+  }
+
+  .our-clients .clients-heading h2 {
+    font-size: 38px;
+  }
+
+  .our-clients .client-logo {
+    width: 165px;
+    height: 85px;
+    margin: 0 20px;
+  }
+
+  .our-clients .client-logo img {
+    max-width: 135px;
+    max-height: 65px;
+  }
+
+  .our-clients .clients-track {
+    animation-duration: 20s;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .our-clients {
+    padding: 40px 0 25px;
+  }
+
+  .our-clients .clients-heading {
+    margin-bottom: 25px;
+  }
+
+  .our-clients .clients-heading h2 {
+    font-size: 32px;
+  }
+
+  .our-clients .client-logo {
+    width: 135px;
+    height: 70px;
+    margin: 0 15px;
+  }
+
+  .our-clients .client-logo img {
+    max-width: 110px;
+    max-height: 50px;
+  }
+
+  .our-clients .clients-track {
+    animation-duration: 17s;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .our-clients .clients-track {
+    animation: none;
     width: 100%;
-    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    row-gap: 15px;
   }
-  
-  .clients-heading h2 {
-    margin: 0;
-    color: #29266f;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 52px;
-    font-weight: 700;
-    letter-spacing: -1.5px;
-    line-height: 1;
+
+  .our-clients .client-logo img {
+    transition-duration: 0.01ms;
   }
-  
-  
-  /* ================================
-     MARQUEE CONTAINER
-  ================================ */
-  
-  .clients-marquee {
-    width: 100%;
-    overflow: hidden;
-    margin-top: 82px;
+
+  .our-clients .client-logo:hover img {
+    transform: none;
   }
-  
-  
-  /* ================================
-     MOVING TRACK
-  ================================ */
-  
-  .clients-track {
-    display: flex;
-    align-items: center;
-    width: max-content;
-  
-    animation: clientsSlide 28s linear infinite;
-  }
-  
-  
-  /* ================================
-     INDIVIDUAL LOGO
-  ================================ */
-  
-  .client-logo {
-    width: 200px;   /* pehle 150px tha */
-    height: 99px;
-  
-    flex-shrink: 0;
-  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    margin: 0 48px;
-  }
-  
-  
-  /* Logo image */
-  
-  .client-logo img {
-    max-width: 200px;
-    max-height: 120px;
-  
-    width: auto;
-    height: auto;
-  
-    object-fit: contain;
-  
-    display: block;
-  }
-  
-  
-  /* ================================
-     SLIDING ANIMATION
-  ================================ */
-  
-  @keyframes clientsSlide {
-  
-    0% {
-      transform: translateX(0);
-    }
-  
-    100% {
-      transform: translateX(-50%);
-    }
-  
-  }
-  
-  
-  /* ================================
-     RESPONSIVE
-  ================================ */
-  
-  @media (max-width: 1024px) {
-  
-    .our-clients {
-      padding-top: 55px;
-      padding-bottom: 45px;
-    }
-  
-    .clients-heading h2 {
-      font-size: 44px;
-    }
-  
-    .clients-marquee {
-      margin-top: 65px;
-    }
-  
-    .client-logo {
-      margin: 0 35px;
-    }
-  
-  }
-  
-  
-  @media (max-width: 768px) {
-  
-    .our-clients {
-      padding-top: 53px;
-      padding-bottom: 40px;
-    }
-  
-    .clients-heading h2 {
-      font-size: 36px;
-      letter-spacing: -1px;
-    }
-  
-    .clients-marquee {
-      margin-top: 50px;
-    }
-  
-    .client-logo {
-      width: 125px;
-      height: 60px;
-      margin: 0 25px;
-    }
-  
-    .client-logo img {
-      max-width: 125px;
-      max-height: 50px;
-    }
-  
-  }
-  
-  
-  @media (max-width: 480px) {
-  
-    .clients-heading h2 {
-      font-size: 30px;
-    }
-  
-    .clients-marquee {
-      margin-top: 40px;
-    }
-  
-    .client-logo {
-      width: 110px;
-      margin: 0 20px;
-    }
-  
-    .client-logo img {
-      max-width: 110px;
-      max-height: 45px;
-    }
-  
-  }
+}

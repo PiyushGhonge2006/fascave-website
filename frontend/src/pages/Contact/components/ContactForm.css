@@ -1,0 +1,715 @@
+/* =========================================================
+   CONTACT ENQUIRY FORM
+   ------------------------------------------------------------
+   The block is called `contact-enquiry` rather than
+   `contact-form` on purpose: `component/contact/ContactModal.css`
+   already defines GLOBAL `.contact-form input / textarea` rules for
+   the consultation modal, and reusing that class name here would
+   leak the modal's white input styling onto this page.
+   ========================================================= */
+
+.contact-enquiry {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+
+    /* Clears the fixed navbar when the hero scrolls here. */
+    scroll-margin-top: 104px;
+}
+
+.contact-enquiry__glow {
+    position: absolute;
+    inset: 6% -14% 0;
+    pointer-events: none;
+    z-index: 0;
+
+    background:
+        radial-gradient(46% 42% at 22% 12%, rgba(110, 105, 225, 0.2), transparent 70%),
+        radial-gradient(44% 40% at 82% 78%, rgba(78, 74, 190, 0.2), transparent 72%);
+    filter: blur(28px);
+}
+
+.contact-enquiry__card {
+    position: relative;
+    z-index: 1;
+
+    padding: clamp(26px, 3.4vw, 44px);
+    border: 1px solid var(--ct-line);
+    border-radius: var(--ct-radius-lg);
+
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.022));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 40px 90px -44px rgba(0, 0, 0, 0.95),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.contact-enquiry__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.contact-enquiry__title {
+    font-size: clamp(26px, 3.2vw, 40px);
+    outline: none;
+}
+
+.contact-enquiry__subtitle {
+    max-width: 52ch;
+    color: var(--ct-text-soft);
+    font-size: clamp(14.5px, 1.4vw, 16.5px);
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PROGRESS + STEP INDICATOR
+   ========================================================= */
+
+.contact-enquiry__progress {
+    margin: 28px 0 30px;
+}
+
+.contact-enquiry__progress-bar {
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(167, 167, 176, 0.14);
+    overflow: hidden;
+}
+
+.contact-enquiry__progress-fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+
+    background: linear-gradient(90deg, var(--ct-blue), var(--ct-violet));
+    box-shadow: 0 0 16px -2px rgba(78, 74, 190, 0.8);
+    transition: width 0.55s var(--ct-ease);
+}
+
+.contact-enquiry__steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.contact-enquiry__step-item[data-state="todo"] {
+    opacity: 0.5;
+}
+
+.contact-enquiry__step-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    width: 100%;
+    padding: 6px 4px;
+    border: none;
+    border-radius: 10px;
+
+    background: none;
+    color: var(--ct-text-dim);
+
+    font-size: 12.5px;
+    font-weight: 600;
+    text-align: left;
+
+    cursor: pointer;
+    transition:
+        color var(--ct-fast) var(--ct-ease),
+        opacity var(--ct-fast) var(--ct-ease);
+}
+
+.contact-enquiry__step-button:disabled {
+    cursor: default;
+}
+
+.contact-enquiry__step-button:focus-visible {
+    outline: 2px solid #5eb0e0;
+    outline-offset: 2px;
+}
+
+.contact-enquiry__step-item[data-state="current"] .contact-enquiry__step-button,
+.contact-enquiry__step-item[data-state="done"] .contact-enquiry__step-button {
+    color: var(--ct-text);
+}
+
+.contact-enquiry__step-item[data-state="done"] .contact-enquiry__step-button:hover {
+    color: var(--ct-blue-soft);
+}
+
+.contact-enquiry__step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--ct-line);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 12px;
+    font-weight: 700;
+
+    transition:
+        background-color var(--ct-fast) var(--ct-ease),
+        border-color var(--ct-fast) var(--ct-ease),
+        transform var(--ct-fast) var(--ct-ease);
+}
+
+.contact-enquiry__step-item[data-state="current"] .contact-enquiry__step-badge {
+    color: #111116;
+    background: linear-gradient(130deg, #9c99e4, var(--ct-violet));
+    border-color: transparent;
+    transform: scale(1.08);
+}
+
+.contact-enquiry__step-item[data-state="done"] .contact-enquiry__step-badge {
+    color: #111116;
+    background: var(--ct-success);
+    border-color: transparent;
+}
+
+.contact-enquiry__step-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.contact-enquiry__progress-meta {
+    margin-top: 10px;
+    color: var(--ct-text-dim);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   STEP BODY
+   ========================================================= */
+
+.contact-enquiry__form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Re-keyed per step, so each step fades in rather than snapping. */
+.contact-enquiry__step {
+    animation: ctStepIn 0.45s var(--ct-ease) both;
+}
+
+.contact-enquiry__step-title {
+    font-size: clamp(18px, 1.8vw, 21px);
+}
+
+.contact-enquiry__step-text {
+    margin-top: 6px;
+    color: var(--ct-text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.contact-enquiry__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 18px;
+    margin-top: 26px;
+}
+
+/* Message and single-column fields span the full width. */
+.contact-enquiry__field[data-control="textarea"] {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   HONEYPOT
+   ------------------------------------------------------------
+   Pushed off-screen rather than display:none, because a bot
+   that only walks visible controls skips a hidden input and
+   the trap stops working.
+   ========================================================= */
+
+.contact-enquiry__trap {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FIELDS
+   ========================================================= */
+
+.contact-enquiry__field {
+    position: relative;
+    min-width: 0;
+}
+
+.contact-enquiry__label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1;
+
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+
+    color: var(--ct-text-dim);
+    font-size: 14.5px;
+    font-weight: 500;
+
+    pointer-events: none;
+    transform-origin: left top;
+    white-space: nowrap;
+
+    transition:
+        transform 0.25s var(--ct-ease),
+        color 0.25s var(--ct-ease);
+}
+
+.contact-enquiry__optional {
+    color: rgba(122, 133, 153, 0.7);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* Floats on focus, once filled, and always for selects. */
+.contact-enquiry__field:focus-within .contact-enquiry__label,
+.contact-enquiry__field[data-filled="true"] .contact-enquiry__label,
+.contact-enquiry__field[data-control="select"] .contact-enquiry__label {
+    transform: translateY(-9px) scale(0.74);
+    color: var(--ct-blue-soft);
+}
+
+.contact-enquiry__control {
+    position: relative;
+}
+
+.contact-enquiry__input {
+    width: 100%;
+    min-width: 0;
+
+    padding: 26px 16px 11px;
+    border: 1px solid var(--ct-line);
+    border-radius: var(--ct-radius-sm);
+
+    background: rgba(21, 21, 26, 0.6);
+    color: var(--ct-text);
+
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.5;
+
+    appearance: none;
+    -webkit-appearance: none;
+    transition:
+        border-color var(--ct-fast) var(--ct-ease),
+        box-shadow var(--ct-fast) var(--ct-ease),
+        background-color var(--ct-fast) var(--ct-ease);
+}
+
+.contact-enquiry__input:hover {
+    border-color: rgba(167, 167, 176, 0.28);
+}
+
+.contact-enquiry__input:focus {
+    outline: none;
+    border-color: rgba(78, 74, 190, 0.7);
+    background: rgba(23, 23, 29, 0.8);
+    box-shadow:
+        0 0 0 3px rgba(78, 74, 190, 0.16),
+        0 0 26px -10px rgba(78, 74, 190, 0.9);
+}
+
+.contact-enquiry__select {
+    padding-right: 42px;
+    cursor: pointer;
+}
+
+/* Native dropdown list needs explicit colours on most platforms. */
+.contact-enquiry__select option {
+    background: #1b1b22;
+    color: var(--ct-text);
+}
+
+.contact-enquiry__chevron {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    color: var(--ct-text-dim);
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: color var(--ct-fast) var(--ct-ease);
+}
+
+.contact-enquiry__field:focus-within .contact-enquiry__chevron {
+    color: var(--ct-blue-soft);
+}
+
+.contact-enquiry__textarea {
+    min-height: 150px;
+    padding-top: 30px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.contact-enquiry__field[data-invalid="true"] .contact-enquiry__input {
+    border-color: rgba(255, 122, 122, 0.7);
+}
+
+.contact-enquiry__field[data-invalid="true"] .contact-enquiry__input:focus {
+    box-shadow:
+        0 0 0 3px rgba(255, 122, 122, 0.18),
+        0 0 26px -10px rgba(255, 122, 122, 0.8);
+}
+
+.contact-enquiry__field[data-invalid="true"] .contact-enquiry__label {
+    color: var(--ct-danger);
+}
+
+.contact-enquiry__hint {
+    margin-top: 8px;
+    color: var(--ct-text-dim);
+    font-size: 12.5px;
+    line-height: 1.55;
+}
+
+.contact-enquiry__error {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+
+    margin-top: 8px;
+    color: var(--ct-danger);
+    font-size: 12.5px;
+    line-height: 1.5;
+
+    animation: ctErrorIn 0.3s var(--ct-ease) both;
+}
+
+.contact-enquiry__error svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+
+/* =========================================================
+   REVIEW STEP
+   ========================================================= */
+
+.contact-enquiry__review {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.contact-enquiry__review-row {
+    padding: 14px 16px;
+    border: 1px solid var(--ct-line-soft);
+    border-radius: var(--ct-radius-sm);
+
+    background: rgba(23, 23, 29, 0.5);
+}
+
+.contact-enquiry__review-row[data-wide] {
+    grid-column: 1 / -1;
+}
+
+.contact-enquiry__review-row dt {
+    color: var(--ct-text-dim);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.contact-enquiry__review-row dd {
+    margin-top: 6px;
+    color: var(--ct-text);
+    font-size: 14.5px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ALERT + ACTIONS
+   ========================================================= */
+
+/* Always in the DOM so screen readers announce the message. */
+.contact-enquiry__alert {
+    max-height: 0;
+    margin: 0;
+    color: var(--ct-danger);
+    font-size: 13.5px;
+    line-height: 1.6;
+
+    overflow: hidden;
+    opacity: 0;
+
+    transition:
+        max-height var(--ct-fast) var(--ct-ease),
+        opacity var(--ct-fast) var(--ct-ease),
+        margin-top var(--ct-fast) var(--ct-ease);
+}
+
+.contact-enquiry__alert[data-visible="true"] {
+    max-height: 120px;
+    margin-top: 18px;
+    opacity: 1;
+}
+
+.contact-enquiry__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ct-line-soft);
+}
+
+.contact-enquiry__actions .contact-btn:last-child {
+    margin-left: auto;
+}
+
+.contact-spinner {
+    animation: ctSpinSlow 0.9s linear infinite;
+}
+
+
+/* =========================================================
+   SUCCESS STATE
+   ========================================================= */
+
+.contact-enquiry__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+
+    padding: clamp(16px, 3vw, 30px) 0 8px;
+    text-align: center;
+
+    animation: ctStepIn 0.5s var(--ct-ease) both;
+}
+
+.contact-enquiry__success-mark {
+    width: 78px;
+    height: 78px;
+    color: var(--ct-success);
+}
+
+.contact-enquiry__success-mark svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.contact-enquiry__success-ring {
+    stroke-width: 2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    opacity: 0.35;
+    animation: ctDraw 0.9s var(--ct-ease) 0.05s forwards;
+}
+
+.contact-enquiry__success-tick {
+    stroke-width: 3.4;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ctDraw 0.55s var(--ct-ease) 0.55s forwards;
+}
+
+.contact-enquiry__success-title {
+    font-size: clamp(24px, 2.8vw, 34px);
+}
+
+.contact-enquiry__success-text {
+    max-width: 44ch;
+    color: var(--ct-text-soft);
+    font-size: 15.5px;
+    line-height: 1.7;
+}
+
+.contact-enquiry__success-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+    padding: 6px 2px;
+    border: none;
+    background: none;
+
+    color: var(--ct-text-dim);
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+    transition: color var(--ct-fast) var(--ct-ease);
+}
+
+.contact-enquiry__success-link:hover {
+    color: var(--ct-blue-soft);
+}
+
+.contact-enquiry__success-link:focus-visible {
+    outline: 2px solid #5eb0e0;
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+
+@keyframes ctStepIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes ctSpinSlow {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes ctErrorIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes ctDraw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .contact-enquiry {
+        scroll-margin-top: 92px;
+    }
+
+    .contact-enquiry__fields,
+    .contact-enquiry__review {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .contact-enquiry__step-label {
+        display: none;
+    }
+
+    .contact-enquiry__step-button {
+        justify-content: center;
+    }
+
+    .contact-enquiry__actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .contact-enquiry__actions .contact-btn:last-child {
+        margin-left: 0;
+    }
+
+    .contact-enquiry__actions .contact-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-enquiry__card {
+        padding: 22px 18px 26px;
+        border-radius: 22px;
+    }
+
+    /* 16px keeps iOS Safari from zooming when a field gains focus. */
+    .contact-enquiry__input {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 360px) {
+    .contact-enquiry__steps {
+        gap: 4px;
+    }
+
+    .contact-enquiry__success-mark {
+        width: 66px;
+        height: 66px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .contact-enquiry *,
+    .contact-enquiry *::before,
+    .contact-enquiry *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .contact-enquiry__step,
+    .contact-enquiry__error,
+    .contact-enquiry__success {
+        animation: none !important;
+    }
+
+    /* Final states must be the visible ones. */
+    .contact-enquiry__success-ring,
+    .contact-enquiry__success-tick {
+        animation: none !important;
+        stroke-dashoffset: 0;
+    }
+
+    .contact-enquiry__step-item[data-state="current"] .contact-enquiry__step-badge {
+        transform: none;
+    }
+
+    .contact-enquiry__alert {
+        transition: none;
+    }
+}

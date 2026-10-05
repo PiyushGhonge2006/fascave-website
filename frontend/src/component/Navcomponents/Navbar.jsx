@@ -1,77 +1,113 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./navbar.css";
-import { useContact } from "../contact/Contactbutton";
+import { goToPortfolio } from "../../utils/portfolioNavigation";
+import { useConsultationModal } from "../consultation/consultationModalContext";
+import useScrolledPast from "../../hooks/useScrolledPast";
+import fascaveLogo from "../../assets/logo-fascave/fascave-logo.png";
+
+/* Kept as data so the desktop bar and the mobile sheet render the
+   same links, in the same order, from one place. */
+const NAV_ITEMS = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about-us" },
+  { label: "Services", to: "/features" },
+  { label: "Portfolio", to: null },
+  { label: "Blog", to: "/blog" },
+  { label: "Careers", to: "/careers" },
+  { label: "Contact us", to: "/contact" },
+];
 
 const Navbar = () => {
-  const { openContact } = useContact();
   const navigate = useNavigate();
+  const scrolled = useScrolledPast(12);
+  const { openConsultation } = useConsultationModal();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  /* The sheet covers the page, so stop the body scrolling behind it. */
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [menuOpen]);
+
+  /* Escape closes the sheet, and the viewport growing past the
+     breakpoint must not leave an orphaned open menu behind. */
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    const onResize = () => {
+      if (window.innerWidth > 850) setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
 
   const handlePortfolio = (event) => {
-    event.preventDefault();
+    /* A tap inside the sheet shouldn't also trigger the in-page jump. */
+    if (menuOpen) event.preventDefault();
 
-    if (window.location.pathname === "/") {
-      document
-        .getElementById("portfolio")
-        ?.scrollIntoView({
-          behavior: "smooth",
-        });
-    } else {
-      navigate("/");
+    closeMenu();
+    goToPortfolio(navigate);
+  };
 
-      setTimeout(() => {
-        document
-          .getElementById("portfolio")
-          ?.scrollIntoView({
-            behavior: "smooth",
-          });
-      }, 100);
-    }
+  const handleConsultation = () => {
+    closeMenu();
+    openConsultation();
   };
 
   return (
-    <header className="navbar-wrapper">
+    <header
+      className={`navbar-wrapper${scrolled ? " is-scrolled" : ""}`}
+    >
       <nav className="navbar">
 
         {/* Logo */}
-        <div className="brand">
-          <Link to="/" className="brand">
-            <div className="logo-box">
-              <span>F</span>
-            </div>
-
-            <div className="brand-name">
-              <span>IT SOLUTIONS</span>
-            </div>
-          </Link>
+       <div className="brand">
+          <NavLink to="/" className="brand-logo-link" end onClick={closeMenu}>
+            <img
+              src={fascaveLogo}
+              alt="Fascave IT Solutions Pvt. Ltd."
+              className="fascave-logo"
+           />
+         </NavLink>
         </div>
 
         {/* Navigation */}
         <div className="nav-links">
 
           {/* Home */}
-          <Link
-            to="/"
-            className="nav-link"
-          >
+          <NavLink to="/" className="nav-link" end>
             Home
-          </Link>
+          </NavLink>
 
           {/* About */}
-          <Link
-            to="/about-us"
-            className="nav-link"
-          >
+          <NavLink to="/about-us" className="nav-link">
             About
-          </Link>
+          </NavLink>
 
           {/* Services */}
-          <Link
-            to="/features"
-            className="nav-link"
-          >
+          <NavLink to="/features" className="nav-link">
             Services
-          </Link>
+          </NavLink>
 
           {/* Portfolio */}
           <a
@@ -83,23 +119,19 @@ const Navbar = () => {
           </a>
 
           {/* Blog */}
-          <Link
-            to="/blog"
-            className="nav-link"
-          >
+          <NavLink to="/blog" className="nav-link">
             Blog
-          </Link>
+          </NavLink>
+
+          {/* Careers */}
+          <NavLink to="/careers" className="nav-link">
+            Careers
+          </NavLink>
+
           {/* Contact */}
-          <a
-            href="#contact"
-            className="nav-link"
-            onClick={(event) => {
-              event.preventDefault();
-              openContact("navbar");
-            }}
-          >
+          <NavLink to="/contact" className="nav-link">
             Contact us
-          </a>
+          </NavLink>
 
         </div>
 
@@ -107,12 +139,73 @@ const Navbar = () => {
         <button
           type="button"
           className="consultation-btn"
-          onClick={() => openContact("navbar")}
+          onClick={openConsultation}
         >
           <span>Book a Free Consultation</span>
         </button>
 
+        {/* Mobile trigger */}
+        <button
+          type="button"
+          className={`nav-toggle${menuOpen ? " is-open" : ""}`}
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
       </nav>
+
+
+      {/* =========================================================
+          MOBILE SHEET
+          ========================================================= */}
+
+      <div
+        className={`nav-mobile${menuOpen ? " is-open" : ""}`}
+        id="mobile-nav"
+        hidden={!menuOpen}
+      >
+        <ul className="nav-mobile__list">
+          {NAV_ITEMS.map((item) =>
+            item.to ? (
+              <li key={item.label}>
+                <NavLink
+                  to={item.to}
+                  className="nav-mobile__link"
+                  end={item.to === "/"}
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </NavLink>
+              </li>
+            ) : (
+              <li key={item.label}>
+                <a
+                  href="#portfolio"
+                  className="nav-mobile__link"
+                  onClick={handlePortfolio}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )}
+        </ul>
+
+        <button
+          type="button"
+          className="nav-mobile__cta"
+          onClick={handleConsultation}
+        >
+          Book a Free Consultation
+        </button>
+      </div>
+
     </header>
   );
 };
