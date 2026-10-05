@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useRevealOnScroll from "../../hooks/useRevealOnScroll";
-import { useSingleton } from "../../hooks/useContent";
 import { imageUrl } from "../../utils/apiBase";
 import "./Ourclient.css";
 
@@ -14,10 +13,6 @@ import shetkariLogo from "../../assets/homeing/clientsimg/shetkari.png";
 import shipdartLogo from "../../assets/homeing/clientsimg/shipdartexpress.png";
 import wakeUpLogo from "../../assets/homeing/clientsimg/WakeUp.jpg";
 
-/* Used when the CMS has nothing to return, so the strip
-   is never empty. The images are imported rather than
-   written as raw paths so they resolve on every route,
-   not just the home page. */
 const fallbackClients = [
   { id: 1, name: "APVA Association", image: apvaLogo },
   { id: 2, name: "Foodlex", image: foodlexLogo },
@@ -32,24 +27,47 @@ const fallbackClients = [
 
 const Ourclients = () => {
   const [sectionRef] = useRevealOnScroll();
+  const [clients, setClients] = useState([]);
 
-  const { data: home } = useSingleton(
-    "/api/content/home",
-    { clients: [] }
-  );
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const response = await fetch("/api/clients");
 
-  const fromCms = (home?.clients || []).filter(
-    (client) => client?.logo
-  );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch clients: ${response.status}`);
+        }
 
-  const logos = fromCms.length
-    ? fromCms.map((client, index) => ({
-        id: client._id || index,
-        name: client.name || "Client",
-        image: imageUrl(client.logo),
-        link: client.link || "",
-      }))
-    : fallbackClients;
+        const data = await response.json();
+
+        const clientList = Array.isArray(data)
+          ? data
+          : data?.clients || data?.data || [];
+
+        const formattedClients = clientList
+          .filter((client) => client?.logo)
+          .map((client, index) => ({
+            id: client._id || index,
+            name: client.name || "Client",
+            image: imageUrl(client.logo),
+            link: client.link || "",
+          }));
+
+        setClients(
+          formattedClients.length
+            ? formattedClients
+            : fallbackClients
+        );
+      } catch (error) {
+        console.error("Error fetching clients:", error);
+        setClients(fallbackClients);
+      }
+    };
+
+    fetchClients();
+  }, []);
+
+  const logos = clients.length ? clients : fallbackClients;
 
   return (
     <section className="our-clients" ref={sectionRef}>
@@ -60,34 +78,50 @@ const Ourclients = () => {
       </div>
 
       {/* Logo viewport */}
-      <div className="clients-marquee fc-marquee" data-reveal="fade">
+      <div
+        className="clients-marquee fc-marquee"
+        data-reveal="fade"
+      >
 
         {/* Moving track */}
         <div className="clients-track fc-marquee-track">
 
           {/* First set */}
           {logos.map((client) => (
-            <div className="client-logo" key={`first-${client.id}`}>
+            <div
+              className="client-logo"
+              key={`first-${client.id}`}
+            >
               <img
                 src={client.image}
                 alt={client.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = apvaLogo;
+                }}
               />
             </div>
           ))}
 
           {/* Duplicate set for seamless animation */}
           {logos.map((client) => (
-            <div className="client-logo" key={`second-${client.id}`}>
+            <div
+              className="client-logo"
+              key={`second-${client.id}`}
+            >
               <img
                 src={client.image}
                 alt={client.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = apvaLogo;
+                }}
               />
             </div>
           ))}
 
         </div>
       </div>
-
     </section>
   );
 };

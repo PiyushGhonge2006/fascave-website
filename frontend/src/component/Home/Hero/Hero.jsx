@@ -1,13 +1,18 @@
 ﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MessageCircle } from 'lucide-react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+
 import { slides } from '../data/heroslides'
 import HeroSlide from './HeroSlide'
 import HeroCarousel from './HeroCarousel'
-import DigitalEarth from './DigitalEarth'
+
+import robotAnimation from '../../../assets/Robo/Robot.json'
+
 import usePrefersReducedMotion from '../../../hooks/usePrefersReducedMotion'
 import { useSingleton } from '../../../hooks/useContent'
 import { goToContactForm } from '../../../utils/contactNavigation'
+
 import './Herosection.css'
 
 const AUTOPLAY_MS = 8500
@@ -17,16 +22,15 @@ export default function Hero() {
   const [current, setCurrent] = useState(0)
   const [exiting, setExiting] = useState(null)
   const [paused, setPaused] = useState(false)
-  const reduced = usePrefersReducedMotion()
 
+  const reduced = usePrefersReducedMotion()
   const navigate = useNavigate()
 
   const { data: home } = useSingleton('/api/content/home', {})
 
-  /* The CMS holds one hero, not the four-slide carousel,
-     so the first slide takes its text from the database
-     while the artwork, theme and background word stay in
-     code. The other three slides are still code only. */
+  /* The CMS holds one hero, not the four-slide carousel.
+     The first slide takes its text from the database.
+     The artwork, theme and background word remain in code. */
   const heroSlides = useMemo(() => {
     const hero = home?.hero
 
@@ -55,21 +59,36 @@ export default function Hero() {
     (nextIndex) => {
       const total = heroSlides.length
       const next = ((nextIndex % total) + total) % total
+
       if (next === current) return
+
       clearTimeout(exitTimer.current)
+
       setExiting(current)
       setCurrent(next)
-      exitTimer.current = setTimeout(() => setExiting(null), EXIT_MS)
+
+      exitTimer.current = setTimeout(() => {
+        setExiting(null)
+      }, EXIT_MS)
     },
     [current, heroSlides.length]
   )
 
-  const goNext = useCallback(() => goTo(current + 1), [goTo, current])
-  const goPrev = useCallback(() => goTo(current - 1), [goTo, current])
+  const goNext = useCallback(
+    () => goTo(current + 1),
+    [goTo, current]
+  )
+
+  const goPrev = useCallback(
+    () => goTo(current - 1),
+    [goTo, current]
+  )
 
   useEffect(() => {
     if (paused || reduced) return undefined
+
     const timer = setTimeout(goNext, AUTOPLAY_MS)
+
     return () => clearTimeout(timer)
   }, [paused, reduced, goNext])
 
@@ -106,11 +125,10 @@ export default function Hero() {
       onBlur={() => setPaused(false)}
       onKeyDown={handleKeyDown}
     >
-      {/* ---------------------------------- */}
-      {/* Background: soft brand washes only.  */}
-      {/* No photograph — the globe is the hero */}
-      {/* image, and a photo fought it.        */}
-      {/* ---------------------------------- */}
+      {/* =====================================================
+          BACKGROUND
+          ===================================================== */}
+
       <div className="hero-bg" aria-hidden="true">
         {heroSlides.map((slide, index) => (
           <div
@@ -121,7 +139,6 @@ export default function Hero() {
           />
         ))}
 
-        {/* Giant watermark word, one per slide. */}
         <div className="hero-bg__words">
           {heroSlides.map((slide, index) => (
             <span
@@ -140,12 +157,13 @@ export default function Hero() {
         <div className="hero-bg__grain" />
       </div>
 
-      {/* ---------------------------------- */}
-      {/* Two columns: copy swaps, globe      */}
-      {/* persists across every slide.        */}
-      {/* ---------------------------------- */}
+      {/* =====================================================
+          MAIN HERO
+          ===================================================== */}
+
       <div className="hero-inner">
 
+        {/* LEFT CONTENT */}
         <div className="hero-copy">
           {heroSlides.map((slide, index) => {
             if (index === current) {
@@ -173,14 +191,19 @@ export default function Hero() {
           })}
         </div>
 
+        {/* RIGHT ROBOT */}
         <div className="hero-visual">
-          <DigitalEarth
-            nodes={activeSlide?.nodes}
-            reduced={reduced}
-          />
 
-          {/* Three floating labels that restate the slide's
-              promise beside the globe. */}
+          <div className="hero-robot" aria-hidden="true">
+            <DotLottieReact
+              data={JSON.stringify(robotAnimation)}
+              loop={!reduced}
+              autoplay={!reduced}
+              backgroundColor="transparent"
+            />
+          </div>
+
+          {/* Existing callouts are preserved */}
           <div className="hero-callouts">
             {(activeSlide?.callouts || []).map((callout, index) => (
               <div
@@ -190,19 +213,21 @@ export default function Hero() {
                 <span className="hero-callout__label">
                   {callout.label}
                 </span>
+
                 <span className="hero-callout__value">
                   {callout.value}
                 </span>
               </div>
             ))}
           </div>
-        </div>
 
+        </div>
       </div>
 
-      {/* ---------------------------------- */}
-      {/* Controls: arrows, indicators, labels */}
-      {/* ---------------------------------- */}
+      {/* =====================================================
+          CAROUSEL CONTROLS
+          ===================================================== */}
+
       <div className="hero-controls">
         <div className="hero-controls__inner">
 
@@ -218,7 +243,9 @@ export default function Hero() {
             <span className="hero-counter__current">
               {String(current + 1).padStart(2, '0')}
             </span>
+
             <span className="hero-counter__rule" />
+
             <span className="hero-counter__total">
               {String(heroSlides.length).padStart(2, '0')}
             </span>
@@ -227,13 +254,21 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* =====================================================
+          CHAT BUTTON
+          ===================================================== */}
+
       <button
         type="button"
         className="chat-button"
         aria-label="Send us a message"
         onClick={() => goToContactForm(navigate)}
       >
-        <MessageCircle size={26} strokeWidth={1.75} aria-hidden="true" />
+        <MessageCircle
+          size={26}
+          strokeWidth={1.75}
+          aria-hidden="true"
+        />
       </button>
     </section>
   )

@@ -4,6 +4,7 @@ import "./navbar.css";
 import { goToPortfolio } from "../../utils/portfolioNavigation";
 import { useConsultationModal } from "../consultation/consultationModalContext";
 import useScrolledPast from "../../hooks/useScrolledPast";
+import fascaveLogo from "../../assets/logo-fascave/fascave-logo.png";
 
 /* Kept as data so the desktop bar and the mobile sheet render the
    same links, in the same order, from one place. */
@@ -80,16 +81,14 @@ const Navbar = () => {
       <nav className="navbar">
 
         {/* Logo */}
-        <div className="brand">
-          <NavLink to="/" className="brand" end onClick={closeMenu}>
-            <div className="logo-box">
-              <span>F</span>
-            </div>
-
-            <div className="brand-name">
-              <span>IT SOLUTIONS</span>
-            </div>
-          </NavLink>
+       <div className="brand">
+          <NavLink to="/" className="brand-logo-link" end onClick={closeMenu}>
+            <img
+              src={fascaveLogo}
+              alt="Fascave IT Solutions Pvt. Ltd."
+              className="fascave-logo"
+           />
+         </NavLink>
         </div>
 
         {/* Navigation */}

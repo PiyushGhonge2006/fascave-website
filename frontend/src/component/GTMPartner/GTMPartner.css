@@ -2,16 +2,17 @@
    GTM PARTNERS
    ========================================================= */
 
-.gtm-partner-section {
+   .gtm-partner-section {
     width: 100%;
-    padding: var(--fc-section-pad) 0;
+    padding: var(--fc-section-pad) 0 30px;
     background: var(--fc-surface);
     overflow: hidden;
 }
 
-/* ================================
+
+/* =========================================================
    HEADER
-   ================================ */
+   ========================================================= */
 
 .gtm-partner-header {
     text-align: center;
@@ -48,9 +49,10 @@
     text-align: center;
 }
 
-/* ================================
+
+/* =========================================================
    MARQUEE
-   ================================ */
+   ========================================================= */
 
 .gtm-partner-marquee {
     width: 100%;
@@ -65,6 +67,7 @@
         #000 90%,
         transparent
     );
+
     mask-image: linear-gradient(
         to right,
         transparent,
@@ -74,6 +77,11 @@
     );
 }
 
+
+/* =========================================================
+   MOVING TRACK
+   ========================================================= */
+
 .gtm-partner-track {
     display: flex;
     align-items: center;
@@ -81,9 +89,14 @@
     animation: gtmPartnerScroll 24s linear infinite;
 }
 
+
+/* =========================================================
+   INDIVIDUAL PARTNER LOGO
+   ========================================================= */
+
 .gtm-partner-logo {
     width: 200px;
-    height: 90px;
+    height: 130px;
     margin: 0 30px;
 
     display: flex;
@@ -93,33 +106,41 @@
     flex-shrink: 0;
 }
 
+
+/* =========================================================
+   LOGO IMAGE
+   ========================================================= */
+
 .gtm-partner-logo img {
     width: auto;
-    max-width: 155px;
-    max-height: 65px;
+    max-width: 180px;
+    max-height: 180px;
 
     object-fit: contain;
     display: block;
 
-    /* Greyed by default, full colour on hover. */
-    filter: grayscale(1);
-    opacity: 0.6;
+    /* Always show original logo */
+    filter: none;
+    opacity: 1;
 
-    transition:
-        filter var(--fc-dur-hover) var(--fc-ease),
-        opacity var(--fc-dur-hover) var(--fc-ease),
-        transform var(--fc-dur-hover) var(--fc-ease);
+    /* Smooth hover animation */
+    transition: transform var(--fc-dur-hover) var(--fc-ease);
 }
+
+
+/* =========================================================
+   LOGO HOVER
+   ========================================================= */
 
 .gtm-partner-logo:hover img {
-    filter: grayscale(0);
-    opacity: 1;
-    transform: scale(1.06);
+    /* Slightly increase logo size on hover */
+    transform: scale(1.12);
 }
 
-/* ================================
+
+/* =========================================================
    INFINITE SCROLL
-   ================================ */
+   ========================================================= */
 
 @keyframes gtmPartnerScroll {
     from {
@@ -131,11 +152,13 @@
     }
 }
 
-/* ================================
+
+/* =========================================================
    RESPONSIVE
-   ================================ */
+   ========================================================= */
 
 @media (max-width: 900px) {
+
     .gtm-partner-section {
         padding: var(--fc-section-pad-sm) 0;
     }
@@ -170,7 +193,9 @@
     }
 }
 
+
 @media (max-width: 600px) {
+
     .gtm-partner-accent {
         width: 55px;
         height: 4px;
@@ -202,12 +227,13 @@
     }
 }
 
-/* ================================
+
+/* =========================================================
    REDUCED MOTION
-   ================================ */
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-    /* Stops sliding and lays the logos out in a static, wrapped row. */
+
     .gtm-partner-track {
         animation: none;
         width: 100%;

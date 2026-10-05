@@ -15,36 +15,58 @@ const {
 const whyChooseUsRoutes =
   require("./routes/whyChooseUsRoutes");
 
-const authRoutes = require("./routes/authRoutes");
+const authRoutes =
+  require("./routes/authRoutes");
 
-const uploadRoutes = require("./routes/uploadRoutes");
+const uploadRoutes =
+  require("./routes/uploadRoutes");
 
-const homeRoutes = require("./routes/homeRoutes");
+const homeRoutes =
+  require("./routes/homeRoutes");
 
-const aboutRoutes = require("./routes/aboutRoutes");
+const aboutRoutes =
+  require("./routes/aboutRoutes");
 
-const serviceRoutes = require("./routes/serviceRoutes");
+const serviceRoutes =
+  require("./routes/serviceRoutes");
 
-const portfolioRoutes = require("./routes/portfolioRoutes");
+const portfolioRoutes =
+  require("./routes/portfolioRoutes");
 
-const gtmRoutes = require("./routes/gtmRoutes");
+const gtmRoutes =
+  require("./routes/gtmRoutes");
 
-const faqRoutes = require("./routes/faqRoutes");
+const faqRoutes =
+  require("./routes/faqRoutes");
 
-const testimonialRoutes = require("./routes/testimonialRoutes");
+const testimonialRoutes =
+  require("./routes/testimonialRoutes");
 
-const blogRoutes = require("./routes/blogRoutes");
+const blogRoutes =
+  require("./routes/blogRoutes");
 
-const careerRoutes = require("./routes/careerRoutes");
+const careerRoutes =
+  require("./routes/careerRoutes");
 
 const contactContentRoutes =
   require("./routes/contactContentRoutes");
 
-const statsRoutes = require("./routes/statsRoutes");
+const statsRoutes =
+  require("./routes/statsRoutes");
 
-const seedAdmin = require("./seedAdmin");
+const seedAdmin =
+  require("./seedAdmin");
 
-const seedCareers = require("./seedCareers");
+const seedCareers =
+  require("./seedCareers");
+
+
+// ======================================================
+// FAQ MODEL
+// ======================================================
+
+const Faq =
+  require("./model/faq");
 
 
 const app = express();
@@ -64,22 +86,61 @@ connectDB().then(() => {
 
 
 // ======================================================
-// MIDDLEWARE
+// CORS
 // ======================================================
 
-const allowedOrigins = (
-  process.env.CLIENT_ORIGIN ||
-  "http://localhost:5173"
-)
-  .split(",")
-  .map((origin) => origin.trim());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+];
+
+if (process.env.CLIENT_ORIGIN) {
+
+  const envOrigins =
+    process.env.CLIENT_ORIGIN
+      .split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean);
+
+  allowedOrigins.push(
+    ...envOrigins
+  );
+}
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (
+        allowedOrigins.includes(origin)
+      ) {
+        return callback(null, true);
+      }
+
+      console.log(
+        "CORS blocked origin:",
+        origin
+      );
+
+      return callback(
+        new Error(
+          `CORS blocked origin: ${origin}`
+        )
+      );
+    },
+
     credentials: true,
   })
 );
+
+
+// ======================================================
+// MIDDLEWARE
+// ======================================================
 
 app.use(express.json());
 
@@ -94,13 +155,16 @@ app.use(
 // STATIC UPLOADS
 // ======================================================
 
+const uploadDir = path.resolve(
+  __dirname,
+  process.env.UPLOAD_DIR || "uploads"
+);
+
+console.log("UPLOAD DIRECTORY:", uploadDir);
+
 app.use(
   "/uploads",
-  express.static(
-    path.resolve(
-      process.env.UPLOAD_DIR || "uploads"
-    )
-  )
+  express.static(uploadDir)
 );
 
 
@@ -131,15 +195,6 @@ app.use(
 
 // ======================================================
 // CONTACT ENQUIRY
-// ------------------------------------------------------------
-// Public POST. Same controller as POST /api/messages, so
-// the Contact wizard and the consultation popup both land
-// in the Messages inbox in the admin panel.
-//
-// Mounted on two paths because the wizard's TODO named
-// /api/contact while the older prompts already post to
-// /api/messages. The two can be merged once every caller
-// has moved over.
 // ======================================================
 
 app.post(
@@ -212,10 +267,84 @@ app.use(
   gtmRoutes
 );
 
+
+// ======================================================
+// FAQ - PUBLIC GET ALL
+// ======================================================
+// This is intentionally handled directly here.
+// It guarantees:
+//
+// GET /api/content/faq
+//
+// returns FAQ data from MongoDB.
+//
+// Admin POST / PUT / DELETE remain handled by faqRoutes.
+// ======================================================
+
+app.get(
+  "/api/content/faq",
+  async (req, res) => {
+
+    try {
+
+      console.log(
+        "FAQ GET REQUEST RECEIVED"
+      );
+
+      const faqs =
+        await Faq.find({
+          isPublished: true,
+        }).sort({
+          order: 1,
+          createdAt: 1,
+        });
+
+      console.log(
+        `FAQS FOUND: ${faqs.length}`
+      );
+
+      return res.status(200).json({
+
+        success: true,
+
+        data: faqs,
+
+      });
+
+    } catch (error) {
+
+      console.error(
+        "FAQ FETCH ERROR:",
+        error
+      );
+
+      return res.status(500).json({
+
+        success: false,
+
+        message:
+          "Failed to fetch FAQs",
+
+        error:
+          error.message,
+
+      });
+
+    }
+
+  }
+);
+
+
+// ======================================================
+// FAQ - REMAINING ADMIN / SINGLE FAQ ROUTES
+// ======================================================
+
 app.use(
   "/api/content/faq",
   faqRoutes
 );
+
 
 app.use(
   "/api/content/testimonials",
@@ -232,8 +361,11 @@ app.use(
   careerRoutes
 );
 
-/* Editable contact details only. The enquiry form keeps
-   posting to /api/contact and /api/messages. */
+
+// ======================================================
+// CONTACT CONTENT
+// ======================================================
+
 app.use(
   "/api/content/contact",
   contactContentRoutes
@@ -263,8 +395,12 @@ app.use(
     ) {
 
       return res.status(400).json({
+
         success: false,
-        message: error.message,
+
+        message:
+          error.message,
+
       });
 
     }
@@ -272,15 +408,23 @@ app.use(
     if (error.message) {
 
       return res.status(400).json({
+
         success: false,
-        message: error.message,
+
+        message:
+          error.message,
+
       });
 
     }
 
     return res.status(500).json({
+
       success: false,
-      message: "Server Error",
+
+      message:
+        "Server Error",
+
     });
 
   }

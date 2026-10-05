@@ -49,81 +49,58 @@
 
 
 /* =========================
-   BRAND
+   BRAND / FASCAVE LOGO
 ========================= */
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
   flex-shrink: 0;
 }
 
-.logo-box {
-  width: 48px;
-  height: 48px;
-
-  border-radius: var(--fc-radius-sm);
-
+.brand-logo-link {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
-  background: var(--fc-gradient-brand);
+  width: 190px;
+  height: 58px;
 
-  box-shadow: 0 8px 18px -6px var(--fc-glow-accent);
+  flex-shrink: 0;
 
-  position: relative;
+  text-decoration: none;
+  line-height: 0;
+
   overflow: hidden;
 
-  /* Slow sheen sweep on hover — a single, cheap transform. */
   transition:
-    box-shadow var(--fc-dur-hover) var(--fc-ease),
     transform var(--fc-dur-hover) var(--fc-ease);
 }
 
-.logo-box::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.42) 50%,
-    transparent 70%
-  );
-  transform: translateX(-120%);
-  transition: transform 0.7s var(--fc-ease);
+.fascave-logo {
+  display: block;
+
+  width: 190px;
+  height: 58px;
+
+  max-width: 190px;
+  max-height: 58px;
+
+  min-width: 0;
+  min-height: 0;
+
+  object-fit: contain;
+  object-position: left center;
+
+  margin: 0;
+  padding: 0;
+
+  transition:
+    transform var(--fc-dur-hover) var(--fc-ease);
 }
 
-.brand:hover .logo-box {
-  transform: translateY(-2px);
-  box-shadow:
-    0 12px 26px -6px var(--fc-glow-accent),
-    0 0 24px -10px var(--fc-glow-brand);
-}
-
-.brand:hover .logo-box::after {
-  transform: translateX(120%);
-}
-
-.logo-box span {
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.brand-name {
-  display: flex;
-  align-items: center;
-}
-
-.brand-name span {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  color: var(--fc-text-muted);
-  white-space: nowrap;
+.brand-logo-link:hover .fascave-logo {
+  transform: translateY(-1px) scale(1.01);
 }
 
 
@@ -322,8 +299,18 @@
     font-size: 14px;
   }
 
-  .brand-name {
-    display: none;
+  /* Logo */
+  .brand-logo-link {
+    width: 165px;
+    height: 52px;
+  }
+
+  .fascave-logo {
+    width: 165px;
+    height: 52px;
+
+    max-width: 165px;
+    max-height: 52px;
   }
 
   .consultation-btn {
@@ -345,6 +332,20 @@
     flex: 1;
   }
 
+  /* Logo */
+  .brand-logo-link {
+    width: 155px;
+    height: 48px;
+  }
+
+  .fascave-logo {
+    width: 155px;
+    height: 48px;
+
+    max-width: 155px;
+    max-height: 48px;
+  }
+
   .consultation-btn {
     height: 44px;
     padding-left: 15px;
@@ -363,9 +364,18 @@
     padding: 0 14px;
   }
 
-  .logo-box {
-    width: 44px;
+  /* Logo */
+  .brand-logo-link {
+    width: 135px;
     height: 44px;
+  }
+
+  .fascave-logo {
+    width: 135px;
+    height: 44px;
+
+    max-width: 135px;
+    max-height: 44px;
   }
 
   .consultation-btn span:first-child {
@@ -561,7 +571,7 @@
 
 /* =========================================================
    REDUCED MOTION
-   ============================================ */
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .navbar-wrapper,
@@ -569,9 +579,8 @@
   .nav-link::after,
   .consultation-btn,
   .consultation-btn::after,
-  .logo-box,
-  .logo-box::after,
-  .brand:hover .logo-box,
+  .brand-logo-link,
+  .fascave-logo,
   .nav-toggle,
   .nav-toggle span,
   .nav-mobile.is-open {
@@ -579,13 +588,15 @@
     animation: none !important;
   }
 
-  .logo-box::after,
   .consultation-btn::after {
     display: none;
   }
 
-  .brand:hover .logo-box,
   .consultation-btn:hover {
+    transform: none;
+  }
+
+  .brand-logo-link:hover .fascave-logo {
     transform: none;
   }
 }

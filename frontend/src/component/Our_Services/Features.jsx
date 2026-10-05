@@ -1,7 +1,7 @@
 import FeatureCard from './FeatureCard'
 import { useServices } from './useServices'
 import useRevealOnScroll from '../../hooks/useRevealOnScroll'
-import './ourservice.css'
+import './features.css'
 
 export default function Features() {
   /* One observer for the whole section; cards cascade in on their own. */

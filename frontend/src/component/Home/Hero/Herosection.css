@@ -436,7 +436,7 @@
   padding: 16px 28px;
   border: 1px solid transparent;
   border-radius: var(--fc-radius-pill);
-  background: var(--fc-gradient-brand);
+  background: #544fee;
   color: #ffffff;
   font-size: 0.875rem;
   font-weight: 700;
@@ -482,36 +482,96 @@
   box-shadow: none;
 }
 
-
 /* =========================================================
-   6. GLOBE
+   ROBOT
+   ---------------------------------------------------------
+   Replaces the old DigitalEarth globe.
    ========================================================= */
 
-.hero-earth {
-  position: absolute;
-  inset: 0;
-}
+   .hero-robot {
+    position: absolute;
+    inset: 0;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    width: 100%;
+    height: 100%;
+  
+    z-index: 1;
+    pointer-events: none;
+  
+    transform: translate(4%, -5%) scale(0.8);
+    transform-origin: center center;
+  }
+  
+  .hero-robot > * {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .hero-robot canvas,
+  .hero-robot svg {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 900px) {
+    .hero-robot {
+      transform: translate(-2%, -3%) scale(0.95);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .hero-robot {
+      transform: translate(-1%, -2%) scale(0.9);
+    }
+  }
+  /* DotLottieReact host element */
+  .hero-robot > * {
+    display: block;
+  
+    width: 100% !important;
+    height: 100% !important;
+  
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  /* Lottie canvas / SVG */
+  .hero-robot canvas,
+  .hero-robot svg {
+    display: block;
+  
+    width: 100% !important;
+    height: 100% !important;
+  
+    object-fit: contain;
+  }
+  
+  
+  /* =========================================================
+     ROBOT RESPONSIVE
+     ========================================================= */
+  
+  @media (max-width: 900px) {
+    .hero-robot {
+      transform: translateY(-2%) scale(1.05);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .hero-robot {
+      transform: translateY(-1%) scale(1);
+    }
+  }
 
-.hero-earth__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Static glow behind the canvas halo, which stops the disc
-   from looking like a pasted circle. */
-.hero-earth__glow {
-  position: absolute;
-  inset: 8%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(41, 38, 99, 0.35) 0%,
-    transparent 68%
-  );
-  filter: blur(28px);
-  z-index: -1;
-}
 
 /* Three glass labels around the globe. Positions are fixed
    per index so they do not jump when the slide changes. */

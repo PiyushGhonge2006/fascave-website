@@ -1,156 +1,9 @@
 /* =========================================================
-   SERVICES
-   ------------------------------------------------------------
-   Grid + cards (also used on the home page) and the single
-   service detail page. Everything reads from the shared tokens.
+   SERVICE DETAIL PAGE
+   ---------------------------------------------------------
+   Original Service Detail design.
+   Is file ko FeatureDetails.jsx me import karo.
    ========================================================= */
-
-.our-services {
-  width: 100%;
-  padding: var(--fc-section-pad) 0;
-  background: var(--fc-surface);
-}
-
-/* The one container width — the title and the grid share it. */
-.services-container {
-  width: min(var(--fc-container), 100% - (var(--fc-container-pad) * 2));
-  margin: 0 auto;
-}
-
-.services-title {
-  margin: 0 0 var(--fc-section-gap);
-  text-align: center;
-  font-size: var(--fc-text-display);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: var(--fc-tracking-display);
-  color: var(--fc-ink);
-}
-
-
-/* =========================================================
-   SERVICES GRID
-   ------------------------------------------------------------
-   3 cards per row on desktop, 2 on tablet, 1 on mobile.
-   ========================================================= */
-
-.services-grid {
-  width: 100%;
-
-  display: grid;
-
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-
-  gap: 28px;
-
-  align-items: stretch;
-}
-
-.feature-card {
-  width: 100%;
-  min-width: 0;
-
-  /* Equal-height rows: the body grows so short copy leaves
-     the whitespace at the bottom, not a ragged baseline. */
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  background: var(--fc-surface);
-  border: 1px solid var(--fc-border);
-  border-radius: var(--fc-radius-lg);
-  overflow: hidden;
-
-  box-shadow: var(--fc-shadow-sm);
-
-  transition:
-    transform var(--fc-dur-card) var(--fc-ease),
-    box-shadow var(--fc-dur-card) var(--fc-ease),
-    border-color var(--fc-dur-card) var(--fc-ease);
-}
-
-.feature-card:hover {
-  transform: translateY(var(--fc-lift));
-  border-color: var(--fc-border-strong);
-
-  box-shadow:
-    var(--fc-shadow-lift),
-    0 0 34px -16px var(--fc-glow-accent);
-}
-
-.feature-image-wrapper {
-  width: 100%;
-  height: 200px;
-  flex-shrink: 0;
-  overflow: hidden;
-  background: var(--fc-surface-sunken);
-}
-
-.feature-image {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-  object-position: center;
-
-  /* Slow push-in on hover, paired with the card lift. */
-  transform: scale(1.01);
-  transition: transform 0.68s var(--fc-ease);
-}
-
-.feature-card:hover .feature-image {
-  transform: scale(1.06);
-}
-
-.feature-content {
-  padding: 24px 26px 28px;
-
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.feature-content h3 {
-  margin: 0 0 11px;
-
-  font-size: var(--fc-text-title);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: var(--fc-tracking-tight);
-
-  color: var(--fc-ink);
-
-  transition: color var(--fc-dur-micro) var(--fc-ease);
-}
-
-.feature-card:hover .feature-content h3 {
-  color: var(--fc-accent-strong);
-}
-
-.feature-content p {
-  margin: 0;
-
-  font-size: var(--fc-text-sm);
-  line-height: 1.7;
-
-  color: var(--fc-text-secondary);
-}
-
-/* The link is the grid item, so it carries the row height
-   and the whole cell is clickable. */
-.feature-card-link {
-  display: block;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-}
-
-
-/* =========================================================
-   CLICKED SERVICE DETAIL PAGE
-========================================================= */
 
 .service-hero {
   width: 100%;
@@ -175,8 +28,8 @@
 
 
 /* =========================================================
-   IMAGE CONTAINER - FIXED
-========================================================= */
+   IMAGE CONTAINER
+   ========================================================= */
 
 .service-hero-image {
   width: 100% !important;
@@ -200,6 +53,7 @@
     transform var(--fc-dur-card) var(--fc-ease);
 }
 
+
 .service-hero-image:hover {
   transform: translateY(var(--fc-lift));
 
@@ -210,8 +64,8 @@
 
 
 /* =========================================================
-   ACTUAL IMAGE INSIDE CONTAINER
-========================================================= */
+   ACTUAL IMAGE
+   ========================================================= */
 
 .service-hero-image img {
   width: 100% !important;
@@ -233,17 +87,17 @@
 
   border: none !important;
 
-  /* Slow push-in, clipped by the rounded container. */
   transform: scale(1.01);
-  transition: transform 0.8s var(--fc-ease);
+
+  transition:
+    transform 0.8s var(--fc-ease);
 }
+
 
 .service-hero-image:hover img {
   transform: scale(1.06);
 }
 
-
-/* If image has feature-image class */
 
 .service-hero-image .feature-image {
   width: 100% !important;
@@ -254,14 +108,13 @@
 }
 
 
-/* If there is an extra wrapper */
-
 .service-hero-image > div {
   width: 100% !important;
   height: 100% !important;
 
   overflow: hidden !important;
 }
+
 
 .service-hero-image > div img {
   width: 100% !important;
@@ -276,7 +129,7 @@
 
 /* =========================================================
    DETAIL CONTENT
-========================================================= */
+   ========================================================= */
 
 .service-hero-content {
   width: 100%;
@@ -284,6 +137,7 @@
 
   box-sizing: border-box;
 }
+
 
 .service-hero-content > span {
   display: inline-flex;
@@ -299,11 +153,13 @@
 
   font-size: 12px;
   font-weight: 700;
+
   letter-spacing: 0.2em;
   text-transform: uppercase;
 
   color: var(--fc-accent-strong);
 }
+
 
 .service-hero-content h1 {
   margin: 0 0 24px;
@@ -311,10 +167,12 @@
   font-size: var(--fc-text-display);
   line-height: 1.1;
   font-weight: 800;
+
   letter-spacing: var(--fc-tracking-display);
 
   color: var(--fc-ink);
 }
+
 
 .service-hero-content p {
   width: 100%;
@@ -331,8 +189,6 @@
 
 /* =========================================================
    BACK BUTTON
-   ------------------------------------------------------------
-   Same shape as the shared .fc-btn--primary.
    ========================================================= */
 
 .service-hero-content a,
@@ -353,6 +209,7 @@
   border-radius: var(--fc-radius-md);
 
   background: var(--fc-gradient-brand);
+
   color: #ffffff;
 
   text-decoration: none;
@@ -362,12 +219,14 @@
 
   cursor: pointer;
 
-  box-shadow: 0 10px 26px -12px var(--fc-glow-brand-deep);
+  box-shadow:
+    0 10px 26px -12px var(--fc-glow-brand-deep);
 
   transition:
     transform var(--fc-dur-hover) var(--fc-ease),
     box-shadow var(--fc-dur-hover) var(--fc-ease);
 }
+
 
 .service-hero-content a:hover,
 .service-hero-content button:hover {
@@ -393,6 +252,7 @@
   background: var(--fc-surface-alt);
 }
 
+
 .comparison-heading {
   width: 100%;
   max-width: 900px;
@@ -401,6 +261,7 @@
 
   text-align: center;
 }
+
 
 .comparison-heading span {
   display: inline-flex;
@@ -416,22 +277,27 @@
 
   font-size: 12px;
   font-weight: 700;
+
   letter-spacing: 0.2em;
   text-transform: uppercase;
 
   color: var(--fc-accent-strong);
 }
 
+
 .comparison-heading h2 {
   margin: 0 0 18px;
 
   font-size: var(--fc-text-display);
   font-weight: 800;
+
   line-height: 1.12;
+
   letter-spacing: var(--fc-tracking-display);
 
   color: var(--fc-ink);
 }
+
 
 .comparison-heading p {
   width: 100%;
@@ -447,11 +313,12 @@
 
 
 /* =========================================================
-   TODAY / BUSINESS OUTCOME
+   COMPARISON GRID
    ========================================================= */
 
 .comparison-grid {
   width: min(var(--fc-container), 100%);
+
   margin: 0 auto;
 
   display: grid;
@@ -461,6 +328,11 @@
 
   gap: 45px;
 }
+
+
+/* =========================================================
+   COLUMN HEADINGS
+   ========================================================= */
 
 .comparison-column h3 {
   margin: 0 0 20px;
@@ -473,13 +345,11 @@
   text-transform: uppercase;
 }
 
-/*
-   The two columns keep their semantic red/green, but the hues
-   are the site's muted pair rather than raw hex.
-*/
+
 .today h3 {
   color: #c0392f;
 }
+
 
 .outcome h3 {
   color: #0f8f66;
@@ -487,7 +357,7 @@
 
 
 /* =========================================================
-   COMPARISON BOXES
+   COMPARISON ITEMS
    ========================================================= */
 
 .comparison-item {
@@ -520,11 +390,13 @@
     border-color var(--fc-dur-hover) var(--fc-ease);
 }
 
+
 .comparison-item:hover {
   transform: translateY(-3px);
 
   box-shadow: var(--fc-shadow-md);
 }
+
 
 .today .comparison-item {
   background: #fffafa;
@@ -532,20 +404,24 @@
   border: 1px solid #f5c9c9;
 }
 
+
 .outcome .comparison-item {
   background: #f7fdfa;
 
   border: 1px solid #b6e6d3;
 }
 
+
 .comparison-item p {
   margin: 0;
 
   font-size: var(--fc-text-body);
+
   line-height: 1.65;
 
   color: var(--fc-text-primary);
 }
+
 
 .bullet {
   flex-shrink: 0;
@@ -555,8 +431,8 @@
 
 
 /* =========================================================
-   THIRD COMMON SECTION
-========================================================= */
+   SERVICE POINTS
+   ========================================================= */
 
 .service-points {
   width: 100%;
@@ -577,6 +453,7 @@
   overflow: hidden;
 }
 
+
 .points-wrapper {
   position: relative;
 
@@ -586,8 +463,8 @@
 
 
 /* =========================================================
-   CENTER LOGO
-========================================================= */
+   CENTER CORE
+   ========================================================= */
 
 .service-core {
   position: absolute;
@@ -606,6 +483,7 @@
   align-items: center;
 }
 
+
 .core-glow {
   position: absolute;
 
@@ -618,6 +496,7 @@
 
   filter: blur(25px);
 }
+
 
 .core-circle {
   position: relative;
@@ -642,19 +521,23 @@
 
   z-index: 2;
 
-  /* Slow, continuous rotation — the dashed edge is the only thing that moves. */
-  animation: servicesCoreSpin 34s linear infinite;
+  animation:
+    servicesCoreSpin 34s linear infinite;
 }
 
+
 .core-circle > * {
-  animation: servicesCoreSpin 34s linear infinite reverse;
+  animation:
+    servicesCoreSpin 34s linear infinite reverse;
 }
+
 
 @keyframes servicesCoreSpin {
   to {
     transform: rotate(1turn);
   }
 }
+
 
 .core-circle img {
   width: 82%;
@@ -664,6 +547,7 @@
 
   object-fit: contain;
 }
+
 
 .core-circle span {
   font-size: 14px;
@@ -676,8 +560,8 @@
 
 
 /* =========================================================
-   THIRD SECTION POINTS
-========================================================= */
+   POINTS
+   ========================================================= */
 
 .point {
   position: absolute;
@@ -691,9 +575,11 @@
   color: var(--fc-text-primary);
 }
 
+
 .point strong {
   font-weight: 700;
 }
+
 
 .point-top {
   top: 15px;
@@ -702,20 +588,24 @@
   transform: translateX(-50%);
 }
 
+
 .point-left-top {
   top: 105px;
   left: 0;
 }
+
 
 .point-right-top {
   top: 105px;
   right: 0;
 }
 
+
 .point-left-bottom {
   bottom: 70px;
   left: 0;
 }
+
 
 .point-right-bottom {
   bottom: 70px;
@@ -725,20 +615,7 @@
 
 /* =========================================================
    TABLET
-   ------------------------------------------------------------
-   Two steps: the grid drops to 2 columns at 1050px, the
-   detail page stacks at 1000px.
    ========================================================= */
-
-@media (max-width: 1050px) {
-
-  .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 24px;
-  }
-
-}
 
 @media (max-width: 1000px) {
 
@@ -752,11 +629,13 @@
     gap: 40px;
   }
 
+
   .service-hero-image {
     width: 100% !important;
 
     height: 400px !important;
   }
+
 
   .service-hero-image img {
     width: 100% !important;
@@ -765,15 +644,18 @@
     object-fit: cover !important;
   }
 
+
   .service-hero-content {
     max-width: 100%;
 
     padding: 0;
   }
 
+
   .comparison-grid {
     grid-template-columns: 1fr;
   }
+
 
   .points-wrapper {
     transform: scale(0.85);
@@ -783,38 +665,9 @@
 
 /* =========================================================
    MOBILE
-========================================================= */
+   ========================================================= */
 
 @media (max-width: 680px) {
-
-  .our-services {
-    padding: var(--fc-section-pad-sm) 0;
-  }
-
-  .services-container {
-    width: min(var(--fc-container), 100% - 32px);
-  }
-
-  .services-title {
-    margin-bottom: var(--fc-section-gap-sm);
-  }
-
-  .services-grid {
-    grid-template-columns: minmax(0, 1fr);
-
-    gap: 20px;
-  }
-
-  .feature-image-wrapper {
-    height: 190px;
-  }
-
-  .feature-content {
-    padding: 22px 22px 24px;
-  }
-
-
-  /* DETAIL */
 
   .service-hero {
     padding: var(--fc-section-pad-sm) 18px;
@@ -822,11 +675,13 @@
     gap: 30px;
   }
 
+
   .service-hero-image {
     width: 100% !important;
 
     height: 300px !important;
   }
+
 
   .service-hero-image img {
     width: 100% !important;
@@ -834,6 +689,7 @@
 
     object-fit: cover !important;
   }
+
 
   .service-hero-content p {
     font-size: var(--fc-text-body);
@@ -846,6 +702,7 @@
     padding: var(--fc-section-pad-sm) 18px;
   }
 
+
   .comparison-item {
     min-height: 72px;
 
@@ -855,13 +712,14 @@
   }
 
 
-  /* THIRD SECTION */
+  /* POINTS */
 
   .service-points {
     min-height: 520px;
 
     padding: var(--fc-section-pad-sm) 18px;
   }
+
 
   .points-wrapper {
     transform: scale(0.62);
@@ -871,7 +729,7 @@
 
 /* =========================================================
    SMALL MOBILE
-========================================================= */
+   ========================================================= */
 
 @media (max-width: 420px) {
 
@@ -880,9 +738,11 @@
     padding-right: 15px;
   }
 
+
   .service-hero-image {
     height: 260px !important;
   }
+
 
   .service-hero-image img {
     width: 100% !important;
@@ -891,9 +751,11 @@
     object-fit: cover !important;
   }
 
+
   .comparison-item {
     padding: 16px 17px;
   }
+
 
   .point {
     font-size: 17px;
@@ -912,27 +774,12 @@
     animation: none !important;
   }
 
-  .feature-card,
-  .feature-card-link,
-  .feature-image,
+
   .service-hero-image,
   .service-hero-image img,
   .service-hero-content a,
   .service-hero-content button,
   .comparison-item {
     transition-duration: 0.01ms !important;
-  }
-
-  .feature-card:hover,
-  .service-hero-image:hover,
-  .service-hero-image:hover img,
-  .service-hero-content a:hover,
-  .service-hero-content button:hover,
-  .comparison-item:hover {
-    transform: none;
-  }
-
-  .feature-card:hover .feature-image {
-    transform: scale(1);
   }
 }

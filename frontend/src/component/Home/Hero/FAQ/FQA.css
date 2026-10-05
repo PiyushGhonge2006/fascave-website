@@ -5,9 +5,7 @@
 .faq-section {
   width: 100%;
   background: var(--fc-surface);
-
   padding: var(--fc-section-pad) var(--fc-container-pad);
-
   box-sizing: border-box;
 }
 
@@ -19,32 +17,24 @@
 .faq-header {
   width: 100%;
   text-align: center;
-
   margin-bottom: var(--fc-section-gap);
 }
 
 .faq-header h2 {
   margin: 0;
-
   font-size: var(--fc-text-display);
   font-weight: 800;
-
   letter-spacing: var(--fc-tracking-display);
   color: var(--fc-ink);
-
   line-height: 1.1;
 }
 
 .faq-header p {
   margin: 18px auto 0;
-
   max-width: 780px;
-
   font-size: var(--fc-text-lead);
   font-weight: 400;
-
   line-height: 1.7;
-
   color: var(--fc-text-secondary);
 }
 
@@ -55,22 +45,19 @@
 
 .faq-container {
   width: min(var(--fc-container-narrow), 100%);
-
   margin: 0 auto;
 }
 
 
 /* =========================================================
-   ITEM
+   FAQ ITEM
    ========================================================= */
 
 .faq-item {
   width: 100%;
-
   margin-bottom: 14px;
 
   background: var(--fc-surface);
-
   border: 1px solid var(--fc-border);
   border-radius: var(--fc-radius-md);
 
@@ -85,7 +72,6 @@
 
 .faq-item:hover {
   border-color: var(--fc-border-strong);
-
   box-shadow: var(--fc-shadow-md);
 }
 
@@ -96,10 +82,9 @@
 
 .faq-question {
   width: 100%;
-
   min-height: 64px;
 
-  padding: 0 22px;
+  padding: 16px 22px;
 
   border: none;
   outline: none;
@@ -115,10 +100,12 @@
   cursor: pointer;
 
   text-align: left;
-
   color: var(--fc-ink);
 
-  transition: background var(--fc-dur-micro) var(--fc-ease);
+  box-sizing: border-box;
+
+  transition:
+    background var(--fc-dur-micro) var(--fc-ease);
 }
 
 .faq-question:hover {
@@ -130,18 +117,20 @@
    QUESTION TEXT
    ========================================================= */
 
-.faq-question span:first-child {
+.faq-question-text {
+  flex: 1;
+
   font-size: var(--fc-text-body);
   font-weight: 600;
-
   line-height: 1.5;
 
   color: var(--fc-ink);
 
-  transition: color var(--fc-dur-micro) var(--fc-ease);
+  transition:
+    color var(--fc-dur-micro) var(--fc-ease);
 }
 
-.faq-item:hover .faq-question span:first-child {
+.faq-item:hover .faq-question-text {
   color: var(--fc-accent-strong);
 }
 
@@ -163,7 +152,6 @@
   border-radius: 50%;
 
   background: var(--fc-accent-wash-hover);
-
   color: var(--fc-accent-strong);
 
   font-size: 20px;
@@ -182,51 +170,53 @@
 
 /* =========================================================
    ANSWER
-   ------------------------------------------------------------
-   The 0fr -> 1fr grid trick animates height without a fixed
-   max-height guess, so the transition stays correct at any
-   content length.
    ========================================================= */
 
 .faq-answer {
-  display: grid;
-
-  grid-template-rows: 0fr;
-
-  transition:
-    grid-template-rows var(--fc-dur-hover) var(--fc-ease);
-}
-
-.faq-answer.answer-open {
-  grid-template-rows: 1fr;
-}
-
-.faq-answer-content {
-  min-height: 0;
+  max-height: 0;
 
   overflow: hidden;
 
+  opacity: 0;
+
+  transition:
+    max-height var(--fc-dur-hover) var(--fc-ease),
+    opacity var(--fc-dur-hover) var(--fc-ease);
+}
+
+.faq-answer.answer-open {
+  /*
+     Large enough to accommodate CMS answers of different
+     lengths without cutting them off.
+  */
+  max-height: 500px;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   ANSWER CONTENT
+   ========================================================= */
+
+.faq-answer-content {
   padding: 0 22px;
 
   font-size: var(--fc-text-sm);
-
   line-height: 1.75;
 
   color: var(--fc-text-secondary);
 
-  opacity: 0;
   transform: translateY(-6px);
 
   transition:
     padding var(--fc-dur-hover) var(--fc-ease),
-    opacity var(--fc-dur-hover) var(--fc-ease),
     transform var(--fc-dur-hover) var(--fc-ease);
 }
 
 .faq-answer.answer-open .faq-answer-content {
   padding: 2px 22px 24px;
 
-  opacity: 1;
   transform: translateY(0);
 }
 
@@ -237,7 +227,6 @@
 
 .faq-item.faq-active {
   border-color: var(--fc-border-accent-strong);
-
   box-shadow: var(--fc-shadow-md);
 }
 
@@ -258,10 +247,10 @@
 
   .faq-question {
     min-height: 58px;
-    padding: 0 18px;
+    padding: 14px 18px;
   }
-
 }
+
 
 @media (max-width: 480px) {
 
@@ -271,11 +260,11 @@
 
   .faq-question {
     min-height: 54px;
-    padding: 0 16px;
+    padding: 14px 16px;
     gap: 12px;
   }
 
-  .faq-question span:first-child {
+  .faq-question-text {
     font-size: var(--fc-text-sm);
   }
 
@@ -288,7 +277,6 @@
   .faq-answer.answer-open .faq-answer-content {
     padding: 2px 16px 20px;
   }
-
 }
 
 
@@ -300,16 +288,18 @@
 
   .faq-item,
   .faq-question,
-  .faq-question span:first-child,
+  .faq-question-text,
   .faq-arrow,
   .faq-answer,
   .faq-answer-content {
     transition-duration: 0.01ms !important;
   }
 
-  /* The answer still appears, it just does not slide. */
+  .faq-answer.answer-open {
+    max-height: 500px;
+  }
+
   .faq-answer-content {
-    opacity: 1;
     transform: none;
   }
 }

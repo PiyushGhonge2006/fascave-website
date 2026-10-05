@@ -175,25 +175,6 @@ function About() {
 
                 </div>
 
-                {values.length > 0 && (
-                    <div className="mission-vision-grid">
-                        {values.map((value, index) => (
-                            <article
-                                className="about-card"
-                                key={`${value.title}-${index}`}
-                                data-reveal="scale"
-                            >
-                                {value.icon && (
-                                    <span className="about-card__icon">
-                                        <Icon name={value.icon} />
-                                    </span>
-                                )}
-                                <h2>{value.title}</h2>
-                                <p>{value.description}</p>
-                            </article>
-                        ))}
-                    </div>
-                )}
 
                 <div className="office-section">
 
@@ -281,6 +262,25 @@ function About() {
                     </a>
 
                 </div>
+                {values.length > 0 && (
+                    <div className="mission-vision-grid">
+                        {values.map((value, index) => (
+                            <article
+                                className="about-card"
+                                key={`${value.title}-${index}`}
+                                data-reveal="scale"
+                            >
+                                {value.icon && (
+                                    <span className="about-card__icon">
+                                        <Icon name={value.icon} />
+                                    </span>
+                                )}
+                                <h2>{value.title}</h2>
+                                <p>{value.description}</p>
+                            </article>
+                        ))}
+                    </div>
+                )}
 
             </div>
 

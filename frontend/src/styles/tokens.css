@@ -232,7 +232,7 @@
 
   --fc-section-pad: clamp(72px, 8vw, 120px);
   --fc-section-pad-sm: clamp(48px, 5vw, 72px);
-  --fc-section-gap: clamp(56px, 6vw, 88px);
+  --fc-section-gap: clamp(50px, 6vw, 75px);
   --fc-section-gap-sm: 48px;
 
   /* Height of the fixed navbar — pages offset themselves by this. */
