@@ -1,464 +1,512 @@
 /* ================================================================
    PORTFOLIO SECTION
-   ------------------------------------------------------------
-   1.  Section and container
-   2.  Header
-   3.  Buttons
-   4.  Grid
-   5.  Card
-   6.  Project image
-   7.  Card details
-   8.  Services and technologies
-   9.  Challenge box
-   10. Responsive
    ================================================================ */
 
-
-/* ================================================================
-   1. SECTION AND CONTAINER
-   ================================================================ */
-
-.portfolio-section {
+   .portfolio-section {
+    position: relative;
+    isolation: isolate;
+  
     width: 100%;
     padding: var(--fc-section-pad) 0;
-    background: var(--fc-surface-alt);
-    border-top: 1px solid var(--fc-border);
-}
-
-.portfolio-container {
+  
+    /* SAME DARK BLUE/PURPLE EFFECT AS SERVICE DETAIL */
+    background:
+      radial-gradient(
+        circle at 10% 15%,
+        rgba(105, 82, 220, 0.60),
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at 90% 25%,
+        rgba(55, 45, 150, 0.65),
+        transparent 35%
+      ),
+      radial-gradient(
+        circle at 50% 100%,
+        rgba(125, 90, 220, 0.35),
+        transparent 42%
+      ),
+      linear-gradient(
+        135deg,
+        #070817 0%,
+        #12112e 45%,
+        #080918 100%
+      );
+  
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  
+  /* ================================================================
+     CONTAINER
+     ================================================================ */
+  
+  .portfolio-container {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--fc-container-pad);
-}
-
-
-/* ================================================================
-   2. HEADER
-   The whole heading area is centered, like the About Us heading.
-   ================================================================ */
-
-.portfolio-header {
+  }
+  
+  
+  /* ================================================================
+     HEADER
+     ================================================================ */
+  
+  .portfolio-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: var(--fc-section-gap);
     text-align: center;
-}
-
-/* Accent rule above the title — same primitive as the shared .fc-rule-accent. */
-
-.portfolio-header-line {
+  }
+  
+  .portfolio-header-line {
     width: 76px;
     height: 4px;
     margin-bottom: 20px;
     border-radius: var(--fc-radius-pill);
     background: var(--fc-gradient-accent);
-}
-
-.portfolio-title {
+  }
+  
+  .portfolio-title {
     margin: 0;
-    color: var(--fc-ink);
+  
+    color: #ffffff;
+  
     font-size: var(--fc-text-display);
     line-height: 1.1;
     font-weight: 800;
     letter-spacing: var(--fc-tracking-display);
-}
-
-.portfolio-description {
+  }
+  
+  .portfolio-description {
     max-width: 620px;
     margin: 18px 0 26px;
-    color: var(--fc-text-secondary);
+  
+    color: #cbd0e8;
+  
     font-size: var(--fc-text-body);
     line-height: 1.75;
-}
-
-
-/* ================================================================
-   3. BUTTONS
-   Both buttons share the same shape. Only the colours differ.
-   ================================================================ */
-
-.portfolio-button {
+  }
+  
+  
+  /* ================================================================
+     BUTTONS
+     ================================================================ */
+  
+  .portfolio-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+  
     min-height: 50px;
     padding: 0 24px;
+  
     border-radius: var(--fc-radius-md);
+  
     font-size: var(--fc-text-sm);
     font-weight: 600;
     cursor: pointer;
-
+  
     transition:
-        background var(--fc-dur-hover) var(--fc-ease),
-        border-color var(--fc-dur-hover) var(--fc-ease),
-        color var(--fc-dur-hover) var(--fc-ease),
-        transform var(--fc-dur-hover) var(--fc-ease),
-        box-shadow var(--fc-dur-hover) var(--fc-ease);
-}
-
-.portfolio-button span {
+      background var(--fc-dur-hover) var(--fc-ease),
+      border-color var(--fc-dur-hover) var(--fc-ease),
+      color var(--fc-dur-hover) var(--fc-ease),
+      transform var(--fc-dur-hover) var(--fc-ease),
+      box-shadow var(--fc-dur-hover) var(--fc-ease);
+  }
+  
+  .portfolio-button span {
     font-size: 16px;
     line-height: 1;
-}
-
-/* Solid button, used at the top of the section */
-
-.portfolio-button-solid {
+  }
+  
+  .portfolio-button-solid {
     background: var(--fc-gradient-brand);
     border: 1px solid transparent;
     color: #ffffff;
     box-shadow: 0 10px 26px -12px var(--fc-glow-brand-deep);
-}
-
-.portfolio-button-solid:hover {
+  }
+  
+  .portfolio-button-solid:hover {
     background: var(--fc-gradient-accent);
     border-color: transparent;
-
+  
     transform: translateY(-3px);
-
+  
     box-shadow:
-        0 16px 34px -14px var(--fc-glow-accent-deeper),
-        0 0 26px -12px var(--fc-glow-accent);
-}
-
-/* Outlined button, used inside each card */
-
-.portfolio-button-outline {
+      0 16px 34px -14px var(--fc-glow-accent-deeper),
+      0 0 26px -12px var(--fc-glow-accent);
+  }
+  
+  .portfolio-button-outline {
     width: 100%;
     margin-top: 18px;
+  
     background: var(--fc-surface);
     border: 1px solid var(--fc-border-strong);
     color: var(--fc-accent-strong);
-}
-
-.portfolio-button-outline:hover {
+  }
+  
+  .portfolio-button-outline:hover {
     background: var(--fc-accent-wash);
     border-color: var(--fc-accent);
-
+  
     transform: translateY(-2px);
-
+  
     box-shadow: 0 8px 20px -10px rgba(92, 88, 205, 0.6);
-}
-
-.portfolio-button:focus-visible {
+  }
+  
+  .portfolio-button:focus-visible {
     outline: 2px solid var(--fc-accent);
     outline-offset: 2px;
-}
-
-
-/* ================================================================
-   4. GRID
-   3 cards per row on desktop, 2 on tablet, 1 on mobile.
-   ================================================================ */
-
-.portfolio-grid {
+  }
+  
+  
+  /* ================================================================
+     GRID
+     ================================================================ */
+  
+  .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
-}
-
-
-/* ================================================================
-   5. CARD
-   ================================================================ */
-
-.portfolio-card {
+  }
+  
+  
+  /* ================================================================
+     CARD
+     ================================================================ */
+  
+  .portfolio-card {
     display: flex;
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
+  
     background: var(--fc-surface);
     border: 1px solid var(--fc-border);
     border-radius: var(--fc-radius-lg);
+  
     box-shadow: var(--fc-shadow-sm);
-
+  
     transition:
-        box-shadow var(--fc-dur-card) var(--fc-ease),
-        border-color var(--fc-dur-card) var(--fc-ease),
-        transform var(--fc-dur-card) var(--fc-ease);
-}
-
-.portfolio-card:hover {
+      box-shadow var(--fc-dur-card) var(--fc-ease),
+      border-color var(--fc-dur-card) var(--fc-ease),
+      transform var(--fc-dur-card) var(--fc-ease);
+  }
+  
+  .portfolio-card:hover {
     border-color: var(--fc-border-accent-strong);
-
+  
     transform: translateY(var(--fc-lift));
-
+  
     box-shadow:
-        var(--fc-shadow-lift),
-        0 0 30px -14px var(--fc-glow-accent);
-}
-
-
-/* ================================================================
-   6. PROJECT IMAGE
-   ================================================================ */
-
-.portfolio-image {
+      var(--fc-shadow-lift),
+      0 0 30px -14px var(--fc-glow-accent);
+  }
+  
+  
+  /* ================================================================
+     PROJECT IMAGE
+     ================================================================ */
+  
+  .portfolio-image {
     position: relative;
     width: 100%;
     height: 210px;
+  
     overflow: hidden;
+  
     background: var(--fc-surface-sunken);
     border-bottom: 1px solid var(--fc-border);
-}
-
-.portfolio-image img {
+  }
+  
+  .portfolio-image img {
     display: block;
+  
     width: 100%;
     height: 100%;
+  
     object-fit: cover;
+  
     transition: transform 0.62s var(--fc-ease);
-}
-
-.portfolio-card:hover .portfolio-image img {
+  }
+  
+  .portfolio-card:hover .portfolio-image img {
     transform: scale(1.06);
-}
-
-/* Dark label that fades in over the image on hover */
-
-.portfolio-image-overlay {
+  }
+  
+  .portfolio-image-overlay {
     position: absolute;
     inset: 0;
+  
     display: flex;
     align-items: center;
     justify-content: center;
+  
     padding: 0 24px;
+  
     background: rgba(23, 23, 27, 0.74);
     color: #ffffff;
+  
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.16em;
     text-align: center;
+  
     opacity: 0;
+  
     transition: opacity var(--fc-dur-hover) var(--fc-ease);
-}
-
-.portfolio-card:hover .portfolio-image-overlay {
+  }
+  
+  .portfolio-card:hover .portfolio-image-overlay {
     opacity: 1;
     animation: portfolio-fade-in 0.3s ease;
-}
-
-@keyframes portfolio-fade-in {
+  }
+  
+  @keyframes portfolio-fade-in {
     from {
-        opacity: 0;
+      opacity: 0;
     }
-
+  
     to {
-        opacity: 1;
+      opacity: 1;
     }
-}
-
-
-/* ================================================================
-   7. CARD DETAILS
-   ================================================================ */
-
-.portfolio-card-body {
+  }
+  
+  
+  /* ================================================================
+     CARD DETAILS
+     ================================================================ */
+  
+  .portfolio-card-body {
     display: flex;
     flex: 1;
     flex-direction: column;
     min-width: 0;
     padding: 24px;
-}
-
-.portfolio-card-meta {
+  }
+  
+  .portfolio-card-meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 8px 12px;
-}
-
-.portfolio-category {
+  }
+  
+  .portfolio-category {
     padding: 6px 11px;
+  
     background: var(--fc-accent-wash);
     border: 1px solid var(--fc-border-accent);
     border-radius: var(--fc-radius-xs);
+  
     color: var(--fc-accent-strong);
+  
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-}
-
-.portfolio-date {
+  }
+  
+  .portfolio-date {
     color: var(--fc-text-muted);
     font-size: 12px;
     white-space: nowrap;
-}
-
-.portfolio-card-title {
+  }
+  
+  .portfolio-card-title {
     margin: 16px 0 6px;
+  
     color: var(--fc-ink);
+  
     font-size: var(--fc-text-title);
     line-height: 1.25;
     font-weight: 700;
     letter-spacing: var(--fc-tracking-tight);
+  
     overflow-wrap: break-word;
-}
-
-.portfolio-client {
+  }
+  
+  .portfolio-client {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     gap: 4px 8px;
+  
     margin: 0 0 15px;
+  
     color: var(--fc-ink);
+  
     font-size: 14px;
     font-weight: 600;
+  
     overflow-wrap: break-word;
-}
-
-.portfolio-client-label {
+  }
+  
+  .portfolio-client-label {
     color: var(--fc-text-muted);
+  
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-}
-
-
-/* ================================================================
-   8. SERVICES AND TECHNOLOGIES
-   ================================================================ */
-
-.portfolio-tags {
+  }
+  
+  
+  /* ================================================================
+     SERVICES AND TECHNOLOGIES
+     ================================================================ */
+  
+  .portfolio-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
     margin-bottom: 18px;
-}
-
-.portfolio-tag {
+  }
+  
+  .portfolio-tag {
     padding: 6px 11px;
+  
     background: var(--fc-surface-alt);
     border: 1px solid var(--fc-border);
     border-radius: var(--fc-radius-xs);
+  
     color: var(--fc-text-secondary);
+  
     font-size: 12px;
     font-weight: 500;
-
+  
     transition:
-        background var(--fc-dur-micro) var(--fc-ease),
-        border-color var(--fc-dur-micro) var(--fc-ease),
-        color var(--fc-dur-micro) var(--fc-ease);
-}
-
-.portfolio-card:hover .portfolio-tag {
+      background var(--fc-dur-micro) var(--fc-ease),
+      border-color var(--fc-dur-micro) var(--fc-ease),
+      color var(--fc-dur-micro) var(--fc-ease);
+  }
+  
+  .portfolio-card:hover .portfolio-tag {
     background: var(--fc-accent-wash);
     border-color: var(--fc-border-accent);
     color: var(--fc-accent-strong);
-}
-
-.portfolio-technologies {
+  }
+  
+  .portfolio-technologies {
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
-}
-
-.portfolio-technology {
+  }
+  
+  .portfolio-technology {
     padding: 5px 11px;
+  
     background: var(--fc-surface-sunken);
     border: 1px solid var(--fc-border);
     border-radius: var(--fc-radius-xs);
+  
     color: var(--fc-text-muted);
+  
     font-size: 11px;
-}
-
-
-/* ================================================================
-   9. CHALLENGE BOX
-   ================================================================ */
-
-.portfolio-challenge {
+  }
+  
+  
+  /* ================================================================
+     CHALLENGE BOX
+     ================================================================ */
+  
+  .portfolio-challenge {
     margin-top: 18px;
+  
     border: 1px solid var(--fc-border);
     border-radius: var(--fc-radius-md);
+  
     background: var(--fc-surface-alt);
-}
-
-.portfolio-challenge-label {
+  }
+  
+  .portfolio-challenge-label {
     margin: 0;
     padding: 13px 16px 0;
+  
     color: var(--fc-text-muted);
+  
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-}
-
-.portfolio-challenge-text {
+  }
+  
+  .portfolio-challenge-text {
     margin: 0;
     padding: 8px 16px 15px;
+  
     color: var(--fc-text-secondary);
+  
     font-size: 13px;
     line-height: 1.7;
-}
-
-
-/* ================================================================
-   10. RESPONSIVE
-   ================================================================ */
-
-@media (max-width: 1050px) {
+  }
+  
+  
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  
+  @media (max-width: 1050px) {
     .portfolio-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-}
-
-@media (max-width: 680px) {
+  }
+  
+  @media (max-width: 680px) {
     .portfolio-section {
-        padding: var(--fc-section-pad-sm) 0;
+      padding: var(--fc-section-pad-sm) 0;
     }
-
+  
     .portfolio-container {
-        padding: 0 16px;
+      padding: 0 16px;
     }
-
+  
     .portfolio-header {
-        margin-bottom: 36px;
+      margin-bottom: 36px;
     }
-
+  
     .portfolio-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 18px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
     }
-
+  
     .portfolio-image {
-        height: 190px;
+      height: 190px;
     }
-
+  
     .portfolio-card-body {
-        padding: 20px;
+      padding: 20px;
     }
-}
-
-
-/* ================================================================
-   11. REDUCED MOTION
-   ================================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
+  }
+  
+  
+  /* ================================================================
+     REDUCED MOTION
+     ================================================================ */
+  
+  @media (prefers-reduced-motion: reduce) {
     .portfolio-button,
     .portfolio-card,
     .portfolio-image img,
     .portfolio-image-overlay,
     .portfolio-tag {
-        transition-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
     }
-
+  
     .portfolio-button-solid:hover,
     .portfolio-button-outline:hover,
     .portfolio-card:hover,
     .portfolio-card:hover .portfolio-image img {
-        transform: none;
+      transform: none;
     }
-
+  
     .portfolio-card:hover .portfolio-image-overlay {
-        animation: none !important;
+      animation: none !important;
     }
-}
+  }
