@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./navbar.css";
-import { goToPortfolio } from "../../utils/portfolioNavigation";
 import { useConsultationModal } from "../consultation/consultationModalContext";
 import useScrolledPast from "../../hooks/useScrolledPast";
 import fascaveLogo from "../../assets/logo-fascave/fascave-logo.png";
@@ -12,14 +11,12 @@ const NAV_ITEMS = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about-us" },
   { label: "Services", to: "/features" },
-  { label: "Portfolio", to: null },
   { label: "Blog", to: "/blog" },
   { label: "Careers", to: "/careers" },
   { label: "Contact us", to: "/contact" },
 ];
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const scrolled = useScrolledPast(12);
   const { openConsultation } = useConsultationModal();
 
@@ -61,14 +58,6 @@ const Navbar = () => {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const handlePortfolio = (event) => {
-    /* A tap inside the sheet shouldn't also trigger the in-page jump. */
-    if (menuOpen) event.preventDefault();
-
-    closeMenu();
-    goToPortfolio(navigate);
-  };
-
   const handleConsultation = () => {
     closeMenu();
     openConsultation();
@@ -81,14 +70,14 @@ const Navbar = () => {
       <nav className="navbar">
 
         {/* Logo */}
-       <div className="brand">
+        <div className="brand">
           <NavLink to="/" className="brand-logo-link" end onClick={closeMenu}>
             <img
               src={fascaveLogo}
               alt="Fascave IT Solutions Pvt. Ltd."
               className="fascave-logo"
-           />
-         </NavLink>
+            />
+          </NavLink>
         </div>
 
         {/* Navigation */}
@@ -108,15 +97,6 @@ const Navbar = () => {
           <NavLink to="/features" className="nav-link">
             Services
           </NavLink>
-
-          {/* Portfolio */}
-          <a
-            href="#portfolio"
-            className="nav-link"
-            onClick={handlePortfolio}
-          >
-            Portfolio
-          </a>
 
           {/* Blog */}
           <NavLink to="/blog" className="nav-link">
@@ -160,7 +140,6 @@ const Navbar = () => {
 
       </nav>
 
-
       {/* =========================================================
           MOBILE SHEET
           ========================================================= */}
@@ -171,30 +150,18 @@ const Navbar = () => {
         hidden={!menuOpen}
       >
         <ul className="nav-mobile__list">
-          {NAV_ITEMS.map((item) =>
-            item.to ? (
-              <li key={item.label}>
-                <NavLink
-                  to={item.to}
-                  className="nav-mobile__link"
-                  end={item.to === "/"}
-                  onClick={closeMenu}
-                >
-                  {item.label}
-                </NavLink>
-              </li>
-            ) : (
-              <li key={item.label}>
-                <a
-                  href="#portfolio"
-                  className="nav-mobile__link"
-                  onClick={handlePortfolio}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ),
-          )}
+          {NAV_ITEMS.map((item) => (
+            <li key={item.label}>
+              <NavLink
+                to={item.to}
+                className="nav-mobile__link"
+                end={item.to === "/"}
+                onClick={closeMenu}
+              >
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
 
         <button
