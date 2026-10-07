@@ -1,0 +1,253 @@
+.service-points {
+  width: 100%;
+  min-height: 620px;
+  padding: var(--fc-section-pad) 40px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(100, 80, 220, 0.18),
+      transparent 35%
+    ),
+    rgba(4, 5, 15, 0.20);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  position: relative;
+}
+
+.points-wrapper {
+  position: relative;
+  width: 780px;
+  height: 480px;
+}
+
+/* ================= CENTER CORE ================= */
+
+.service-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 280px;
+  height: 280px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 5;
+}
+
+/* Glow */
+.core-glow {
+  position: absolute;
+
+  width: 250px;
+  height: 250px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(125, 100, 255, 0.40),
+      rgba(75, 60, 180, 0.16) 45%,
+      transparent 72%
+    );
+
+  filter: blur(28px);
+
+  animation: coreAmbientGlow 4s ease-in-out infinite alternate;
+
+  pointer-events: none;
+}
+
+@keyframes coreAmbientGlow {
+  from {
+    opacity: 0.60;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.10);
+  }
+}
+
+/* Center Circle */
+.core-circle {
+  position: relative;
+
+  width: 150px;
+  height: 150px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(15, 15, 35, 0.78);
+
+  border: 1px solid rgba(150, 130, 255, 0.35);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 35px rgba(100, 90, 220, 0.30),
+    inset 0 0 25px rgba(120, 100, 255, 0.12);
+
+  overflow: hidden;
+
+  z-index: 3;
+
+  /* No rotation */
+  animation: none;
+}
+
+.core-circle span {
+  font-size: 55px;
+  color: #ffffff;
+
+  text-shadow:
+    0 0 15px rgba(150, 130, 255, 0.9),
+    0 0 30px rgba(100, 80, 220, 0.6);
+
+  animation: none;
+}
+
+/* Ring */
+.core-ring {
+  position: absolute;
+
+  width: 225px;
+  height: 225px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(130, 115, 240, 0.35);
+
+  box-shadow:
+    0 0 25px rgba(100, 90, 220, 0.18);
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  animation: coreRingRotate 18s linear infinite;
+}
+
+@keyframes coreRingRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Inner shine */
+.core-circle::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      rgba(255, 255, 255, 0.12),
+      transparent 35%
+    );
+
+  pointer-events: none;
+
+  z-index: 4;
+}
+
+/* ================= POINTS ================= */
+
+.point {
+  position: absolute;
+
+  z-index: 5;
+
+  font-size: 20px;
+  line-height: 1.5;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  text-shadow:
+    0 3px 15px rgba(0, 0, 0, 0.35);
+}
+
+.point strong {
+  font-weight: 700;
+}
+
+.point-top {
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.point-left-top {
+  top: 105px;
+  left: 0;
+}
+
+.point-right-top {
+  top: 105px;
+  right: 0;
+}
+
+.point-left-bottom {
+  bottom: 70px;
+  left: 0;
+}
+
+.point-right-bottom {
+  bottom: 70px;
+  right: 0;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1000px) {
+  .points-wrapper {
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 680px) {
+  .service-points {
+    min-height: 520px;
+    padding: var(--fc-section-pad-sm) 18px;
+  }
+
+  .points-wrapper {
+    transform: scale(0.62);
+  }
+}
+
+@media (max-width: 420px) {
+  .point {
+    font-size: 17px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .core-glow,
+  .core-circle,
+  .core-circle span,
+  .core-ring {
+    animation: none !important;
+  }
+}

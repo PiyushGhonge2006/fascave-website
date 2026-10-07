@@ -1,0 +1,279 @@
+.service-benefits {
+  width: 100%;
+  padding: 80px 40px;
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #eef0ff 100%
+    );
+}
+
+/* ================= HEADER ================= */
+
+.service-benefits-header {
+  max-width: 650px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.service-benefits-header h2 {
+  margin: 0;
+
+  color: #172554;
+
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.benefits-line {
+  width: 80px;
+  height: 2px;
+
+  margin: 10px auto 14px;
+
+  background: #f28c28;
+}
+
+.service-benefits-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ================= GRID ================= */
+
+.service-benefits-grid {
+  width: 100%;
+  max-width: 1150px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+}
+
+/* ================= CARD ================= */
+
+.service-benefit-card {
+  position: relative;
+
+  width: 100%;
+  min-height: 270px;
+
+  padding: 18px 16px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  text-align: left;
+
+  /* Initially WHITE */
+  background: #ffffff;
+
+  border: 2px solid #acb6ce;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 22px rgba(15, 23, 42, 0.08);
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* ================= NUMBER ================= */
+
+.benefit-number {
+  position: absolute;
+
+  top: 14px;
+  right: 14px;
+
+  font-size: 28px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  color: #dce3ef;
+
+  transition: color 0.3s ease;
+}
+
+/* ================= ICON ================= */
+
+.benefit-icon {
+  width: 38px;
+  height: 38px;
+
+  margin-bottom: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #20205f;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* ================= TITLE ================= */
+
+.service-benefit-card h3 {
+  margin: 0 0 10px;
+
+  padding-right: 35px;
+
+  color: #111827;
+
+  font-size: 20px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  transition: color 0.3s ease;
+}
+
+/* ================= DESCRIPTION ================= */
+
+.service-benefit-card p {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 12px;
+  line-height: 1.65;
+
+  transition: color 0.3s ease;
+}
+
+/* =================================================
+   HOVER EFFECT
+   ONLY HOVER CHANGES THE CARD
+   ================================================= */
+
+.service-benefit-card:hover {
+  background: #191923;
+
+  border-color: #191923;
+
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 16px 35px rgba(20, 20, 35, 0.28);
+}
+
+/* Hover Icon */
+
+.service-benefit-card:hover .benefit-icon {
+  background: #635bdb;
+
+  color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+/* Hover Number */
+
+.service-benefit-card:hover .benefit-number {
+  color: #4b4b56;
+}
+
+/* Hover Title */
+
+.service-benefit-card:hover h3 {
+  color: #ffffff;
+}
+
+/* Hover Description */
+
+.service-benefit-card:hover p {
+  color: #d5d7e5;
+}
+
+/* Bottom purple line */
+
+.service-benefit-card:hover::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 3px;
+
+  background: #675fe0;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1050px) {
+  .service-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .service-benefits {
+    padding: 60px 20px;
+  }
+
+  .service-benefits-header {
+    margin-bottom: 30px;
+  }
+
+  .service-benefits-header h2 {
+    font-size: 27px;
+  }
+
+  .service-benefits-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .service-benefit-card {
+    min-height: 230px;
+  }
+}
+
+/* ================= REDUCED MOTION ================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .service-benefit-card,
+  .benefit-icon,
+  .benefit-number,
+  .service-benefit-card h3,
+  .service-benefit-card p {
+    transition: none;
+  }
+}
