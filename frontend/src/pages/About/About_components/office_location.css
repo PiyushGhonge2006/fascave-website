@@ -1,0 +1,732 @@
+/* =========================================
+   OFFICE LOCATION SECTION
+========================================= */
+
+.office-location-section {
+    width: 100%;
+    margin-top: 57px;
+    padding: 20px 18px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+  
+  .office-location-container {
+    width: min(1290px, calc(100% - 50px));
+    margin: 0 auto;
+  
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+  
+    gap: 26px;
+    align-items: stretch;
+  }
+  
+  
+  /* =========================================
+     LEFT - OFFICE INFO
+  ========================================= */
+  
+  .office-info-panel {
+    position: relative;
+    overflow: hidden;
+  
+    min-height: 480px;
+  
+    border-radius: 22px;
+  
+    background:
+      radial-gradient(
+        circle at 100% 100%,
+        rgba(56, 102, 255, 0.30),
+        transparent 32%
+      ),
+      radial-gradient(
+        circle at 100% 45%,
+        rgba(74, 64, 255, 0.16),
+        transparent 30%
+      ),
+      linear-gradient(
+        135deg,
+        #111a3d 0%,
+        #151e46 50%,
+        #182762 100%
+      );
+  
+    box-shadow: 0 20px 45px rgba(18, 29, 70, 0.13);
+  }
+  
+  
+  /* Grid background */
+  
+  .office-info-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+  
+    background-image:
+      linear-gradient(
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      );
+  
+    background-size: 40px 40px;
+  
+    pointer-events: none;
+  }
+  
+  
+  /* Bottom glow */
+  
+  .office-info-panel::after {
+    content: "";
+  
+    position: absolute;
+  
+    width: 260px;
+    height: 260px;
+  
+    right: -130px;
+    bottom: -130px;
+  
+    border-radius: 50%;
+  
+    background: rgba(49, 111, 255, 0.20);
+  
+    filter: blur(10px);
+  
+    pointer-events: none;
+  }
+  
+  
+  .office-info-content {
+    position: relative;
+    z-index: 2;
+  
+    padding: 42px;
+  }
+  
+  
+  /* =========================================
+     LEFT TYPOGRAPHY
+  ========================================= */
+  
+  .office-eyebrow,
+  .office-map-eyebrow {
+    display: inline-block;
+  
+    margin-bottom: 14px;
+  
+    font-size: 12px;
+    font-weight: 700;
+  
+    letter-spacing: 3px;
+  
+    color: #76a8ff;
+  }
+  
+  
+  .office-main-title {
+    margin: 0;
+  
+    font-size: clamp(36px, 3.2vw, 50px);
+    line-height: 1.05;
+  
+    font-weight: 700;
+  
+    letter-spacing: -1.8px;
+  
+    color: #ffffff;
+  }
+  
+  
+  .office-main-title span {
+    color: #3f8cff;
+  }
+  
+  
+  .office-description {
+    max-width: 620px;
+  
+    margin: 18px 0 0;
+  
+    font-size: 14px;
+    line-height: 1.6;
+  
+    color: rgba(255, 255, 255, 0.76);
+  }
+  
+  
+  .office-divider {
+    width: 75px;
+    height: 2px;
+  
+    margin: 22px 0 18px;
+  
+    background: linear-gradient(
+      90deg,
+      #4b8cff,
+      #5e46ff
+    );
+  }
+  
+  
+  /* =========================================
+     OFFICE DETAILS
+  ========================================= */
+  
+  .office-details-grid {
+    display: grid;
+  
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  
+    gap: 12px;
+  }
+  
+  
+  .office-detail-card {
+    display: flex;
+    align-items: flex-start;
+  
+    gap: 14px;
+  
+    min-height: 100px;
+  
+    padding: 15px;
+  
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  
+    border-radius: 14px;
+  
+    background: rgba(255, 255, 255, 0.045);
+  
+    backdrop-filter: blur(7px);
+  
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      background 0.3s ease;
+  }
+  
+  
+  .office-detail-card:hover {
+    transform: translateY(-3px);
+  
+    border-color: rgba(91, 145, 255, 0.45);
+  
+    background: rgba(255, 255, 255, 0.07);
+  }
+  
+  
+  .office-detail-icon {
+    flex-shrink: 0;
+  
+    width: 42px;
+    height: 42px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 11px;
+  
+    color: #ffffff;
+  
+    background: linear-gradient(
+      135deg,
+      #397fff,
+      #4d42e9
+    );
+  
+    box-shadow: 0 7px 16px rgba(52, 102, 255, 0.22);
+  }
+  
+  
+  .office-detail-content {
+    min-width: 0;
+  }
+  
+  
+  .office-detail-label {
+    display: block;
+  
+    margin-bottom: 5px;
+  
+    font-size: 10px;
+    font-weight: 700;
+  
+    letter-spacing: 1.7px;
+  
+    color: #78a9ff;
+  }
+  
+  
+  .office-detail-content p {
+    margin: 0;
+  
+    font-size: 12.5px;
+    line-height: 1.55;
+  
+    color: rgba(255, 255, 255, 0.88);
+  
+    word-break: break-word;
+  }
+  
+  
+  /* =========================================
+     RIGHT - MAP PANEL
+  ========================================= */
+  
+  .office-map-panel {
+    min-height: 480px;
+  
+    border: 1px solid #e9ebf1;
+  
+    border-radius: 22px;
+  
+    background: #ffffff;
+  
+    box-shadow: 0 20px 45px rgba(20, 30, 60, 0.07);
+  }
+  
+  
+  .office-map-content {
+    padding: 42px;
+  }
+  
+  
+  .office-map-eyebrow {
+    color: #3979ef;
+  }
+  
+  
+  .office-map-title {
+    margin: 0;
+  
+    font-size: clamp(34px, 3vw, 46px);
+    line-height: 1.05;
+  
+    font-weight: 700;
+  
+    letter-spacing: -1.8px;
+  
+    color: #111a35;
+  }
+  
+  
+  .office-map-title span {
+    color: #5645e8;
+  }
+  
+  
+  .office-map-description {
+    max-width: 520px;
+  
+    margin: 16px 0 22px;
+  
+    font-size: 14px;
+    line-height: 1.6;
+  
+    color: #66708c;
+  }
+  
+  
+  /* =========================================
+     MAP VISUAL
+  ========================================= */
+  
+  .office-map-visual {
+    position: relative;
+  
+    width: 100%;
+    height: 230px;
+  
+    overflow: hidden;
+  
+    border-radius: 17px;
+  
+    border: 1px solid #e4e7ed;
+  
+    background:
+      linear-gradient(
+        135deg,
+        #f4f6f8,
+        #e9edf1
+      );
+  }
+  
+  
+  .office-map-visual::before {
+    content: "";
+  
+    position: absolute;
+    inset: 0;
+  
+    background:
+      linear-gradient(
+        32deg,
+        transparent 47%,
+        rgba(255, 255, 255, 0.95) 48%,
+        rgba(255, 255, 255, 0.95) 51%,
+        transparent 52%
+      ),
+      linear-gradient(
+        120deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.9) 46%,
+        rgba(255, 255, 255, 0.9) 49%,
+        transparent 50%
+      );
+  
+    opacity: 0.8;
+  }
+  
+  
+  /* =========================================
+     MAP ROADS
+  ========================================= */
+  
+  .map-road {
+    position: absolute;
+  
+    height: 7px;
+  
+    border-radius: 100px;
+  
+    background: #ffffff;
+  
+    box-shadow:
+      0 0 0 2px rgba(206, 212, 220, 0.8);
+  }
+  
+  
+  .map-road-one {
+    width: 125%;
+  
+    left: -15%;
+    top: 52%;
+  
+    transform: rotate(-8deg);
+  
+    background: #f3c84b;
+  
+    box-shadow: none;
+  }
+  
+  
+  .map-road-two {
+    width: 90%;
+  
+    left: -15%;
+    top: 25%;
+  
+    transform: rotate(30deg);
+  }
+  
+  
+  .map-road-three {
+    width: 90%;
+  
+    right: -15%;
+    top: 68%;
+  
+    transform: rotate(-42deg);
+  }
+  
+  
+  .map-road-four {
+    width: 75%;
+  
+    right: -10%;
+    top: 42%;
+  
+    transform: rotate(82deg);
+  }
+  
+  
+  /* =========================================
+     MAP LOCATION
+  ========================================= */
+  
+  .map-location {
+    position: absolute;
+  
+    left: 52%;
+    top: 45%;
+  
+    transform: translate(-50%, -50%);
+  
+    display: flex;
+    align-items: center;
+  
+    gap: 9px;
+  
+    z-index: 5;
+  }
+  
+  
+  .map-location-pin {
+    width: 46px;
+    height: 46px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    color: #ffffff;
+  
+    border-radius: 50% 50% 50% 0;
+  
+    background: #ef4444;
+  
+    transform: rotate(-45deg);
+  
+    box-shadow:
+      0 7px 16px rgba(239, 68, 68, 0.28);
+  }
+  
+  
+  .map-location-pin svg {
+    width: 24px;
+    height: 24px;
+  
+    transform: rotate(45deg);
+  }
+  
+  
+  .map-location-label {
+    display: flex;
+    flex-direction: column;
+  
+    padding: 8px 11px;
+  
+    border-radius: 8px;
+  
+    background: rgba(255, 255, 255, 0.95);
+  
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  
+    white-space: nowrap;
+  }
+  
+  
+  .map-location-label strong {
+    font-size: 12px;
+  
+    color: #17213c;
+  }
+  
+  
+  .map-location-label span {
+    margin-top: 2px;
+  
+    font-size: 10px;
+  
+    color: #6d7890;
+  }
+  
+  
+  /* =========================================
+     MAP PLACES
+  ========================================= */
+  
+  .map-place {
+    position: absolute;
+  
+    display: flex;
+    align-items: center;
+  
+    gap: 6px;
+  
+    font-size: 10px;
+    font-weight: 600;
+  
+    color: #68738a;
+  
+    z-index: 2;
+  }
+  
+  
+  .map-place span {
+    width: 6px;
+    height: 6px;
+  
+    border-radius: 50%;
+  
+    background: #8994a8;
+  }
+  
+  
+  .map-place-one {
+    top: 17%;
+    left: 16%;
+  }
+  
+  
+  .map-place-two {
+    top: 68%;
+    left: 17%;
+  }
+  
+  
+  .map-place-three {
+    right: 10%;
+    top: 26%;
+  }
+  
+  
+  /* =========================================
+     GOOGLE MAP BUTTON
+  ========================================= */
+  
+  .office-map-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  
+    gap: 10px;
+  
+    margin-top: 18px;
+  
+    min-height: 48px;
+  
+    padding: 0 20px;
+  
+    border-radius: 12px;
+  
+    text-decoration: none;
+  
+    color: #ffffff;
+  
+    font-size: 14px;
+    font-weight: 600;
+  
+    background: linear-gradient(
+      100deg,
+      #4285f4,
+      #6940ee
+    );
+  
+    box-shadow:
+      0 10px 22px rgba(70, 93, 225, 0.20);
+  
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  
+  
+  .office-map-button:hover {
+    transform: translateY(-2px);
+  
+    box-shadow:
+      0 14px 26px rgba(70, 93, 225, 0.28);
+  }
+  
+  
+  .office-map-button-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  /* =========================================
+     RESPONSIVE
+  ========================================= */
+  
+  @media (max-width: 1100px) {
+  
+    .office-location-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .office-info-panel,
+    .office-map-panel {
+      min-height: auto;
+    }
+  }
+  
+  
+  @media (max-width: 760px) {
+  
+    .office-location-section {
+      padding: 50px 0;
+    }
+  
+    .office-location-container {
+      width: min(100% - 30px, 650px);
+  
+      gap: 18px;
+    }
+  
+    .office-info-content,
+    .office-map-content {
+      padding: 32px 25px;
+    }
+  
+    .office-main-title {
+      font-size: 36px;
+    }
+  
+    .office-map-title {
+      font-size: 34px;
+    }
+  
+    .office-details-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .office-map-visual {
+      height: 220px;
+    }
+  }
+  
+  
+  @media (max-width: 480px) {
+  
+    .office-info-content,
+    .office-map-content {
+      padding: 28px 20px;
+    }
+  
+    .office-main-title {
+      font-size: 32px;
+      letter-spacing: -1px;
+    }
+  
+    .office-map-title {
+      font-size: 31px;
+      letter-spacing: -1px;
+    }
+  
+    .office-description,
+    .office-map-description {
+      font-size: 13px;
+    }
+  
+    .office-detail-card {
+      padding: 14px;
+    }
+  
+    .office-detail-icon {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .map-location {
+      left: 45%;
+    }
+  
+    .map-location-label {
+      display: none;
+    }
+  
+    .office-map-button {
+      width: 100%;
+    }
+  }

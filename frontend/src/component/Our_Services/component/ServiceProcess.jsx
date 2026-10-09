@@ -3,43 +3,43 @@ import './serviceprocess.css'
 
 const PROCESS_STEPS = [
     {
-        title: 'Your journey',
-        subtitle: 'starts here',
+        title: 'Understand',
+        subtitle: 'Your Needs',
         icon: '⚑',
     },
     {
-        title: 'Discovery &',
-        subtitle: 'Strategy',
+        title: 'Discover',
+        subtitle: 'Opportunities',
         icon: '⌕',
     },
     {
-        title: 'Solution',
-        subtitle: 'Architecture',
+        title: 'Innovate',
+        subtitle: 'Ideas & Strategy',
         icon: '▦',
     },
     {
-        title: 'Experience',
-        subtitle: 'Design',
+        title: 'Design',
+        subtitle: 'The Experience',
         icon: '◈',
     },
     {
-        title: 'Development &',
-        subtitle: 'QA',
+        title: 'Build',
+        subtitle: '& Develop',
         icon: '</>',
     },
     {
-        title: 'Deployment',
-        subtitle: '',
+        title: 'Integrate',
+        subtitle: '& Test',
         icon: '↗',
     },
     {
-        title: 'Enablement &',
-        subtitle: 'Support',
+        title: 'Launch',
+        subtitle: '& Optimize',
         icon: '⚙',
     },
     {
-        title: 'Live, supported',
-        subtitle: '& evolving',
+        title: 'Grow',
+        subtitle: '& Evolve',
         icon: '✓',
     },
 ]
@@ -89,7 +89,7 @@ export default function ServiceProcess() {
                     </span>
 
                     <h2>
-                        A transparent delivery process —
+                        Our approach —
                         <br />
                         from planning to production.
                     </h2>
@@ -140,8 +140,8 @@ export default function ServiceProcess() {
                             return (
                                 <div
                                     className={`process-step ${isActive
-                                            ? 'is-active'
-                                            : ''
+                                        ? 'is-active'
+                                        : ''
                                         }`}
                                     key={`${step.title}-${index}`}
                                 >
