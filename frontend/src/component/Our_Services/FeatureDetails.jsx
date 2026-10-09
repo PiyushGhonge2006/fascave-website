@@ -37,16 +37,12 @@ export default function FeatureDetails() {
   }
 
   return (
-    <main
-      className="details-page"
-      ref={pageRef}
-    >
+    <main className="details-page" ref={pageRef}>
       <ServiceHero feature={feature} />
-
       <ServiceComparison feature={feature} />
-      <ServiceProcess/>
-      <ServiceBenefits feature={feature}/>
+      <ServiceProcess />
+      <ServiceBenefits feature={feature} />
       <ServicePoints feature={feature} />
     </main>
-  )
+  );
 }
