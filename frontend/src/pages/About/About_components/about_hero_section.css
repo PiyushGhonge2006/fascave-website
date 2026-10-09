@@ -1,0 +1,634 @@
+/* =========================================================
+   ABOUT HERO SECTION
+========================================================= */
+
+.about-hero-section {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  min-height: 760px;
+
+  overflow: hidden;
+
+  background: #030a16;
+}
+
+
+/* =========================================================
+   HERO IMAGE
+========================================================= */
+
+.about-hero-section__background {
+  position: absolute;
+
+  top: 50%;
+  right: -2.1%;
+
+  width: 82%;
+  height: 88%;
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center right;
+
+  transform: translateY(-50%);
+
+  z-index: -2;
+
+  filter: none;
+  opacity: 1;
+}
+
+
+/* =========================================================
+   SUBTLE DARK OVERLAY
+========================================================= */
+
+.about-hero-section__overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(2, 7, 18, 0.38) 0%,
+      rgba(2, 7, 18, 0.18) 42%,
+      rgba(2, 7, 18, 0.06) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(2, 7, 18, 0.08) 0%,
+      rgba(2, 7, 18, 0.03) 60%,
+      rgba(2, 7, 18, 0.22) 100%
+    );
+
+  z-index: -1;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.about-hero-section__content {
+  position: relative;
+  z-index: 1;
+
+  width: min(89%, 1400px);
+
+  min-height: 760px;
+
+  margin: 0 auto;
+
+  padding: 110px 0 50px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.about-hero-section__copy {
+  width: 48%;
+  max-width: 650px;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.about-hero-section__eyebrow {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 22px;
+
+  color: #9c9aff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.24em;
+
+  text-transform: uppercase;
+}
+
+
+.about-hero-section__eyebrow-line {
+  display: block;
+
+  width: 54px;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    #7567ff,
+    transparent
+  );
+}
+
+
+/* =========================================================
+   MAIN HEADING
+========================================================= */
+
+.about-hero-section__copy h1 {
+  margin: 0;
+
+  max-width: 650px;
+
+  color: #ffffff;
+
+  font-size: clamp(
+    44px,
+    4.7vw,
+    68px
+  );
+
+  line-height: 1.04;
+
+  font-weight: 700;
+
+  letter-spacing: -0.045em;
+}
+
+
+.about-hero-section__copy h1 span {
+  background: linear-gradient(
+    90deg,
+    #7658ff 0%,
+    #4d8fff 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.about-hero-section__copy p {
+  max-width: 590px;
+
+  margin: 26px 0 0;
+
+  color: rgba(
+    232,
+    237,
+    248,
+    0.78
+  );
+
+  font-size: 16px;
+
+  line-height: 1.65;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   BUTTON AREA
+========================================================= */
+
+.about-hero-section__actions {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-top: 32px;
+}
+
+/* =========================================================
+   CONNECT WITH US BUTTON
+========================================================= */
+.hero-cta {
+  min-height: 50px;
+
+  padding: 0 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  border-radius: 30px;
+
+  color: #ffffff;
+
+  background: rgba(11, 75, 185, 0.35);
+
+  border: 1px solid #377dff;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.03em;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+
+  /* Continuous pumping */
+  animation: heroButtonPulse 2s ease-in-out infinite;
+}
+
+
+/* Continuous Pumping Animation */
+
+@keyframes heroButtonPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 rgba(55, 125, 255, 0);
+  }
+
+  50% {
+    transform: scale(1.045);
+    box-shadow:
+      0 0 22px rgba(55, 125, 255, 0.45);
+  }
+}
+
+
+/* Hover */
+
+.hero-cta:hover {
+  background: rgba(55, 125, 255, 0.18);
+
+  border-color: #659fff;
+
+  animation-duration: 1.8s;
+}
+
+
+/* Arrow movement */
+
+.hero-cta__arrow {
+  transition: transform 0.35s ease;
+}
+
+.hero-cta:hover .hero-cta__arrow {
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   STATS BAR
+========================================================= */
+
+.about-hero-section__stats {
+  position: absolute;
+
+  right: 3.5%;
+  bottom: 28px;
+
+  width: min(
+    60%,
+    820px
+  );
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  background: rgba(
+    3,
+    12,
+    28,
+    0.86
+  );
+
+  border: 1px solid rgba(
+    100,
+    150,
+    255,
+    0.22
+  );
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 18px 45px rgba(
+      0,
+      0,
+      0,
+      0.28
+    );
+}
+
+
+/* =========================================================
+   INDIVIDUAL STAT
+========================================================= */
+
+.about-hero-section__stat {
+  min-height: 82px;
+
+  padding: 14px 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  box-sizing: border-box;
+
+  border-right: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.1
+  );
+}
+
+
+.about-hero-section__stat:last-child {
+  border-right: none;
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.about-hero-section__stat-icon {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #7867ff;
+
+  font-size: 19px;
+}
+
+
+/* =========================================================
+   STAT CONTENT
+========================================================= */
+
+.about-hero-section__stat-content {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+
+.about-hero-section__stat-content strong {
+  color: #ffffff;
+
+  font-size: 27px;
+
+  line-height: 1;
+
+  font-weight: 700;
+}
+
+
+.about-hero-section__stat-content span {
+  margin-top: 5px;
+
+  color: rgba(
+    225,
+    232,
+    245,
+    0.68
+  );
+
+  font-size: 11px;
+
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .about-hero-section {
+    min-height: 700px;
+  }
+
+  .about-hero-section__content {
+    min-height: 700px;
+  }
+
+  .about-hero-section__copy {
+    width: 55%;
+  }
+
+  .about-hero-section__copy h1 {
+    font-size: clamp(
+      40px,
+      5vw,
+      58px
+    );
+  }
+
+  .about-hero-section__background {
+    width: 78%;
+    height: 82%;
+  }
+
+  .about-hero-section__stats {
+    width: 72%;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .about-hero-section {
+    min-height: auto;
+  }
+
+  .about-hero-section__content {
+    width: 90%;
+
+    min-height: auto;
+
+    padding:
+      100px
+      0
+      30px;
+  }
+
+  .about-hero-section__copy {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .about-hero-section__eyebrow {
+    font-size: 11px;
+  }
+
+  .about-hero-section__copy h1 {
+    font-size: clamp(
+      38px,
+      10vw,
+      52px
+    );
+
+    line-height: 1.06;
+  }
+
+  .about-hero-section__copy p {
+    font-size: 15px;
+  }
+
+  .about-hero-section__actions {
+    flex-wrap: wrap;
+
+    margin-top: 28px;
+  }
+
+  .about-hero-section__background {
+    top: 0;
+    right: 0;
+
+    width: 100%;
+    height: 70%;
+
+    transform: none;
+
+    object-position: center top;
+  }
+
+  .about-hero-section__stats {
+    position: static;
+
+    width: 100%;
+
+    margin-top: 55px;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .about-hero-section__stat {
+    min-height: 76px;
+
+    padding: 12px;
+  }
+
+  .about-hero-section__stat:nth-child(2) {
+    border-right: none;
+  }
+
+  .about-hero-section__stat:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .about-hero-section__content {
+    width: 92%;
+
+    padding-top: 90px;
+  }
+
+  .about-hero-section__copy h1 {
+    font-size: 36px;
+  }
+
+  .about-hero-section__copy p {
+    font-size: 14px;
+  }
+
+  .about-hero-section__actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .about-hero-section__primary,
+  .hero-cta {
+    width: 100%;
+  }
+
+  .about-hero-section__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero-section__stat {
+    border-right: none;
+
+    border-bottom: 1px solid rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+  }
+
+  .about-hero-section__stat:last-child {
+    border-bottom: none;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about-hero-section__primary,
+  .hero-cta,
+  .hero-cta__arrow {
+    transition: none;
+  }
+}

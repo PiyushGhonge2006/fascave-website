@@ -106,82 +106,78 @@
   
   
   /* =========================================================
-     SERVICE HERO
+     SERVICE DETAIL HERO
+     FULL WIDTH — IMAGE + CONTENT
      ========================================================= */
   
   .service-hero {
-    width: 100%;
-    min-height: 560px;
-  
-    display: grid;
-  
-    grid-template-columns:
-      minmax(0, 48%)
-      minmax(0, 52%);
-  
-    align-items: center;
-  
-    gap: 50px;
-  
-    padding: var(--fc-section-pad) 6%;
-  
-    box-sizing: border-box;
-  
-    /* IMPORTANT: transparent */
-    background: transparent;
-  }
-  
-  
-  /* =========================================================
-     IMAGE CONTAINER
-     ========================================================= */
-  
-  .service-hero-image {
-    width: 100% !important;
-    height: 440px !important;
-  
-    min-width: 0;
-    min-height: 0;
-  
     position: relative;
+    isolation: isolate;
+  
+    width: 100%;
+    min-height: 620px;
+  
+    display: flex;
+    align-items: center;
   
     overflow: hidden;
   
-    border-radius: var(--fc-radius-lg);
+    box-sizing: border-box;
   
-    background: rgba(255, 255, 255, 0.08);
+    padding: 80px 7%;
   
-    border: 1px solid rgba(255, 255, 255, 0.16);
-  
-    box-shadow:
-      0 25px 60px -25px rgba(0, 0, 0, 0.75),
-      0 0 35px -18px rgba(105, 85, 220, 0.55);
-  
-    transition:
-      box-shadow var(--fc-dur-card) var(--fc-ease),
-      transform var(--fc-dur-card) var(--fc-ease);
-  }
-  
-  
-  .service-hero-image:hover {
-    transform: translateY(var(--fc-lift));
-  
-    box-shadow:
-      0 30px 70px -25px rgba(0, 0, 0, 0.80),
-      0 0 45px -15px rgba(105, 85, 220, 0.70);
+    background: #020a2a;
   }
   
   
   /* =========================================================
-     ACTUAL IMAGE
+     HERO IMAGE
+     Full-screen background image
      ========================================================= */
   
-  .service-hero-image img {
+  .service-hero-image {
+    position: absolute !important;
+  
+    inset: 0 !important;
+  
     width: 100% !important;
     height: 100% !important;
   
-    min-width: 100% !important;
-    min-height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+  
+    margin: 0 !important;
+    padding: 0 !important;
+  
+    overflow: hidden !important;
+  
+    border: none !important;
+    border-radius: 0 !important;
+  
+    background: transparent !important;
+  
+    box-shadow: none !important;
+  
+    transform: none !important;
+  
+    z-index: -1;
+  }
+  
+  
+  /* =========================================================
+     ACTUAL HERO IMAGE
+     ========================================================= */
+  
+  .service-hero-image img {
+    position: absolute !important;
+  
+    inset: 0 !important;
+  
+    width: 100% !important;
+    height: 100% !important;
+  
+    min-width: 0 !important;
+    min-height: 0 !important;
   
     max-width: none !important;
     max-height: none !important;
@@ -192,198 +188,402 @@
     padding: 0 !important;
   
     object-fit: cover !important;
+  
     object-position: center center !important;
   
     border: none !important;
+    border-radius: 0 !important;
   
-    transform: scale(1.01);
+    transform: none !important;
   
-    transition:
-      transform 0.8s var(--fc-ease);
-  }
+    filter: none !important;
   
-  
-  .service-hero-image:hover img {
-    transform: scale(1.06);
-  }
-  
-  
-  .service-hero-image .feature-image {
-    width: 100% !important;
-    height: 100% !important;
-  
-    object-fit: cover !important;
-    object-position: center !important;
-  }
-  
-  
-  .service-hero-image > div {
-    width: 100% !important;
-    height: 100% !important;
-  
-    overflow: hidden !important;
-  }
-  
-  
-  .service-hero-image > div img {
-    width: 100% !important;
-    height: 100% !important;
-  
-    display: block !important;
-  
-    object-fit: cover !important;
-    object-position: center !important;
+    transition: none;
   }
   
   
   /* =========================================================
-     DETAIL CONTENT
+     HERO LEFT SIDE READABILITY
+     ========================================================= */
+  
+  .service-hero::before {
+    content: "";
+  
+    position: absolute;
+  
+    inset: 0;
+  
+    z-index: 0;
+  
+    pointer-events: none;
+  
+    background:
+      linear-gradient(
+        90deg,
+        rgba(2, 8, 30, 0.18) 0%,
+        rgba(2, 8, 30, 0.08) 42%,
+        transparent 68%
+      );
+  }
+  
+  
+  /* =========================================================
+     HERO BOTTOM BLEND
+     ========================================================= */
+  
+  .service-hero::after {
+    content: "";
+  
+    position: absolute;
+  
+    left: 0;
+    right: 0;
+    bottom: 0;
+  
+    height: 90px;
+  
+    z-index: 0;
+  
+    pointer-events: none;
+  
+    background:
+      linear-gradient(
+        to top,
+        rgba(2, 7, 27, 0.28),
+        transparent
+      );
+  }
+  
+  
+  /* =========================================================
+     HERO CONTENT
      ========================================================= */
   
   .service-hero-content {
-    width: 100%;
-    max-width: 700px;
+    position: relative;
+  
+    z-index: 3;
+  
+    width: 50%;
+  
+    max-width: 680px;
+  
+    padding: 0;
   
     box-sizing: border-box;
   }
   
   
-  /* Label */
+  /* =========================================================
+     SERVICE LABEL
+     ========================================================= */
   
   .service-hero-content > span {
     display: inline-flex;
+  
     align-items: center;
   
-    margin-bottom: 18px;
-    padding: 7px 15px;
+    margin-bottom: 20px;
   
-    border: 1px solid rgba(170, 155, 255, 0.40);
+    padding: 8px 16px;
   
-    border-radius: var(--fc-radius-pill);
+    border: 1px solid rgba(190, 205, 255, 0.38);
   
-    background: rgba(100, 85, 200, 0.16);
+    border-radius: 999px;
+  
+    background: rgba(30, 50, 110, 0.28);
   
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   
     font-size: 12px;
+  
     font-weight: 700;
   
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
+  
     text-transform: uppercase;
   
-    color: #c9c2ff;
+    color: #d8e2ff;
   }
   
   
-  /* Heading */
+  /* =========================================================
+     SERVICE TITLE
+     ========================================================= */
   
   .service-hero-content h1 {
-    margin: 0 0 24px;
+    margin: 0 0 22px;
   
-    font-size: var(--fc-text-display);
-    line-height: 1.1;
+    max-width: 650px;
+  
+    font-size: clamp(42px, 5vw, 68px);
+  
+    line-height: 1.05;
+  
     font-weight: 800;
   
-    letter-spacing: var(--fc-tracking-display);
+    letter-spacing: -2px;
   
     color: #ffffff;
   
     text-shadow:
-      0 5px 30px rgba(80, 65, 190, 0.35);
+      0 5px 30px rgba(0, 0, 0, 0.35);
   }
   
   
-  /* Paragraph */
+  /* =========================================================
+     DATABASE DESCRIPTION
+     ========================================================= */
   
   .service-hero-content p {
     width: 100%;
-    max-width: 680px;
   
-    margin: 0 0 20px;
+    max-width: 620px;
   
-    font-size: var(--fc-text-lead);
-    line-height: 1.8;
+    margin: 0 0 18px;
   
-    color: rgba(255, 255, 255, 0.72);
+    font-size: 17px;
+  
+    line-height: 1.7;
+  
+    color: rgba(255, 255, 255, 0.82);
   }
   
   
   /* =========================================================
-     BACK BUTTON
+     HERO BUTTON AREA
      ========================================================= */
   
-  .service-hero-content a,
-  .service-hero-content button {
+  .service-hero-actions {
+    display: flex;
+  
+    align-items: center;
+  
+    gap: 12px;
+  
+    flex-wrap: wrap;
+  
+    margin-top: 28px;
+  }
+  
+  
+  /* =========================================================
+     HERO BUTTONS
+     ========================================================= */
+  
+  .service-hero-content a {
     display: inline-flex;
   
     align-items: center;
+  
     justify-content: center;
   
-    gap: 10px;
+    min-height: 50px;
   
-    min-height: 52px;
-    margin-top: 12px;
+    padding: 0 25px;
   
-    padding: 0 26px;
-  
-    border: none;
-    border-radius: var(--fc-radius-md);
-  
-    background: var(--fc-gradient-brand);
-  
-    color: #ffffff;
+    border-radius: 30px;
   
     text-decoration: none;
   
-    font-size: 15px;
+    font-size: 14px;
+  
     font-weight: 600;
   
-    cursor: pointer;
-  
-    box-shadow:
-      0 10px 30px -12px rgba(100, 80, 220, 0.75);
-  
     transition:
-      transform var(--fc-dur-hover) var(--fc-ease),
-      box-shadow var(--fc-dur-hover) var(--fc-ease);
-  }
-  
-  
-  .service-hero-content a:hover,
-  .service-hero-content button:hover {
-    transform: translateY(-3px);
-  
-    box-shadow:
-      0 18px 40px -14px rgba(100, 80, 220, 0.85),
-      0 0 30px -12px rgba(130, 105, 255, 0.65);
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      background 0.3s ease;
   }
   
   
   /* =========================================================
-     BUSINESS TRANSFORMATION
+     GET FREE CONSULTATION
+     ========================================================= */
+  
+  .service-hero-content .consultation-button {
+    background: #ff7900;
+  
+    color: #ffffff;
+  
+    box-shadow:
+      0 10px 30px rgba(255, 121, 0, 0.22);
+  }
+  
+  
+  .service-hero-content .consultation-button:hover {
+    background: #ff8b1a;
+  
+    transform: translateY(-3px);
+  
+    box-shadow:
+      0 15px 35px rgba(255, 121, 0, 0.35);
+  }
+  
+  
+  /* =========================================================
+     BACK TO SERVICES
+     ========================================================= */
+  
+  .service-hero-content .details-button {
+    background: rgba(15, 25, 65, 0.72);
+  
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  
+    color: #ffffff;
+  
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  
+  .service-hero-content .details-button:hover {
+    background: rgba(35, 50, 105, 0.8);
+  
+    transform: translateY(-3px);
+  
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  
+  
+  /* =========================================================
+     DISABLE HERO IMAGE HOVER
+     ========================================================= */
+  
+  .service-hero-image:hover {
+    transform: none !important;
+  
+    box-shadow: none !important;
+  }
+  
+  
+  .service-hero-image:hover img {
+    transform: none !important;
+  }
+  
+  
+  /* =========================================================
+     BUSINESS TRANSFORMATION / COMPARISON
+     HOME SERVICES LIGHT BLUE + WHITE THEME
      ========================================================= */
   
   .service-comparison {
+    position: relative;
+  
+    isolation: isolate;
+  
     width: 100%;
   
     padding: var(--fc-section-pad) 6%;
   
     box-sizing: border-box;
   
-    position: relative;
+    overflow: hidden;
   
-    /* IMPORTANT: transparent */
-    background: rgba(5, 6, 18, 0.32);
+    background:
+      radial-gradient(
+        circle at 15% 20%,
+        rgba(96, 115, 236, 0.18),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at 85% 75%,
+        rgba(125, 105, 255, 0.14),
+        transparent 40%
+      ),
+      linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #eaecf7 45%,
+        #d4d9fc 100%
+      );
   
-    border-top:
-      1px solid rgba(255, 255, 255, 0.06);
+    border-top: none;
   
-    border-bottom:
-      1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: none;
   
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: none;
+  
+    -webkit-backdrop-filter: none;
+  }
+  
+  
+  /* =========================================================
+     COMPARISON AMBIENT GLOW
+     ========================================================= */
+  
+  .service-comparison::before {
+    content: "";
+  
+    position: absolute;
+  
+    inset: -30%;
+  
+    z-index: -1;
+  
+    pointer-events: none;
+  
+    background:
+      radial-gradient(
+        circle at 25% 30%,
+        rgba(130, 105, 255, 0.28),
+        transparent 25%
+      ),
+      radial-gradient(
+        circle at 75% 70%,
+        rgba(80, 100, 220, 0.22),
+        transparent 28%
+      );
+  
+    filter: blur(65px);
+  
+    animation:
+      comparisonAmbientMove 12s ease-in-out infinite alternate;
+  }
+  
+  
+  .service-comparison::after {
+    content: "";
+  
+    position: absolute;
+  
+    inset: 0;
+  
+    z-index: -1;
+  
+    pointer-events: none;
+  
+    background:
+      linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.35),
+        transparent 40%,
+        rgba(120, 100, 220, 0.08)
+      );
+  }
+  
+  
+  @keyframes comparisonAmbientMove {
+  
+    0% {
+      transform:
+        translate3d(-4%, -2%, 0)
+        scale(1);
+    }
+  
+    50% {
+      transform:
+        translate3d(3%, 3%, 0)
+        scale(1.08);
+    }
+  
+    100% {
+      transform:
+        translate3d(-2%, 5%, 0)
+        scale(1.04);
+    }
+  
   }
   
   
@@ -392,7 +592,12 @@
      ========================================================= */
   
   .comparison-heading {
+    position: relative;
+  
+    z-index: 2;
+  
     width: 100%;
+  
     max-width: 900px;
   
     margin: 0 auto var(--fc-section-gap);
@@ -401,55 +606,83 @@
   }
   
   
+  /* =========================================================
+     COMPARISON LABEL
+     ========================================================= */
+  
   .comparison-heading span {
     display: inline-flex;
+  
     align-items: center;
   
     margin-bottom: 18px;
+  
     padding: 7px 15px;
   
-    border: 1px solid rgba(170, 155, 255, 0.40);
+    border: 1px solid rgba(105, 92, 210, 0.28);
   
     border-radius: var(--fc-radius-pill);
   
-    background: rgba(100, 85, 200, 0.16);
+    background:
+      rgba(255, 255, 255, 0.65);
   
     backdrop-filter: blur(8px);
   
+    -webkit-backdrop-filter: blur(8px);
+  
     font-size: 12px;
+  
     font-weight: 700;
   
     letter-spacing: 0.2em;
+  
     text-transform: uppercase;
   
-    color: #c9c2ff;
+    color: #5146a5;
+  
+    box-shadow:
+      0 8px 25px rgba(70, 55, 180, 0.08);
   }
   
+  
+  /* =========================================================
+     COMPARISON MAIN HEADING
+     ========================================================= */
   
   .comparison-heading h2 {
     margin: 0 0 18px;
   
     font-size: var(--fc-text-display);
+  
     font-weight: 800;
   
     line-height: 1.12;
   
     letter-spacing: var(--fc-tracking-display);
   
-    color: #ffffff;
+    color: #130e2b;
+  
+    text-shadow:
+      0 4px 25px rgba(70, 55, 180, 0.15);
   }
   
   
+  /* =========================================================
+     COMPARISON DESCRIPTION
+     ========================================================= */
+  
   .comparison-heading p {
     width: 100%;
+  
     max-width: 760px;
   
     margin: 0 auto;
   
     font-size: var(--fc-text-lead);
+  
     line-height: 1.75;
   
-    color: rgba(255, 255, 255, 0.68);
+    color: #5c6075;
   }
   
   
@@ -458,6 +691,10 @@
      ========================================================= */
   
   .comparison-grid {
+    position: relative;
+  
+    z-index: 2;
+  
     width: min(var(--fc-container), 100%);
   
     margin: 0 auto;
@@ -472,13 +709,14 @@
   
   
   /* =========================================================
-     COLUMN HEADINGS
+     CO.comparisonLUMN HEADINGS
      ========================================================= */
   
   .comparison-column h3 {
     margin: 0 0 20px;
   
     font-size: 15px;
+  
     font-weight: 700;
   
     letter-spacing: 0.16em;
@@ -488,12 +726,12 @@
   
   
   .today h3 {
-    color: #ff8e8e;
+    color: #8a5360;
   }
   
   
   .outcome h3 {
-    color: #6ee7b7;
+    color: #357d69;
   }
   
   
@@ -501,62 +739,97 @@
      COMPARISON ITEMS
      ========================================================= */
   
-  .comparison-item {
-    width: 100%;
+     .comparison-item {
+      width: 100%;
+    
+      min-height: 76px;
+    
+      margin-bottom: 14px;
+    
+      padding: 20px 24px;
+    
+      box-sizing: border-box;
+    
+      display: flex;
+    
+      align-items: center;
+    
+      gap: 12px;
+    
+      border-radius: 12px;
+    
+      /* NAVY BLUE RECTANGULAR BORDER */
+      border: 2px solid #172554;
+    
+      font-size: var(--fc-text-body);
+    
+      line-height: 1.65;
+    
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    
+      box-shadow:
+        0 12px 30px rgba(23, 37, 84, 0.12);
+    
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+    }
   
-    min-height: 76px;
-  
-    margin-bottom: 14px;
-  
-    padding: 20px 24px;
-  
-    box-sizing: border-box;
-  
-    display: flex;
-  
-    align-items: center;
-  
-    gap: 12px;
-  
-    border-radius: var(--fc-radius-md);
-  
-    font-size: var(--fc-text-body);
-    line-height: 1.65;
-  
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  
-    box-shadow:
-      0 15px 40px -25px rgba(0, 0, 0, 0.65);
-  
-    transition:
-      transform var(--fc-dur-hover) var(--fc-ease),
-      box-shadow var(--fc-dur-hover) var(--fc-ease),
-      border-color var(--fc-dur-hover) var(--fc-ease);
-  }
-  
+  /* =========================================================
+     COMPARISON ITEM HOVER
+     ========================================================= */
   
   .comparison-item:hover {
     transform: translateY(-3px);
   
     box-shadow:
-      0 20px 45px -22px rgba(0, 0, 0, 0.75);
+      0 20px 45px -22px rgba(70, 55, 130, 0.30);
   }
   
   
-  .today .comparison-item {
-    background: rgba(100, 30, 40, 0.18);
+  /* =========================================================
+     TODAY CARD
+     ========================================================= */
   
-    border: 1px solid rgba(255, 120, 130, 0.22);
-  }
+     .today .comparison-item {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(248, 244, 248, 0.92)
+        );
+    
+      border: 5px solid #324585;
+    
+      box-shadow:
+        0 15px 35px rgba(23, 37, 84, 0.12);
+    }
   
   
-  .outcome .comparison-item {
-    background: rgba(20, 110, 80, 0.16);
+  /* =========================================================
+     BUSINESS OUTCOME CARD
+     ========================================================= */
   
-    border: 1px solid rgba(100, 230, 180, 0.20);
-  }
+     .outcome .comparison-item {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.98),
+          rgba(242, 247, 255, 0.94)
+        );
+    
+      border: 5px solid  #324585;
+    
+      box-shadow:
+        0 15px 35px rgba(23, 37, 84, 0.12);
+    }
   
+  
+  /* =========================================================
+     COMPARISON TEXT
+     ========================================================= */
   
   .comparison-item p {
     margin: 0;
@@ -565,16 +838,20 @@
   
     line-height: 1.65;
   
-    color: rgba(255, 255, 255, 0.78);
+    color: #4f5368;
   }
   
+  
+  /* =========================================================
+     BULLET
+     ========================================================= */
   
   .bullet {
     flex-shrink: 0;
   
     font-size: 20px;
   
-    color: rgba(255, 255, 255, 0.70);
+    color: #6258c7;
   }
   
   
@@ -591,7 +868,6 @@
   
     box-sizing: border-box;
   
-    /* IMPORTANT: transparent */
     background:
       radial-gradient(
         circle at 50% 50%,
@@ -603,6 +879,7 @@
     display: flex;
   
     justify-content: center;
+  
     align-items: center;
   
     overflow: hidden;
@@ -619,6 +896,7 @@
     position: relative;
   
     width: 780px;
+  
     height: 480px;
   }
   
@@ -631,24 +909,32 @@
     position: absolute;
   
     left: 50%;
+  
     top: 50%;
   
     transform: translate(-50%, -50%);
   
     width: 280px;
+  
     height: 280px;
   
     display: flex;
   
     justify-content: center;
+  
     align-items: center;
   }
   
+  
+  /* =========================================================
+     CORE GLOW
+     ========================================================= */
   
   .core-glow {
     position: absolute;
   
     width: 250px;
+  
     height: 250px;
   
     border-radius: var(--fc-radius-xl);
@@ -669,33 +955,45 @@
   
   
   @keyframes coreAmbientGlow {
+  
     from {
       opacity: 0.60;
+  
       transform: scale(0.92);
     }
   
     to {
       opacity: 1;
+  
       transform: scale(1.10);
     }
+  
   }
   
+  
+  /* =========================================================
+     CORE CIRCLE
+     ========================================================= */
   
   .core-circle {
     position: relative;
   
     width: 190px;
+  
     height: 190px;
   
     display: flex;
   
     justify-content: center;
+  
     align-items: center;
   
     background:
       rgba(15, 15, 35, 0.78);
   
-    border: 2px dashed rgba(190, 180, 255, 0.45);
+    border:
+      2px dashed
+      rgba(190, 180, 255, 0.45);
   
     border-radius: var(--fc-radius-lg);
   
@@ -719,14 +1017,21 @@
   
   
   @keyframes servicesCoreSpin {
+  
     to {
       transform: rotate(1turn);
     }
+  
   }
   
   
+  /* =========================================================
+     CORE IMAGE
+     ========================================================= */
+  
   .core-circle img {
     width: 82%;
+  
     height: 82%;
   
     display: block;
@@ -735,8 +1040,13 @@
   }
   
   
+  /* =========================================================
+     CORE TEXT
+     ========================================================= */
+  
   .core-circle span {
     font-size: 14px;
+  
     font-weight: 700;
   
     letter-spacing: 1.5px;
@@ -746,7 +1056,7 @@
   
   
   /* =========================================================
-     POINTS
+     SERVICE POINTS
      ========================================================= */
   
   .point {
@@ -770,8 +1080,13 @@
   }
   
   
+  /* =========================================================
+     POINT POSITIONS
+     ========================================================= */
+  
   .point-top {
     top: 15px;
+  
     left: 50%;
   
     transform: translateX(-50%);
@@ -780,24 +1095,28 @@
   
   .point-left-top {
     top: 105px;
+  
     left: 0;
   }
   
   
   .point-right-top {
     top: 105px;
+  
     right: 0;
   }
   
   
   .point-left-bottom {
     bottom: 70px;
+  
     left: 0;
   }
   
   
   .point-right-bottom {
     bottom: 70px;
+  
     right: 0;
   }
   
@@ -809,40 +1128,40 @@
   @media (max-width: 1000px) {
   
     .service-hero {
-      grid-template-columns: 1fr;
+      min-height: 600px;
   
-      min-height: auto;
-  
-      padding: 55px 30px 70px;
-  
-      gap: 40px;
-    }
-  
-  
-    .service-hero-image {
-      width: 100% !important;
-  
-      height: 400px !important;
-    }
-  
-  
-    .service-hero-image img {
-      width: 100% !important;
-      height: 100% !important;
-  
-      object-fit: cover !important;
+      padding: 70px 6%;
     }
   
   
     .service-hero-content {
-      max-width: 100%;
+      width: 60%;
   
-      padding: 0;
+      max-width: 650px;
+    }
+  
+  
+    .service-hero-content h1 {
+      font-size:
+        clamp(40px, 6vw, 58px);
+    }
+  
+  
+    .service-hero-content p {
+      font-size: 16px;
+    }
+  
+  
+    .service-hero-image img {
+      object-position:
+        center center !important;
     }
   
   
     .comparison-grid {
       grid-template-columns: 1fr;
+  
+      gap: 30px;
     }
   
   
@@ -860,34 +1179,122 @@
   @media (max-width: 680px) {
   
     .service-hero {
-      padding: var(--fc-section-pad-sm) 18px;
+      min-height: 720px;
   
-      gap: 30px;
+      display: flex;
+  
+      align-items: flex-start;
+  
+      padding: 100px 22px 60px;
     }
   
   
-    .service-hero-image {
-      width: 100% !important;
-  
-      height: 300px !important;
+    .service-hero::before {
+      background:
+        linear-gradient(
+          90deg,
+          rgba(2, 7, 28, 0.80) 0%,
+          rgba(2, 7, 28, 0.62) 55%,
+          rgba(2, 7, 28, 0.20) 100%
+        );
     }
   
   
-    .service-hero-image img {
-      width: 100% !important;
-      height: 100% !important;
+    .service-hero-content {
+      width: 100%;
   
-      object-fit: cover !important;
+      max-width: 100%;
+    }
+  
+  
+    .service-hero-content > span {
+      margin-bottom: 18px;
+  
+      font-size: 10px;
+  
+      padding: 7px 13px;
+    }
+  
+  
+    .service-hero-content h1 {
+      font-size: 42px;
+  
+      line-height: 1.08;
+  
+      letter-spacing: -1px;
+  
+      margin-bottom: 20px;
     }
   
   
     .service-hero-content p {
-      font-size: var(--fc-text-body);
+      max-width: 100%;
+  
+      font-size: 15px;
+  
+      line-height: 1.65;
     }
   
   
+    .service-hero-actions {
+      flex-direction: column;
+  
+      align-items: stretch;
+  
+      width: 100%;
+  
+      margin-top: 25px;
+    }
+  
+  
+    .service-hero-content a {
+      width: 100%;
+    }
+  
+  
+    .service-hero-image img {
+      object-position:
+        65% center !important;
+    }
+  
+  
+    /* -------------------------
+       COMPARISON
+       ------------------------- */
+  
     .service-comparison {
-      padding: var(--fc-section-pad-sm) 18px;
+      padding:
+        var(--fc-section-pad-sm)
+        18px;
+    }
+  
+  
+    .comparison-heading {
+      margin-bottom:
+        var(--fc-section-gap-sm);
+    }
+  
+  
+    .comparison-heading h2 {
+      font-size:
+        clamp(32px, 8vw, 44px);
+  
+      line-height: 1.15;
+    }
+  
+  
+    .comparison-heading p {
+      font-size:
+        var(--fc-text-body);
+  
+      line-height: 1.65;
+    }
+  
+  
+    .comparison-grid {
+      grid-template-columns: 1fr;
+  
+      gap: 28px;
     }
   
   
@@ -896,14 +1303,21 @@
   
       padding: 18px 20px;
   
-      font-size: var(--fc-text-sm);
+      font-size:
+        var(--fc-text-sm);
     }
   
+  
+    /* -------------------------
+       SERVICE POINTS
+       ------------------------- */
   
     .service-points {
       min-height: 520px;
   
-      padding: var(--fc-section-pad-sm) 18px;
+      padding:
+        var(--fc-section-pad-sm)
+        18px;
     }
   
   
@@ -921,21 +1335,28 @@
   @media (max-width: 420px) {
   
     .service-hero {
-      padding-left: 15px;
-      padding-right: 15px;
+      min-height: 700px;
+  
+      padding:
+        85px
+        18px
+        50px;
     }
   
   
-    .service-hero-image {
-      height: 260px !important;
+    .service-hero-content h1 {
+      font-size: 36px;
+    }
+  
+  
+    .service-hero-content p {
+      font-size: 14px;
     }
   
   
     .service-hero-image img {
-      width: 100% !important;
-      height: 100% !important;
-  
-      object-fit: cover !important;
+      object-position:
+        65% center !important;
     }
   
   
@@ -962,6 +1383,11 @@
     }
   
   
+    .service-comparison::before {
+      animation: none !important;
+    }
+  
+  
     .core-glow {
       animation: none !important;
     }
@@ -978,7 +1404,8 @@
     .service-hero-content a,
     .service-hero-content button,
     .comparison-item {
-      transition-duration: 0.01ms !important;
+      transition-duration:
+        0.01ms !important;
     }
   
   }
