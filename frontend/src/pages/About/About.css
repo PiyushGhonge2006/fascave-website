@@ -46,7 +46,6 @@
 
     position: relative;
     width: 100%;
-    min-height: 100vh;
 
     /* Clears the fixed navbar, then adds the page's own rhythm. */
     padding: calc(var(--fc-nav-offset) + var(--fc-section-pad-sm)) 0 var(--fc-section-pad);
