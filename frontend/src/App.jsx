@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   BrowserRouter,
@@ -7,6 +8,8 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./component/Navcomponents/Navbar";
+import Footer from "./component/Footer/Footer";
+
 import Hero from "./component/Home/Hero/Hero";
 import OurClients from "./component/Home/Ourclient";
 
@@ -31,12 +34,9 @@ import RouteTransition from "./component/common/RouteTransition";
 
 import "./App.css";
 
-
 /* =========================================================
    GLOBAL PAGE THEME
-   ---------------------------------------------------------
-   Wave animation is applied ONLY to light/white pages.
-   Dark pages remain completely untouched.
+   Wave animation is applied only to light/white pages.
    ========================================================= */
 
 function PageTheme({ children }) {
@@ -78,7 +78,6 @@ function PageTheme({ children }) {
   );
 }
 
-
 /* =========================================================
    HOME PAGE
    ========================================================= */
@@ -86,7 +85,6 @@ function PageTheme({ children }) {
 function HomePage() {
   return (
     <div className="website-sections">
-
       <section className="home-hero-section">
         <Hero />
       </section>
@@ -118,11 +116,28 @@ function HomePage() {
       <section>
         <FAQ />
       </section>
-
     </div>
   );
 }
 
+/* =========================================================
+   PUBLIC WEBSITE FOOTER
+   Hide footer on admin routes.
+   ========================================================= */
+
+function PublicFooter() {
+  const location = useLocation();
+
+  const isAdminPage =
+    location.pathname === "/admin" ||
+    location.pathname.startsWith("/admin/");
+
+  if (isAdminPage) {
+    return null;
+  }
+
+  return <Footer />;
+}
 
 /* =========================================================
    APP
@@ -131,25 +146,18 @@ function HomePage() {
 function App() {
   return (
     <BrowserRouter>
-
       <Navbar />
 
       <RouteTransition>
-
         <PageTheme>
-
           <Routes>
-
-            {/* ================= HOME ================= */}
-
+            {/* HOME */}
             <Route
               path="/"
               element={<HomePage />}
             />
 
-
-            {/* ================= SERVICES ================= */}
-
+            {/* SERVICES */}
             <Route
               path="/features"
               element={
@@ -168,17 +176,13 @@ function App() {
               }
             />
 
-
-            {/* ================= ABOUT ================= */}
-
+            {/* ABOUT */}
             <Route
               path="/about-us"
               element={<About />}
             />
 
-
-            {/* ================= BLOG ================= */}
-
+            {/* BLOG */}
             <Route
               path="/blog"
               element={<Blog />}
@@ -189,36 +193,28 @@ function App() {
               element={<BlogDetails />}
             />
 
-
-            {/* ================= CAREERS ================= */}
-
+            {/* CAREERS */}
             <Route
               path="/careers"
               element={<Careers />}
             />
 
-
-            {/* ================= CONTACT ================= */}
-
+            {/* CONTACT */}
             <Route
               path="/contact"
               element={<Contact />}
             />
 
-
-            {/* ================= ADMIN ================= */}
-
+            {/* ADMIN */}
             <Route
               path="/admin/*"
               element={<AdminApp />}
             />
-
           </Routes>
-
         </PageTheme>
-
       </RouteTransition>
 
+      <PublicFooter />
     </BrowserRouter>
   );
 }
