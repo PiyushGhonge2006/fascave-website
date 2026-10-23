@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./navbar.css";
+import "./Navbar.css";
 import { useConsultationModal } from "../consultation/consultationModalContext";
 import useScrolledPast from "../../hooks/useScrolledPast";
 import fascaveLogo from "../../assets/logo-fascave/fascave-logo.png";

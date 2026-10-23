@@ -1,0 +1,721 @@
+/* =========================================================
+   FASCAVE FOOTER
+   ========================================================= */
+
+.site-footer {
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 15% 10%,
+            rgba(92, 72, 210, 0.16),
+            transparent 32%),
+        radial-gradient(circle at 85% 75%,
+            rgba(106, 57, 220, 0.12),
+            transparent 35%),
+        #15132b;
+
+    color: #c3c0d0;
+}
+
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.footer-cta {
+    position: relative;
+    overflow: hidden;
+
+    padding: 88px 24px;
+
+    background:
+        linear-gradient(135deg,
+            #33288f 0%,
+            #5139bd 50%,
+            #7541cf 100%);
+}
+
+.footer-cta::before {
+    content: "";
+
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    top: -320px;
+    left: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.footer-cta::after {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -190px;
+    bottom: -300px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.footer-cta-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.footer-cta-label {
+    display: block;
+
+    margin-bottom: 16px;
+
+    color: #ded9ff;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 0.22em;
+}
+
+.footer-cta-content h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 1.05;
+
+    font-weight: 800;
+    letter-spacing: -0.045em;
+}
+
+.footer-cta-content p {
+    max-width: 650px;
+
+    margin: 22px auto 32px;
+
+    color: #dedbea;
+
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.footer-cta-buttons {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.footer-cta-primary,
+.footer-cta-secondary {
+    min-height: 54px;
+
+    padding: 0 28px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+}
+
+.footer-cta-primary {
+    background: #ffffff;
+    color: #30267f;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+}
+
+.footer-cta-primary:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+}
+
+.footer-cta-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+
+    background: rgba(255, 255, 255, 0.1);
+
+    color: #ffffff;
+}
+
+.footer-cta-secondary:hover {
+    transform: translateY(-4px);
+
+    background: rgba(255, 255, 255, 0.18);
+}
+
+
+/* =========================================================
+   MAIN FOOTER
+   ========================================================= */
+
+.footer-main {
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 70px 50px 28px;
+}
+
+.footer-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.45fr 1fr 1.2fr 1fr;
+
+    gap: 58px;
+
+    padding-bottom: 55px;
+}
+
+
+/* =========================================================
+   COMPANY
+   ========================================================= */
+
+.footer-company {
+    min-width: 0;
+
+    max-width: 430px;
+}
+
+
+/* =========================================================
+   FASCAVE LOGO
+   ========================================================= */
+
+.footer-logo-link {
+    display: flex;
+
+    align-items: center;
+
+    width: 270px;
+    height: 100px;
+
+    margin-bottom: 12px;
+
+    text-decoration: none;
+
+    overflow: visible;
+}
+
+.footer-logo {
+    display: block;
+
+    width: 270px;
+    height: 100px;
+
+    object-fit: contain;
+
+    object-position: left center;
+
+    /*
+    Slightly bigger than previous version.
+    No filter so original FasCave colours remain.
+  */
+    transform: scale(1.22);
+
+    transform-origin: left center;
+}
+
+
+/* =========================================================
+   COMPANY DESCRIPTION
+   ========================================================= */
+
+.footer-description {
+    max-width: 410px;
+
+    margin: 0;
+
+    color: #c0bdcc;
+
+    font-size: 15px;
+
+    line-height: 1.78;
+}
+
+
+/* =========================================================
+   SOCIAL ICONS
+   ========================================================= */
+
+.footer-socials {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: nowrap;
+
+    gap: 11px;
+
+    margin-top: 28px;
+
+    white-space: nowrap;
+}
+
+.social {
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.20);
+
+    background: rgba(255, 255, 255, 0.045);
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.social svg {
+    width: 21px;
+    height: 21px;
+
+    display: block;
+
+    fill: currentColor;
+}
+
+.social:hover {
+    transform: translateY(-4px) scale(1.06);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.30);
+}
+
+.social.facebook:hover {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+
+.social.x:hover {
+    background: #000000;
+    border-color: #ffffff;
+}
+
+.social.linkedin:hover {
+    background: #0a66c2;
+    border-color: #0a66c2;
+}
+
+.social.github:hover {
+    background: #24292f;
+    border-color: #ffffff;
+}
+
+.social.instagram:hover {
+    background:
+        linear-gradient(135deg,
+            #833ab4,
+            #fd1d1d,
+            #fcb045);
+
+    border-color: transparent;
+}
+
+.social.youtube:hover {
+    background: #ff0000;
+    border-color: #ff0000;
+}
+
+
+/* =========================================================
+   COLUMN HEADINGS
+   ========================================================= */
+
+.footer-column {
+    min-width: 0;
+}
+
+.footer-column h3 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+.footer-heading-line {
+    width: 42px;
+    height: 4px;
+
+    margin-top: 11px;
+    margin-bottom: 25px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(90deg,
+            #a76cff,
+            #c17cff);
+}
+
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+
+.footer-column nav {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.footer-column nav a {
+    color: #c0bdcc;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    text-decoration: none;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.footer-column nav a:hover {
+    color: #ffffff;
+
+    transform: translateX(5px);
+}
+
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact-block {
+    margin-bottom: 21px;
+}
+
+.contact-block span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #9c87e9;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+}
+
+.contact-block p {
+    margin: 0;
+
+    color: #c0bdcc;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+}
+
+.contact-block a {
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: color 0.25s ease;
+}
+
+.contact-block a:hover {
+    color: #b99cff;
+}
+
+
+/* =========================================================
+   PARTNER
+   ========================================================= */
+
+.partner-image-wrapper {
+    width: 100%;
+
+    max-width: 300px;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.24);
+}
+
+.partner-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   BOTTOM
+   ========================================================= */
+
+.footer-bottom {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding-top: 23px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    color: #888595;
+
+    font-size: 13px;
+}
+
+.footer-bottom-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.footer-bottom-links a {
+    color: #aaa6b7;
+
+    font-size: 13px;
+
+    text-decoration: none;
+
+    transition: color 0.25s ease;
+}
+
+.footer-bottom-links a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom-links span {
+    color: #575367;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .footer-main {
+        padding: 65px 35px 28px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1.3fr 1fr;
+
+        gap: 50px 45px;
+    }
+
+    .footer-logo-link {
+        width: 250px;
+        height: 92px;
+    }
+
+    .footer-logo {
+        width: 250px;
+        height: 92px;
+
+        transform: scale(1.18);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .footer-cta {
+        padding: 70px 20px;
+    }
+
+    .footer-cta-content h2 {
+        font-size: 40px;
+    }
+
+    .footer-cta-content p {
+        font-size: 15px;
+    }
+
+    .footer-cta-buttons {
+        flex-direction: column;
+    }
+
+    .footer-cta-primary,
+    .footer-cta-secondary {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .footer-main {
+        padding: 55px 22px 25px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+
+        gap: 42px;
+
+        padding-bottom: 45px;
+    }
+
+    .footer-company {
+        max-width: none;
+    }
+
+    .footer-logo-link {
+        width: 250px;
+        height: 92px;
+    }
+
+    .footer-logo {
+        width: 250px;
+        height: 92px;
+
+        transform: scale(1.15);
+    }
+
+    .footer-socials {
+        gap: 9px;
+    }
+
+    .social {
+        flex-basis: 46px;
+
+        width: 46px;
+        height: 46px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .footer-bottom-links {
+        flex-wrap: wrap;
+    }
+
+    .partner-image-wrapper {
+        max-width: 330px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .footer-cta-content h2 {
+        font-size: 34px;
+    }
+
+    .footer-main {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .footer-logo-link {
+        width: 235px;
+        height: 88px;
+    }
+
+    .footer-logo {
+        width: 235px;
+        height: 88px;
+
+        transform: scale(1.1);
+    }
+
+    .footer-socials {
+        gap: 7px;
+    }
+
+    .social {
+        flex-basis: 43px;
+
+        width: 43px;
+        height: 43px;
+    }
+
+    .social svg {
+        width: 20px;
+        height: 20px;
+    }
+}
