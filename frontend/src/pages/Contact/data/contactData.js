@@ -194,6 +194,249 @@ export const budgetOptions = [
   "Let's Discuss",
 ];
 
+/** Shared limits so the inputs and the validator cannot drift apart. */
+export const formLimits = Object.freeze({
+  name: 80,
+  email: 120,
+  company: 100,
+  phone: 15,
+  message: 2000,
+});
+
+export const DEFAULT_COUNTRY_CODE = "+91";
+
+/**
+ * Calling codes offered next to the phone field.
+ *
+ * `minDigits` / `maxDigits` describe the national number only — the
+ * calling code is stored separately. `pattern` adds a country-aware
+ * sanity check on top of the length rule, and `groups` is used to
+ * format the review screen without changing the submitted value.
+ */
+export const countryCallingCodes = [
+  {
+    code: "+91",
+    iso: "IN",
+    name: "India",
+    minDigits: 10,
+    maxDigits: 10,
+    pattern: /^[6-9]\d{9}$/,
+    groups: [5, 5],
+    example: "98765 43210",
+  },
+  {
+    code: "+1",
+    iso: "US",
+    name: "USA / Canada",
+    minDigits: 10,
+    maxDigits: 10,
+    pattern: /^[2-9]\d{2}[2-9]\d{6}$/,
+    groups: [3, 3, 4],
+    example: "415 555 2671",
+  },
+  {
+    code: "+44",
+    iso: "GB",
+    name: "United Kingdom",
+    minDigits: 10,
+    maxDigits: 10,
+    pattern: /^[1-9]\d{9}$/,
+    groups: [4, 6],
+    example: "7911 123456",
+  },
+  {
+    code: "+61",
+    iso: "AU",
+    name: "Australia",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[2-478]\d{8}$/,
+    groups: [3, 3, 3],
+    example: "412 345 678",
+  },
+  {
+    code: "+971",
+    iso: "AE",
+    name: "UAE",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[2-9]\d{8}$/,
+    groups: [2, 3, 4],
+    example: "50 123 4567",
+  },
+  {
+    code: "+49",
+    iso: "DE",
+    name: "Germany",
+    minDigits: 6,
+    maxDigits: 11,
+    pattern: /^[1-9]\d{5,10}$/,
+    groups: [3, 3, 4],
+    example: "151 234 5678",
+  },
+  {
+    code: "+33",
+    iso: "FR",
+    name: "France",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[1-9]\d{8}$/,
+    groups: [1, 2, 2, 2, 2],
+    example: "6 12 34 56 78",
+  },
+  {
+    code: "+81",
+    iso: "JP",
+    name: "Japan",
+    minDigits: 9,
+    maxDigits: 10,
+    pattern: /^[1-9]\d{8,9}$/,
+    groups: [2, 4, 4],
+    example: "90 1234 5678",
+  },
+  {
+    code: "+65",
+    iso: "SG",
+    name: "Singapore",
+    minDigits: 8,
+    maxDigits: 8,
+    pattern: /^[3689]\d{7}$/,
+    groups: [4, 4],
+    example: "9123 4567",
+  },
+  {
+    code: "+64",
+    iso: "NZ",
+    name: "New Zealand",
+    minDigits: 8,
+    maxDigits: 10,
+    pattern: /^[2-9]\d{7,9}$/,
+    groups: [3, 3, 4],
+    example: "21 123 4567",
+  },
+  {
+    code: "+27",
+    iso: "ZA",
+    name: "South Africa",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[1-8]\d{8}$/,
+    groups: [2, 3, 4],
+    example: "82 123 4567",
+  },
+  {
+    code: "+55",
+    iso: "BR",
+    name: "Brazil",
+    minDigits: 10,
+    maxDigits: 11,
+    pattern: /^[1-9]\d{9,10}$/,
+    groups: [2, 5, 4],
+    example: "11 91234 5678",
+  },
+  {
+    code: "+39",
+    iso: "IT",
+    name: "Italy",
+    minDigits: 9,
+    maxDigits: 10,
+    pattern: /^[1-9]\d{8,9}$/,
+    groups: [3, 3, 4],
+    example: "312 345 6789",
+  },
+  {
+    code: "+34",
+    iso: "ES",
+    name: "Spain",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[1-9]\d{8}$/,
+    groups: [3, 3, 3],
+    example: "612 345 678",
+  },
+  {
+    code: "+31",
+    iso: "NL",
+    name: "Netherlands",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[1-9]\d{8}$/,
+    groups: [2, 3, 4],
+    example: "6 1234 5678",
+  },
+  {
+    code: "+41",
+    iso: "CH",
+    name: "Switzerland",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[1-9]\d{8}$/,
+    groups: [2, 3, 2, 2],
+    example: "78 123 45 67",
+  },
+  {
+    code: "+353",
+    iso: "IE",
+    name: "Ireland",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[1-9]\d{8}$/,
+    groups: [2, 3, 4],
+    example: "85 123 4567",
+  },
+  {
+    code: "+966",
+    iso: "SA",
+    name: "Saudi Arabia",
+    minDigits: 9,
+    maxDigits: 9,
+    pattern: /^[1-9]\d{8}$/,
+    groups: [2, 3, 4],
+    example: "50 123 4567",
+  },
+  {
+    code: "+974",
+    iso: "QA",
+    name: "Qatar",
+    minDigits: 8,
+    maxDigits: 8,
+    pattern: /^[3-7]\d{7}$/,
+    groups: [4, 4],
+    example: "3312 3456",
+  },
+];
+
+export function getCountryCallingCode(code) {
+  return (
+    countryCallingCodes.find((country) => country.code === code) ||
+    countryCallingCodes[0]
+  );
+}
+
+/** Formats for display only — callers keep the raw national digits. */
+export function formatPhoneForDisplay(countryCode, value) {
+  const digits =
+    typeof value === "string" ? value.replace(/\D/g, "") : "";
+
+  if (!digits) return "";
+
+  const country = getCountryCallingCode(countryCode);
+  const parts = [];
+  let cursor = 0;
+
+  country.groups.forEach((size) => {
+    if (cursor >= digits.length) return;
+    parts.push(digits.slice(cursor, cursor + size));
+    cursor += size;
+  });
+
+  if (cursor < digits.length) {
+    parts.push(digits.slice(cursor));
+  }
+
+  return `${country.code} ${parts.join(" ")}`;
+}
+
 /**
  * Step definitions drive the whole wizard: the progress indicator, the
  * field rendering and the per-step validation all read from here.
@@ -211,7 +454,7 @@ export const formSteps = [
         label: "Name",
         required: true,
         autoComplete: "name",
-        maxLength: 80,
+        maxLength: formLimits.name,
       },
       {
         name: "email",
@@ -220,7 +463,7 @@ export const formSteps = [
         required: true,
         autoComplete: "email",
         inputMode: "email",
-        maxLength: 120,
+        maxLength: formLimits.email,
       },
     ],
   },
@@ -235,7 +478,7 @@ export const formSteps = [
         type: "text",
         label: "Company",
         autoComplete: "organization",
-        maxLength: 100,
+        maxLength: formLimits.company,
       },
       {
         name: "phone",
@@ -243,7 +486,7 @@ export const formSteps = [
         label: "Phone",
         inputMode: "tel",
         autoComplete: "tel",
-        maxLength: 20,
+        hint: "Optional. Digits only — the calling code is added automatically.",
       },
       {
         name: "projectType",
@@ -273,7 +516,7 @@ export const formSteps = [
         label: "Message",
         required: true,
         rows: 5,
-        maxLength: 2000,
+        maxLength: formLimits.message,
         hint: "A few sentences is plenty — goals, deadlines, links.",
       },
     ],
@@ -300,12 +543,16 @@ export const initialContactValues = Object.freeze({
     (values, step) => ({
       ...values,
       ...(step.fields ?? []).reduce(
-        (fields, field) => ({ ...fields, [field.name]: "" }),
+        (fields, field) => ({
+          ...fields,
+          [field.name]: "",
+        }),
         {},
       ),
     }),
     {},
   ),
+  countryCode: DEFAULT_COUNTRY_CODE,
   trap: "",
 });
 
@@ -314,12 +561,16 @@ export const reviewRows = [
   { name: "name", label: "Name" },
   { name: "email", label: "Email" },
   { name: "company", label: "Company" },
-  { name: "phone", label: "Phone" },
+  {
+    name: "phone",
+    label: "Phone",
+    format: (values) =>
+      formatPhoneForDisplay(values.countryCode, values.phone),
+  },
   { name: "projectType", label: "Project Type" },
   { name: "budget", label: "Budget" },
   { name: "message", label: "Message", wide: true },
 ];
-
 /* ------------------------------------------------------------
    IDEA → LAUNCH VISUAL
    Nodes sit on a 3 x 3 grid; the connecting lines are drawn in
