@@ -19,29 +19,32 @@ import { fallbackFeatures } from "./data/features";
    keeps the page looking normal instead of blank.
 ====================================================== */
 
-const toFeature = (service) => ({
-  id: service.slug || service._id,
-  title: service.title,
-  image: imageUrl(service.image),
-  description: service.shortDescription || "",
-  details: service.description || "",
 
-  /* The CMS stores one feature list, where each entry has
-     a short title and a longer outcome line. The detail
-     page shows a "today" column and an "outcome" column,
-     so the outcome text feeds both and the title is used
-     for the five points around the core. */
-  outcome: (service.features || []).map(
-    (feature) => feature.description || feature.title || ""
-  ),
-  today: (service.features || []).map(
-    (feature) => feature.description || feature.title || ""
-  ),
-  points: (service.features || [])
-    .map((feature) => feature.title)
-    .filter(Boolean)
-    .slice(0, 5),
-});
+const toFeature = (service) => {
+  // Match the CMS service to its custom fallback content.
+  const fallback = fallbackFeatures.find(
+    (item) => item.id === (service.slug || service._id)
+  );
+
+  return {
+    id: service.slug || service._id,
+    title: service.title,
+    image: imageUrl(service.image),
+    description: service.shortDescription || "",
+    details: service.description || "",
+
+    // Use custom comparison copy when available.
+    today: fallback?.today || [],
+    outcome: fallback?.outcome || [],
+
+    // Keep service-specific points from the CMS.
+    points: (service.features || [])
+      .map((feature) => feature.title)
+      .filter(Boolean)
+      .slice(0, 5),
+  };
+};
+
 
 export const useServices = () => {
   const { items } = useCollection("/api/content/services");

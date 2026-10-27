@@ -111,7 +111,7 @@ export default function Servicepoint() {
       <div className="fc-orbit-glow fc-orbit-glow-one" />
       <div className="fc-orbit-glow fc-orbit-glow-two" />
 
-      <div className="fc-section-heading">f
+      <div className="fc-section-heading">
 
         <h2>
           Modern &amp; <span>Responsive</span>

@@ -7,35 +7,32 @@ import digitalMarketing from '../../../assets/service_img/digital-marketing.png'
 
 /* Used when the CMS has nothing to return, so the services
    grid is never empty. */
-export const fallbackFeatures = [
 
+/* Fallback service data used when the CMS returns no services. */
+
+export const fallbackFeatures = [
+  // 1. Web Development
   {
     id: 'web-development',
-
     title: 'Web Development',
-
     image: webDevelopment,
-
     description:
       'We build modern, responsive and high-performance websites tailored to your business needs.',
-
     details:
       'Our web development services include custom website design, responsive layouts, clean code and scalable solutions using modern technologies.',
 
     today: [
-      'Manual website processes and outdated workflows.',
-      'Slow websites that affect customer experience.',
-      'Difficulty managing website content and updates.',
-      'Limited visibility into website performance.',
-      'Separate tools for different business requirements.',
+      'Frequent changes break existing features.',
+      'Website updates depend on developers.',
+      'Slow loading affects user experience.',
+      'Rigid platforms make growth difficult.',
     ],
 
     outcome: [
-      'A fast and responsive digital experience.',
-      'Modern websites optimized for all devices.',
-      'Easy content management and updates.',
-      'Better performance and user engagement.',
-      'A scalable platform ready for future growth.',
+      'Scalable architecture makes updates safer.',
+      'Teams manage content with less dependency.',
+      'Optimized websites deliver faster experiences.',
+      'Flexible platforms grow with your business.',
     ],
 
     points: [
@@ -47,34 +44,28 @@ export const fallbackFeatures = [
     ],
   },
 
-
+  // 2. App Development
   {
     id: 'app-development',
-
     title: 'App Development',
-
     image: appDevelopment,
-
     description:
       'We develop powerful and user-friendly mobile applications for Android and iOS platforms.',
-
     details:
       'From concept to deployment, we create secure, scalable and feature-rich mobile applications designed to deliver great user experiences.',
 
     today: [
-      'Customers depend heavily on websites or manual communication.',
-      'Limited mobile accessibility.',
-      'Disconnected customer experiences.',
-      'Manual service and support processes.',
-      'Limited access to real-time information.',
+      'Customers struggle with mobile access to services.',
+      'App experiences feel inconsistent across devices.',
+      'Manual workflows slow customer interactions.',
+      'Growing user demand strains existing systems.',
     ],
 
     outcome: [
-      'A dedicated mobile experience for customers.',
-      'Easy access to services from anywhere.',
-      'Connected and automated workflows.',
-      'Faster customer communication.',
-      'Real-time access to important information.',
+      'Services become accessible on the go.',
+      'Consistent experiences across supported devices.',
+      'Automated workflows simplify daily interactions.',
+      'Scalable apps support growing user demand.',
     ],
 
     points: [
@@ -86,34 +77,28 @@ export const fallbackFeatures = [
     ],
   },
 
-
+  // 3. SEO-Friendly Development
   {
     id: 'seo-friendly',
-
     title: 'SEO Friendly',
-
     image: seoFriendly,
-
     description:
       'We make SEO friendly templates with proper breadcrumbs and structured data.',
-
     details:
       'We structure websites with search-engine-friendly layouts, semantic HTML, metadata, breadcrumbs and structured data.',
 
     today: [
-      'Low visibility in search results.',
-      'Poor website structure for search engines.',
-      'Missing metadata and structured information.',
-      'Difficulty tracking organic growth.',
-      'Unoptimized website content.',
+      'Pages struggle to appear in relevant searches.',
+      'Poor structure makes content harder to discover.',
+      'Missing metadata limits search visibility.',
+      'Unoptimized content misses search opportunities.',
     ],
 
     outcome: [
-      'Search-friendly website architecture.',
-      'Better structured website content.',
-      'Improved search engine understanding.',
-      'Clearer organic performance tracking.',
-      'A stronger foundation for online visibility.',
+      'SEO-friendly pages support better discoverability.',
+      'Clear site structure helps search engines.',
+      'Metadata and structured data improve page context.',
+      'Optimized content targets relevant search intent.',
     ],
 
     points: [
@@ -125,34 +110,28 @@ export const fallbackFeatures = [
     ],
   },
 
-
+  // 4. Cloud & Data Analytics
   {
     id: 'cloud-data-analytics',
-
     title: 'Cloud & Data Analytics Services',
-
     image: cloudDataAnalytics,
-
     description:
       'We help businesses leverage cloud technologies and data analytics for smarter decisions.',
-
     details:
       'Our services include cloud infrastructure, data processing, data visualization and analytics solutions tailored to your business requirements.',
 
     today: [
-      'Data stored across disconnected systems.',
-      'Manual reporting and data collection.',
-      'Limited access to business information.',
-      'Slow decision-making processes.',
-      'Difficulty handling growing data volumes.',
+      'Business data is scattered across systems.',
+      'Manual reporting consumes valuable time.',
+      'Limited visibility delays important decisions.',
+      'Growing datasets strain existing infrastructure.',
     ],
 
     outcome: [
-      'Centralized and accessible business data.',
-      'Automated reporting and analytics.',
-      'Real-time business visibility.',
-      'Faster data-driven decisions.',
-      'Scalable cloud infrastructure.',
+      'Centralized data improves accessibility.',
+      'Automated reporting reduces manual effort.',
+      'Timely insights support faster decisions.',
+      'Scalable cloud infrastructure handles growth.',
     ],
 
     points: [
@@ -164,34 +143,28 @@ export const fallbackFeatures = [
     ],
   },
 
-
+  // 5. Power BI & Visualization
   {
     id: 'power-bi-visualization',
-
-    title: 'Power & BI Visualization Services',
-
+    title: 'Power BI Visualization Services',
     image: powerBI,
-
     description:
       'We create powerful dashboards and visual reports using modern business intelligence tools.',
-
     details:
       'Transform your data into meaningful insights with interactive dashboards, reports and data visualization solutions.',
 
     today: [
-      'Business reports are difficult to understand.',
-      'Important information is spread across files.',
-      'Manual report preparation takes time.',
-      'Decision makers lack real-time visibility.',
-      'Data trends are difficult to identify.',
+      'Reports make important insights hard to find.',
+      'Data is scattered across multiple files.',
+      'Manual report creation delays business reviews.',
+      'Trends remain hidden in raw data.',
     ],
 
     outcome: [
-      'Interactive business dashboards.',
-      'Clear and meaningful data visualization.',
-      'Automated reporting workflows.',
-      'Real-time business insights.',
-      'Better understanding of trends and performance.',
+      'Interactive dashboards clarify key metrics.',
+      'Connected data brings information together.',
+      'Automated reports save preparation time.',
+      'Visual trends support informed decisions.',
     ],
 
     points: [
@@ -203,34 +176,28 @@ export const fallbackFeatures = [
     ],
   },
 
-
+  // 6. Digital Marketing
   {
     id: 'digital-marketing',
-
     title: 'Digital Marketing Services',
-
     image: digitalMarketing,
-
     description:
       'We help you grow your brand with result-driven digital marketing strategies.',
-
     details:
       'Our digital marketing services include social media marketing, SEO, content marketing, paid advertising and online brand promotion.',
 
     today: [
-      'Limited online brand visibility.',
-      'Inconsistent social media presence.',
-      'Difficulty reaching the right audience.',
-      'Manual marketing activities.',
-      'Limited understanding of campaign performance.',
+      'Brand visibility remains limited online.',
+      'Inconsistent campaigns weaken brand recognition.',
+      'Reaching the right audience is difficult.',
+      'Campaign results are hard to measure.',
     ],
 
     outcome: [
-      'Stronger online brand presence.',
-      'Consistent digital communication.',
-      'Targeted audience engagement.',
-      'Data-driven marketing campaigns.',
-      'Clear visibility into campaign performance.',
+      'Strategic campaigns strengthen online visibility.',
+      'Consistent messaging builds brand recognition.',
+      'Targeted marketing reaches relevant audiences.',
+      'Performance tracking reveals campaign results.',
     ],
 
     points: [
@@ -241,5 +208,4 @@ export const fallbackFeatures = [
       'Performance Based',
     ],
   },
-
-]
+];

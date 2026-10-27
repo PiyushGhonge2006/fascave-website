@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import serviceHeroImage from '../../../assets/service_img/service_hero.png'
+import serviceHeroImage from '../../../assets/service_img/service-detail-home.png'
 export default function ServiceHero({ feature }) {
   return (
     <section className="service-hero">
