@@ -37,7 +37,7 @@ export default function ServiceHero({ feature }) {
           </Link>
 
           <Link
-            to="/"
+            to="/features"
             className="details-button"
           >
             ← Back to Services

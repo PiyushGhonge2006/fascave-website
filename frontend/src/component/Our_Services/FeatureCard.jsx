@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+
+import { Link } from 'react-router-dom';
 
 export default function FeatureCard({ feature }) {
   return (
@@ -8,7 +9,6 @@ export default function FeatureCard({ feature }) {
       data-reveal="scale"
     >
       <article className="feature-card">
-
         <div className="feature-image-wrapper">
           <img
             src={feature.image}
@@ -18,14 +18,9 @@ export default function FeatureCard({ feature }) {
         </div>
 
         <div className="feature-content">
-
           <h3>{feature.title}</h3>
-
-          <p>{feature.description}</p>
-
         </div>
-
       </article>
     </Link>
-  )
+  );
 }

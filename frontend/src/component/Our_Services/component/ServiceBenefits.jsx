@@ -162,6 +162,62 @@ const SERVICE_BENEFITS = {
         'Measure campaign performance and use meaningful data to improve your marketing strategy.',
     },
   ],
+
+  // AI Automation
+  ai: [
+    {
+      icon: '🤖',
+      title: 'Intelligent Workflow Automation',
+      description:
+        'Automate repetitive business processes using AI-powered workflows that save time and effort.',
+    },
+    {
+      icon: '⚡',
+      title: 'Process Optimization',
+      description:
+        'Streamline daily operations, reduce manual work, and improve overall business efficiency.',
+    },
+    {
+      icon: '🔗',
+      title: 'Smart Integrations',
+      description:
+        'Connect AI tools with existing applications, APIs, and business systems for seamless workflows.',
+    },
+    {
+      icon: '📊',
+      title: 'AI-Powered Insights',
+      description:
+        'Use AI-assisted data processing and analysis to support faster, informed business decisions.',
+    },
+  ],
+
+  // CPaaS
+  cpaas: [
+    {
+      icon: '💬',
+      title: 'Omnichannel Messaging',
+      description:
+        'Integrate SMS, WhatsApp, and other supported messaging channels into your business applications.',
+    },
+    {
+      icon: '📞',
+      title: 'Voice & Video Communication',
+      description:
+        'Enable voice calls and video communication through APIs suited to your application requirements.',
+    },
+    {
+      icon: '🔔',
+      title: 'Automated Notifications',
+      description:
+        'Send timely OTPs, alerts, reminders, and transaction updates through supported communication channels.',
+    },
+    {
+      icon: '🔗',
+      title: 'Seamless API Integration',
+      description:
+        'Connect communication services with websites, mobile apps, CRM systems, and existing workflows.',
+    },
+  ],
 }
 
 /* =========================================
@@ -171,38 +227,41 @@ const SERVICE_BENEFITS = {
 function getServiceType(title = '') {
   const value = title.toLowerCase().trim()
 
-  if (value.includes('web')) {
-    return 'web'
+  // Check specific services before generic keywords.
+  if (value.includes('cpaas')) {
+    return 'cpaas'
   }
 
-  if (value.includes('app')) {
-    return 'app'
+  if (value.includes('ai automation')) {
+    return 'ai'
   }
 
   if (value.includes('seo')) {
     return 'seo'
   }
 
-  if (
-    value.includes('cloud') ||
-    value.includes('data analytics')
-  ) {
-    return 'cloud'
-  }
-
-  if (
-    value.includes('power') ||
-    value.includes('bi') ||
-    value.includes('visualization')
-  ) {
+  if (value.includes('power bi') ||
+      value.includes('powerbi') ||
+      value.includes('visualization')) {
     return 'powerbi'
   }
 
-  if (
-    value.includes('marketing') ||
-    value.includes('digital marketing')
-  ) {
+  if (value.includes('cloud') ||
+      value.includes('data analytics')) {
+    return 'cloud'
+  }
+
+  if (value.includes('digital marketing') ||
+      value.includes('marketing')) {
     return 'marketing'
+  }
+
+  if (value.includes('app')) {
+    return 'app'
+  }
+
+  if (value.includes('web')) {
+    return 'web'
   }
 
   return null
@@ -225,7 +284,6 @@ export default function ServiceBenefits({ feature }) {
 
   return (
     <section className="service-benefits">
-
       <div className="service-benefits-header">
         <h2>Why Work with Us?</h2>
 
@@ -239,13 +297,11 @@ export default function ServiceBenefits({ feature }) {
       </div>
 
       <div className="service-benefits-grid">
-
         {cards.map((card, index) => (
           <article
             key={`${card.title}-${index}`}
             className="service-benefit-card"
           >
-
             <div className="benefit-number">
               {String(index + 1).padStart(2, '0')}
             </div>
@@ -254,19 +310,12 @@ export default function ServiceBenefits({ feature }) {
               {card.icon}
             </div>
 
-            <h3>
-              {card.title}
-            </h3>
+            <h3>{card.title}</h3>
 
-            <p>
-              {card.description}
-            </p>
-
+            <p>{card.description}</p>
           </article>
         ))}
-
       </div>
-
     </section>
   )
 }
