@@ -548,7 +548,9 @@
   .nav-toggle {
     display: block;
   }
-
+  .consultation-btn {
+    display: none !important;
+  }
   .nav-mobile.is-open {
     display: block;
 
