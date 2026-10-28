@@ -4,8 +4,6 @@ const Message = require("../model/msgbutton");
 
 const BlogPost = require("../model/blogPost");
 
-const Service = require("../model/service");
-
 const PortfolioItem = require("../model/portfolioItem");
 
 const GtmPartner = require("../model/gtmPartner");
