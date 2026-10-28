@@ -27,9 +27,6 @@ const homeRoutes =
 const aboutRoutes =
   require("./routes/aboutRoutes");
 
-const serviceRoutes =
-  require("./routes/serviceRoutes");
-
 const portfolioRoutes =
   require("./routes/portfolioRoutes");
 
@@ -250,11 +247,6 @@ app.use(
 app.use(
   "/api/content/about",
   aboutRoutes
-);
-
-app.use(
-  "/api/content/services",
-  serviceRoutes
 );
 
 app.use(
