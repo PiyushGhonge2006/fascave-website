@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -31,6 +30,7 @@ import Contact from "./pages/Contact/Contact";
 
 import AdminApp from "./admin/AdminApp";
 import RouteTransition from "./component/common/RouteTransition";
+import { api } from "./admin/lib/apiClient";
 
 import "./App.css";
 
@@ -83,6 +83,31 @@ function PageTheme({ children }) {
    ========================================================= */
 
 function HomePage() {
+  const [portfolioSectionVisible, setPortfolioSectionVisible] =
+    useState(true);
+
+  const [loadingHomeContent, setLoadingHomeContent] =
+    useState(true);
+
+  useEffect(() => {
+    const loadHomeContent = async () => {
+      try {
+        const data = await api.get("/api/content/home");
+        const visible =
+          data?.portfolioSectionVisible ??
+          data?.data?.portfolioSectionVisible ??
+          true;
+        setPortfolioSectionVisible(visible !== false);
+      } catch (error) {
+        console.error("Failed to load home content:", error);
+        setPortfolioSectionVisible(true);
+      } finally {
+        setLoadingHomeContent(false);
+      }
+    };
+
+    loadHomeContent();
+  }, []);
   return (
     <div className="website-sections">
       <section className="home-hero-section">
@@ -104,10 +129,11 @@ function HomePage() {
       <section>
         <Whatwe_do />
       </section>
-
-      <section>
-        <Portfolio />
-      </section>
+      {portfolioSectionVisible && (
+        <section>
+          <Portfolio />
+        </section>
+      )}
 
       <section>
         <GTMPartner />

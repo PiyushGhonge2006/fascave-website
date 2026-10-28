@@ -1,1 +1,145 @@
 /* Portfolio admin uses shared admin styles. */
+.portfolio-section-control {
+    margin: 0 0 20px;
+    padding: 0 !important;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow:
+        0 2px 8px rgba(15, 23, 42, 0.04),
+        0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.portfolio-section-control-content {
+    min-height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 20px 22px;
+}
+
+.portfolio-section-control-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.portfolio-section-control-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 7px;
+}
+
+.portfolio-section-control-heading h3 {
+    margin: 0;
+    color: #111827;
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+.portfolio-section-control-copy p {
+    margin: 0;
+    max-width: 720px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.portfolio-section-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.portfolio-toggle-switch {
+    position: relative;
+    width: 52px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #e5e7eb;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.portfolio-toggle-switch.is-on {
+    background: #22c55e;
+    border-color: #22c55e;
+}
+
+.portfolio-toggle-switch.is-off {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+}
+
+.portfolio-toggle-switch:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.portfolio-toggle-knob {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    left: 3px;
+    transition: transform 0.2s ease;
+}
+
+.portfolio-toggle-switch.is-on .portfolio-toggle-knob {
+    transform: translateX(22px);
+}
+
+.portfolio-toggle-label {
+    min-width: 60px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.portfolio-project-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+}
+
+.portfolio-project-info {
+    min-width: 0;
+}
+
+.portfolio-thumb-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 700px) {
+    .portfolio-section-control-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 18px;
+    }
+
+    .portfolio-section-control-content>.admin-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .portfolio-section-control-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+}

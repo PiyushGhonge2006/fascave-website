@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const homeContentSchema =
   new mongoose.Schema(
     {
@@ -84,6 +83,12 @@ const homeContentSchema =
         },
       ],
 
+      // Overall Portfolio section visibility
+      portfolioSectionVisible: {
+        type: Boolean,
+        default: true,
+      },
+
       seoTitle: {
         type: String,
         trim: true,
@@ -101,12 +106,10 @@ const homeContentSchema =
     }
   );
 
-
 const HomeContent =
   mongoose.model(
     "HomeContent",
     homeContentSchema
   );
-
 
 module.exports = HomeContent;

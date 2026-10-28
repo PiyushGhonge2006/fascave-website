@@ -11,9 +11,7 @@ const {
 
 const express = require("express");
 
-
 const router = express.Router();
-
 
 const homeDefaults = {
   hero: {
@@ -26,14 +24,27 @@ const homeDefaults = {
     ctaHref: "/contact",
     image: "",
   },
-  stats: [
-    { value: "150+", label: "Projects delivered" },
-    { value: "40+", label: "Happy clients" },
-    { value: "8+", label: "Years of experience" },
-  ],
-  clients: [],
-};
 
+  stats: [
+    {
+      value: "150+",
+      label: "Projects delivered",
+    },
+    {
+      value: "40+",
+      label: "Happy clients",
+    },
+    {
+      value: "8+",
+      label: "Years of experience",
+    },
+  ],
+
+  clients: [],
+
+  // Overall Portfolio section visibility
+  portfolioSectionVisible: true,
+};
 
 router.get(
   "/",
@@ -43,7 +54,6 @@ router.get(
   )
 );
 
-
 router.put(
   "/",
   protect,
@@ -52,6 +62,5 @@ router.put(
     homeDefaults
   )
 );
-
 
 module.exports = router;
