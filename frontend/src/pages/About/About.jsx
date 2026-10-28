@@ -23,7 +23,7 @@ function About() {
       {/* About FasCave */}
       <About_intro />
 
-      {/* Services Process */}
+      {/* How we Work */}
       <ServiceProcess />
 
       {/* Office Information + Map */}

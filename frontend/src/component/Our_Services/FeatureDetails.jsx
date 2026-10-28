@@ -25,10 +25,7 @@ export default function FeatureDetails() {
         <div className="details-not-found">
           <h1>Service Not Found</h1>
 
-          <Link
-            to="/"
-            className="back-button"
-          >
+          <Link to="/" className="back-button">
             ← Back to Home
           </Link>
         </div>
@@ -36,13 +33,17 @@ export default function FeatureDetails() {
     )
   }
 
-  return (
-    <main className="details-page" ref={pageRef}>
-      <ServiceHero feature={feature} />
-      <ServiceComparison feature={feature} />
-      <ServiceProcess />
-      <ServiceBenefits feature={feature} />
-      <ServicePoints feature={feature} />
-    </main>
-  );
+return (
+  <main className="details-page" ref={pageRef}>
+    <ServiceHero feature={feature} />
+
+    <ServiceBenefits feature={feature} />
+
+    <ServiceComparison feature={feature} />
+
+    <ServiceProcess />
+
+    <ServicePoints feature={feature} />
+  </main>
+)
 }
