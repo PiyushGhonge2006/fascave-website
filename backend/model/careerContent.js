@@ -161,16 +161,18 @@ const careerContentSchema = new mongoose.Schema(
           "Send us your portfolio anyway. We hire for trajectory more than for a perfect match on a job board.",
       },
 
+      /* Kept for compatibility with saved careers content. The public
+         page uses the centralized resume form configuration instead. */
       buttonLabel: {
         type: String,
         trim: true,
-        default: "Send an Application",
+        default: "Send Your Resume",
       },
 
       buttonHref: {
         type: String,
         trim: true,
-        default: "/contact",
+        default: "",
       },
     },
   },

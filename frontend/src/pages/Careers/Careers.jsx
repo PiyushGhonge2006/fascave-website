@@ -8,23 +8,17 @@ import React, {
 
 import {
     ArrowRight,
-    ArrowUpRight,
     Briefcase,
     Cpu,
     Flame,
     Orbit,
     Rocket,
-    Send,
     Sparkles,
     Workflow,
 } from "lucide-react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import {
-    CONTACT_PATH,
-    goToContactForm,
-} from "../../utils/contactNavigation";
 import {
     prefersReducedMotion,
     supportsIntersectionObserver,
@@ -43,8 +37,8 @@ import {
     TIMELINE,
     careersFallback,
     careerIcon,
-    jobsFallback,
 } from "./data/careersData";
+import ResumeButton from "./components/ResumeButton";
 
 import "./Careers.css";
 
@@ -77,19 +71,6 @@ function resolveSection(fallback, incoming) {
     if (!incoming || typeof incoming !== "object") return fallback;
 
     return { ...fallback, ...incoming };
-}
-
-/* The CMS stores the CTA as a plain href. When it points at the
-   contact page, route through the shared helper so the button lands
-   on the enquiry form instead of the top of the page. */
-function isContactHref(href) {
-    const value = String(href ?? "").trim();
-
-    return (
-        value === CONTACT_PATH ||
-        value.startsWith(`${CONTACT_PATH}#`) ||
-        value.startsWith(`${CONTACT_PATH}?`)
-    );
 }
 
 /* Animated counter, no external libraries */
@@ -149,23 +130,10 @@ function RoleCard({ role }) {
     const Icon = role.icon;
 
     return (
-        <article
+        <Link
             className="careers-role-card"
-            onMouseMove={(event) => {
-                const card = event.currentTarget;
-                const rect = card.getBoundingClientRect();
-
-                const x = (event.clientX - rect.left) / rect.width - 0.5;
-                const y = (event.clientY - rect.top) / rect.height - 0.5;
-
-                card.style.setProperty("--rx", `${(-y * 7).toFixed(2)}deg`);
-                card.style.setProperty("--ry", `${(x * 8).toFixed(2)}deg`);
-            }}
-            onMouseLeave={(event) => {
-                const card = event.currentTarget;
-                card.style.setProperty("--rx", "0deg");
-                card.style.setProperty("--ry", "0deg");
-            }}
+            to={`/careers/${encodeURIComponent(role.slug)}`}
+            aria-label={`View role: ${role.role}`}
         >
             <span className="careers-role-card__glow" aria-hidden="true" />
 
@@ -184,11 +152,11 @@ function RoleCard({ role }) {
                 </span>
             )}
 
-            <a className="careers-role-card__cta" href="#careers-apply">
+            <span className="careers-role-card__cta" aria-hidden="true">
                 View Role
                 <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
-            </a>
-        </article>
+            </span>
+        </Link>
     );
 }
 
@@ -197,8 +165,6 @@ function RoleCard({ role }) {
 ========================================= */
 
 function Careers() {
-    const navigate = useNavigate();
-
     /* ---- CMS -------------------------------------------------------
        The singleton carries every editable string on this page; the
        jobs collection carries the role cards. Both fall back to the
@@ -210,9 +176,11 @@ function Careers() {
         careersFallback
     );
 
-    const { items: jobItems } = useCollection(
+    /* No hardcoded role fallback: the admin panel and database are the
+       source of truth, so empty, failed and deleted results stay honest. */
+    const { items: jobItems, status: jobsStatus } = useCollection(
         "/api/content/careers/jobs",
-        jobsFallback
+        []
     );
 
     const {
@@ -251,6 +219,7 @@ function Careers() {
             .filter((job) => job?.title)
             .map((job) => ({
                 id: job._id || job.slug || job.title,
+                slug: job.slug || job._id,
                 role: job.title,
                 description: job.summary || job.department || "",
                 meta: [job.location, job.type].filter(Boolean).join(" / "),
@@ -329,27 +298,6 @@ function Careers() {
     const [reasonsRef] = useRevealOnScroll();
     const [cultureRef] = useRevealOnScroll();
     const [timelineRef] = useRevealOnScroll();
-
-    const handlePrimaryApply = useCallback(
-        (event) => {
-            if (!isContactHref(cta.buttonHref)) return;
-
-            /* Let modified clicks keep their normal new-tab behaviour. */
-            if (
-                event.metaKey ||
-                event.ctrlKey ||
-                event.shiftKey ||
-                event.altKey ||
-                event.button !== 0
-            ) {
-                return;
-            }
-
-            event.preventDefault();
-            goToContactForm(navigate);
-        },
-        [cta.buttonHref, navigate]
-    );
 
     /* Keeps the page above the fixed navbar */
     const heroStyle = {
@@ -541,22 +489,56 @@ function Careers() {
                     </header>
                 </div>
 
-                <div className="careers-marquee" data-reveal>
-                    <div className="careers-marquee__track">
-                        {[0, 1].map((group) => (
+                <div className="careers-inner">
+                    <div
+                        className="careers-roles__grid"
+                        data-reveal
+                        aria-live="polite"
+                    >
+                        {jobsStatus === "loading" && (
                             <div
-                                className="careers-marquee__group"
-                                key={group}
-                                aria-hidden={group === 1 ? "true" : undefined}
+                                className="careers-roles__state"
+                                role="status"
                             >
-                                {roles.map((role) => (
-                                    <RoleCard
-                                        key={`${group}-${role.id}`}
-                                        role={role}
-                                    />
-                                ))}
+                                <span
+                                    className="careers-roles__spinner"
+                                    aria-hidden="true"
+                                />
+                                <h3>Loading open roles…</h3>
+                                <p>
+                                    Fetching the latest openings from our team.
+                                </p>
                             </div>
-                        ))}
+                        )}
+
+                        {jobsStatus === "error" && (
+                            <div
+                                className="careers-roles__state"
+                                role="alert"
+                            >
+                                <h3>We could not load open roles</h3>
+                                <p>
+                                    Please check your connection and refresh
+                                    the page, or send us your resume below.
+                                </p>
+                            </div>
+                        )}
+
+                        {(jobsStatus === "empty" ||
+                            (jobsStatus === "ready" && roles.length === 0)) && (
+                            <div className="careers-roles__state">
+                                <h3>No open roles right now</h3>
+                                <p>
+                                    We are not hiring at the moment, but we
+                                    are always happy to meet good people.
+                                </p>
+                            </div>
+                        )}
+
+                        {jobsStatus === "ready" &&
+                            roles.map((role) => (
+                                <RoleCard key={role.id} role={role} />
+                            ))}
                     </div>
                 </div>
             </section>
@@ -785,31 +767,7 @@ function Careers() {
                             </p>
 
                             <div className="careers-apply__actions">
-                                <a
-                                    className="careers-btn careers-btn--primary"
-                                    href={cta.buttonHref}
-                                    onClick={handlePrimaryApply}
-                                >
-                                    {cta.buttonLabel}
-                                    <ArrowUpRight
-                                        size={17}
-                                        strokeWidth={2.4}
-                                        aria-hidden="true"
-                                    />
-                                </a>
-
-                                <button
-                                    type="button"
-                                    className="careers-btn careers-btn--ghost"
-                                    onClick={() => goToContactForm(navigate)}
-                                >
-                                    Send Your Resume
-                                    <Send
-                                        size={16}
-                                        strokeWidth={2.2}
-                                        aria-hidden="true"
-                                    />
-                                </button>
+                                <ResumeButton />
                             </div>
                     </div>
                 </div>

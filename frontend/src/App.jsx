@@ -26,6 +26,7 @@ import GTMPartner from "./component/GTMPartner/GTMPartner";
 import Blog from "./pages/Blog/Blog";
 import BlogDetails from "./pages/BlogDetails/BlogDetails";
 import Careers from "./pages/Careers/Careers";
+import CareerDetails from "./pages/Careers/CareerDetails";
 import Contact from "./pages/Contact/Contact";
 
 import AdminApp from "./admin/AdminApp";
@@ -53,7 +54,8 @@ function PageTheme({ children }) {
   const isLightPage =
     lightPages.includes(location.pathname) ||
     location.pathname.startsWith("/blog/") ||
-    location.pathname.startsWith("/features/");
+    location.pathname.startsWith("/features/") ||
+    location.pathname.startsWith("/careers/");
 
   return (
     <div
@@ -223,6 +225,11 @@ function App() {
             <Route
               path="/careers"
               element={<Careers />}
+            />
+
+            <Route
+              path="/careers/:slug"
+              element={<CareerDetails />}
             />
 
             {/* CONTACT */}
