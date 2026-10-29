@@ -1,56 +1,68 @@
-import { useEffect, useRef, useState } from 'react'
-import './Herosection.css'
+
+import React, { useEffect, useRef, useState } from "react";
+import "./Typewriter.css";
 
 export default function Typewriter({
-  text,
-  speed = 80,
-  startDelay = 250,
-  cursorHoldMs = 1600,
-  instant = false,
+  text = "",
+  highlight = "",
+  speed = 38,
   onComplete,
 }) {
-  const [display, setDisplay] = useState(instant ? text : '')
-  const [showCursor, setShowCursor] = useState(!instant)
-  const completeRef = useRef(onComplete)
+  const [visibleCount, setVisibleCount] = useState(0);
+  const callbackRef = useRef(onComplete);
+  const fullText = `${text}${highlight}`;
 
   useEffect(() => {
-    completeRef.current = onComplete
-  })
+    callbackRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
-    if (instant) {
-      completeRef.current?.()
-      return
+    let count = 0;
+    let timeoutId;
+
+    setVisibleCount(0);
+
+    const typeNext = () => {
+      count += 1;
+      setVisibleCount(count);
+
+      if (count < fullText.length) {
+        timeoutId = window.setTimeout(typeNext, speed);
+      } else {
+        callbackRef.current?.();
+      }
+    };
+
+    if (!fullText.length) {
+      callbackRef.current?.();
+      return undefined;
     }
 
-    let index = 0
-    let interval
-    let holdTimeout
+    timeoutId = window.setTimeout(typeNext, speed);
 
-    const start = setTimeout(() => {
-      interval = setInterval(() => {
-        index += 1
-        setDisplay(text.slice(0, index))
+    return () => window.clearTimeout(timeoutId);
+  }, [fullText, speed]);
 
-        if (index >= text.length) {
-          clearInterval(interval)
-          completeRef.current?.()
-          holdTimeout = setTimeout(() => setShowCursor(false), cursorHoldMs)
-        }
-      }, speed)
-    }, startDelay)
+  const visibleText = fullText.slice(0, visibleCount);
+  const visibleBefore = visibleText.slice(
+    0,
+    Math.min(visibleText.length, text.length)
+  );
 
-    return () => {
-      clearTimeout(start)
-      clearInterval(interval)
-      clearTimeout(holdTimeout)
-    }
-  }, [text, speed, startDelay, cursorHoldMs, instant])
+  const visibleHighlight =
+    visibleText.length > text.length
+      ? visibleText.slice(text.length)
+      : "";
 
   return (
-    <span className="typewriter">
-      {display}
-      {showCursor && <span className="typewriter__cursor" aria-hidden="true" />}
+    <span className="typewriter-text">
+      {visibleBefore}
+      {visibleHighlight && (
+        <span className="typewriter-highlight">
+          {visibleHighlight}
+        </span>
+      )}
+      <span className="typewriter-cursor" aria-hidden="true" />
     </span>
-  )
+  );
 }
