@@ -21,7 +21,10 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-import { goToContactForm } from "../../utils/contactNavigation";
+import {
+    CONTACT_PATH,
+    goToContactForm,
+} from "../../utils/contactNavigation";
 import {
     prefersReducedMotion,
     supportsIntersectionObserver,
@@ -74,6 +77,19 @@ function resolveSection(fallback, incoming) {
     if (!incoming || typeof incoming !== "object") return fallback;
 
     return { ...fallback, ...incoming };
+}
+
+/* The CMS stores the CTA as a plain href. When it points at the
+   contact page, route through the shared helper so the button lands
+   on the enquiry form instead of the top of the page. */
+function isContactHref(href) {
+    const value = String(href ?? "").trim();
+
+    return (
+        value === CONTACT_PATH ||
+        value.startsWith(`${CONTACT_PATH}#`) ||
+        value.startsWith(`${CONTACT_PATH}?`)
+    );
 }
 
 /* Animated counter, no external libraries */
@@ -313,6 +329,27 @@ function Careers() {
     const [reasonsRef] = useRevealOnScroll();
     const [cultureRef] = useRevealOnScroll();
     const [timelineRef] = useRevealOnScroll();
+
+    const handlePrimaryApply = useCallback(
+        (event) => {
+            if (!isContactHref(cta.buttonHref)) return;
+
+            /* Let modified clicks keep their normal new-tab behaviour. */
+            if (
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey ||
+                event.button !== 0
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+            goToContactForm(navigate);
+        },
+        [cta.buttonHref, navigate]
+    );
 
     /* Keeps the page above the fixed navbar */
     const heroStyle = {
@@ -572,7 +609,7 @@ function Careers() {
                             return (
                                 <article
                                     className="careers-why-card"
-                                    key={reason.title}
+                                    key={index}
                                     data-reveal
                                     style={{
                                         "--careers-delay": `${index * 90}ms`,
@@ -751,6 +788,7 @@ function Careers() {
                                 <a
                                     className="careers-btn careers-btn--primary"
                                     href={cta.buttonHref}
+                                    onClick={handlePrimaryApply}
                                 >
                                     {cta.buttonLabel}
                                     <ArrowUpRight

@@ -1,0 +1,40 @@
+
+.typewriter-text {
+  white-space: normal;
+  color: inherit;
+}
+
+.typewriter-highlight {
+  color: #6c78ff;
+  background: linear-gradient(
+    100deg,
+    #418dff 0%,
+    #2989ff 52%,
+    #8543ff 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.82em;
+  margin-left: 4px;
+  vertical-align: -0.03em;
+  background: #38a5ff;
+  animation: typewriter-blink 800ms steps(2, start) infinite;
+}
+
+@keyframes typewriter-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-cursor {
+    animation: none;
+  }
+}

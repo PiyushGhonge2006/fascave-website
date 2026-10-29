@@ -16,14 +16,6 @@ function FacebookIcon() {
     );
 }
 
-function XIcon() {
-    return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.39L6.49 22H3.37l7.24-8.28L3 2h6.4l4.42 5.84L18.9 2Zm-1.1 17.7h1.73L8.46 4.18H6.6L17.8 19.7Z" />
-        </svg>
-    );
-}
-
 function LinkedinIcon() {
     return (
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -32,13 +24,6 @@ function LinkedinIcon() {
     );
 }
 
-function GithubIcon() {
-    return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 .8a11.2 11.2 0 0 0-3.54 21.82c.56.1.76-.24.76-.54v-2.1c-3.1.68-3.75-1.32-3.75-1.32-.51-1.3-1.24-1.65-1.24-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1 1.72 2.62 1.22 3.26.93.1-.73.39-1.22.71-1.5-2.48-.28-5.1-1.24-5.1-5.52 0-1.22.44-2.22 1.16-3-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.08 1.15a10.68 10.68 0 0 1 5.6 0c2.13-1.45 3.08-1.15 3.08-1.15.61 1.54.23 2.68.11 2.96.72.78 1.16 1.78 1.16 3 0 4.29-2.62 5.23-5.11 5.51.4.35.75 1.04.75 2.1v3.12c0 .3.2.65.76.54A11.2 11.2 0 0 0 12 .8Z" />
-        </svg>
-    );
-}
 
 function InstagramIcon() {
     return (
@@ -141,7 +126,7 @@ function Footer() {
                         <div className="footer-socials">
 
                             <a
-                                href="https://www.facebook.com/"
+                                href="https://www.facebook.com/fascave.it/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="social facebook"
@@ -150,18 +135,9 @@ function Footer() {
                                 <FacebookIcon />
                             </a>
 
-                            <a
-                                href="https://x.com/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social x"
-                                aria-label="X"
-                            >
-                                <XIcon />
-                            </a>
 
                             <a
-                                href="https://www.linkedin.com/"
+                                href="https://www.linkedin.com/company/fascave/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="social linkedin"
@@ -170,18 +146,9 @@ function Footer() {
                                 <LinkedinIcon />
                             </a>
 
-                            <a
-                                href="https://github.com/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social github"
-                                aria-label="GitHub"
-                            >
-                                <GithubIcon />
-                            </a>
 
                             <a
-                                href="https://www.instagram.com/"
+                                href="https://www.instagram.com/fascave.it/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="social instagram"
@@ -191,7 +158,7 @@ function Footer() {
                             </a>
 
                             <a
-                                href="https://www.youtube.com/"
+                                href="https://www.youtube.com/@fascave.it.solutions"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="social youtube"
