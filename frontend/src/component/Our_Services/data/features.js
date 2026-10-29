@@ -1,12 +1,10 @@
-import webDevelopment from '../../../assets/service_img/fully-responsive.png'
+import webDevelopment from '../../../assets/service_img/web-development.png'
 import appDevelopment from '../../../assets/service_img/app-development.png'
-import seoFriendly from '../../../assets/service_img/seo-friendly.png'
 import cloudDataAnalytics from '../../../assets/service_img/cloud-data-analytics.png'
 import powerBI from '../../../assets/service_img/power-bi-visualization.png'
 import digitalMarketing from '../../../assets/service_img/digital-marketing.png'
-
-/* Used when the CMS has nothing to return, so the services
-   grid is never empty. */
+import aiAutomation from '../../../assets/service_img/Ai-automation.png'
+import cpaas from '../../../assets/service_img/cpaas.png'
 
 /* Fallback service data used when the CMS returns no services. */
 
@@ -16,8 +14,7 @@ export const fallbackFeatures = [
     id: 'web-development',
     title: 'Web Development',
     image: webDevelopment,
-    description:
-      'We build modern, responsive and high-performance websites tailored to your business needs.',
+
     details:
       'Our web development services include custom website design, responsive layouts, clean code and scalable solutions using modern technologies.',
 
@@ -49,8 +46,7 @@ export const fallbackFeatures = [
     id: 'app-development',
     title: 'App Development',
     image: appDevelopment,
-    description:
-      'We develop powerful and user-friendly mobile applications for Android and iOS platforms.',
+
     details:
       'From concept to deployment, we create secure, scalable and feature-rich mobile applications designed to deliver great user experiences.',
 
@@ -77,46 +73,12 @@ export const fallbackFeatures = [
     ],
   },
 
-  // 3. SEO-Friendly Development
-  {
-    id: 'seo-friendly',
-    title: 'SEO Friendly',
-    image: seoFriendly,
-    description:
-      'We make SEO friendly templates with proper breadcrumbs and structured data.',
-    details:
-      'We structure websites with search-engine-friendly layouts, semantic HTML, metadata, breadcrumbs and structured data.',
-
-    today: [
-      'Pages struggle to appear in relevant searches.',
-      'Poor structure makes content harder to discover.',
-      'Missing metadata limits search visibility.',
-      'Unoptimized content misses search opportunities.',
-    ],
-
-    outcome: [
-      'SEO-friendly pages support better discoverability.',
-      'Clear site structure helps search engines.',
-      'Metadata and structured data improve page context.',
-      'Optimized content targets relevant search intent.',
-    ],
-
-    points: [
-      'Search Ready',
-      'Structured Data',
-      'Technical SEO',
-      'Better Visibility',
-      'Optimized Content',
-    ],
-  },
-
-  // 4. Cloud & Data Analytics
+  // 3. Cloud & Data Analytics
   {
     id: 'cloud-data-analytics',
     title: 'Cloud & Data Analytics Services',
     image: cloudDataAnalytics,
-    description:
-      'We help businesses leverage cloud technologies and data analytics for smarter decisions.',
+
     details:
       'Our services include cloud infrastructure, data processing, data visualization and analytics solutions tailored to your business requirements.',
 
@@ -143,13 +105,12 @@ export const fallbackFeatures = [
     ],
   },
 
-  // 5. Power BI & Visualization
+  // 4. Power BI & Visualization
   {
     id: 'power-bi-visualization',
     title: 'Power BI Visualization Services',
     image: powerBI,
-    description:
-      'We create powerful dashboards and visual reports using modern business intelligence tools.',
+
     details:
       'Transform your data into meaningful insights with interactive dashboards, reports and data visualization solutions.',
 
@@ -176,13 +137,12 @@ export const fallbackFeatures = [
     ],
   },
 
-  // 6. Digital Marketing
+  // 5. Digital Marketing
   {
     id: 'digital-marketing',
     title: 'Digital Marketing Services',
     image: digitalMarketing,
-    description:
-      'We help you grow your brand with result-driven digital marketing strategies.',
+
     details:
       'Our digital marketing services include social media marketing, SEO, content marketing, paid advertising and online brand promotion.',
 
@@ -206,6 +166,69 @@ export const fallbackFeatures = [
       'Data Driven',
       'Multi Channel',
       'Performance Based',
+    ],
+  },
+
+  // 6. AI Automation
+  {
+    id: 'ai-automation',
+    title: 'AI Automation',
+    image: aiAutomation,
+
+    details:
+      'We implement AI-powered automation solutions that streamline repetitive tasks, optimize business workflows, process information and improve operational efficiency.',
+
+    today: [
+      'Repetitive tasks consume valuable working hours.',
+      'Manual workflows slow down business operations.',
+      'Disconnected tools create inefficient processes.',
+      'Manual data handling increases the risk of errors.',
+    ],
+
+    outcome: [
+      'Automated tasks reduce repetitive manual work.',
+      'Intelligent workflows improve operational efficiency.',
+      'Integrated systems enable smoother processes.',
+      'Automated data processing improves consistency.',
+    ],
+
+    points: [
+      'Workflow Automation',
+      'AI-Powered Solutions',
+      'Process Optimization',
+      'Smart Integrations',
+      'Improved Efficiency',
+    ],
+  },
+
+  // 7. CPaaS
+  {
+    id: 'cpaas',
+    title: 'CPaaS - Communication Platform as a Service',
+    image: cpaas,
+
+    details:
+    'Integrate SMS, WhatsApp, voice, and video communication through APIs.',
+    today: [
+      'Customer communication is spread across channels.',
+      'Manual notifications delay important updates.',
+      'Integrating messaging and calling requires extra effort.',
+      'Disconnected communication tools complicate support.',
+    ],
+
+    outcome: [
+      'Unified channels simplify customer communication.',
+      'Automated notifications deliver timely updates.',
+      'APIs connect communication features to applications.',
+      'Connected channels improve customer support workflows.',
+    ],
+
+    points: [
+      'SMS & Messaging APIs',
+      'WhatsApp Integration',
+      'Voice & Video Calling',
+      'Automated Notifications',
+      'Seamless Integration',
     ],
   },
 ];
