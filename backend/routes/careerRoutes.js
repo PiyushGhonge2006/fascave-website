@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
 const CareerContent = require("../model/careerContent");
 const JobOpening = require("../model/jobOpening");
@@ -94,8 +95,11 @@ const careerDefaults = {
     heading: "Do not see your role?",
     description:
       "Send us your portfolio anyway. We hire for trajectory more than for a perfect match on a job board.",
-    buttonLabel: "Send an Application",
-    buttonHref: "/contact",
+    /* The public CTA now opens the centralized resume form instead of
+       using these fields. They stay in the document for compatibility
+       with existing saved careers content and the admin panel. */
+    buttonLabel: "Send Your Resume",
+    buttonHref: "",
   },
 };
 
@@ -129,6 +133,44 @@ router.get(
       isActive: { $ne: false },
     },
   })
+);
+
+
+/* Public single-role read used by /careers/:slug. Hidden and deleted
+   roles both resolve to 404 so an old link never exposes stale data. */
+const getPublicJob = async (req, res) => {
+  try {
+    const key = String(req.params.id || "").trim();
+
+    const filter = mongoose.isValidObjectId(key)
+      ? { _id: key, isActive: { $ne: false } }
+      : { slug: key.toLowerCase(), isActive: { $ne: false } };
+
+    const item = await JobOpening.findOne(filter);
+
+    if (!item) {
+      return res.status(404).json({
+        success: false,
+        message: "Job opening not found.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: item,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching the job opening.",
+    });
+  }
+};
+
+
+router.get(
+  "/jobs/:id",
+  getPublicJob
 );
 
 

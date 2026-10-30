@@ -1,0 +1,137 @@
+.section-visibility-card {
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+    border: 1px solid rgba(41, 38, 99, 0.1);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(41, 38, 99, 0.08), transparent 38%),
+        #ffffff;
+}
+
+.section-visibility-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: linear-gradient(180deg, #292663, #6f6ac8);
+}
+
+.section-visibility-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.section-visibility-copy {
+    min-width: 0;
+}
+
+.section-visibility-kicker {
+    display: inline-flex;
+    margin-bottom: 8px;
+    color: #6f6ac8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.section-visibility-copy h2 {
+    margin: 0 0 6px;
+    color: #1d1b3f;
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+.section-visibility-copy p {
+    max-width: 620px;
+    margin: 0;
+    color: #6b6b7a;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.section-visibility-switch {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #2f2d3d;
+    font: inherit;
+    cursor: pointer;
+}
+
+.section-visibility-switch:disabled {
+    cursor: wait;
+    opacity: 0.72;
+}
+
+.section-visibility-track {
+    position: relative;
+    display: block;
+    width: 48px;
+    height: 28px;
+    border-radius: 999px;
+    background: #d9d8e3;
+    box-shadow: inset 0 1px 2px rgba(20, 18, 45, 0.14);
+    transition:
+        background 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.section-visibility-thumb {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 7px rgba(20, 18, 45, 0.26);
+    transition: transform 180ms ease;
+}
+
+.section-visibility-switch.is-on .section-visibility-track {
+    background: #292663;
+    box-shadow:
+        inset 0 1px 2px rgba(20, 18, 45, 0.24),
+        0 0 0 4px rgba(41, 38, 99, 0.08);
+}
+
+.section-visibility-switch.is-on .section-visibility-thumb {
+    transform: translateX(20px);
+}
+
+.section-visibility-state {
+    min-width: 52px;
+    color: #4b495d;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-align: left;
+}
+
+.section-visibility-switch.is-off .section-visibility-state {
+    color: #8a8896;
+}
+
+.section-visibility-card .admin-alert {
+    margin-top: 16px;
+    margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+    .section-visibility-card {
+        padding: 20px;
+    }
+
+    .section-visibility-main {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+}

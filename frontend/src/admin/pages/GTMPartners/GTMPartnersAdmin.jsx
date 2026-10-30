@@ -11,6 +11,7 @@ import {
     LoadingState,
     Modal,
     PageHeader,
+    SectionVisibilityCard,
     Toast,
     useToast,
 } from "../../components";
@@ -34,6 +35,7 @@ const emptyItem = {
     description: "",
     tier: "partner",
     isPublished: true,
+    isActive: true,
 };
 
 
@@ -50,6 +52,7 @@ const GTMPartnersAdmin = () => {
 
     const [deleting, setDeleting] = useState(null);
     const [deletingBusy, setDeletingBusy] = useState(false);
+    const [togglingId, setTogglingId] = useState(null);
 
     const { toast, showToast, closeToast } =
         useToast();
@@ -181,6 +184,47 @@ const GTMPartnersAdmin = () => {
     };
 
 
+    const toggleVisibility = async (item) => {
+
+        const visible = item.isActive !== false;
+
+        setTogglingId(item._id);
+
+        try {
+
+            await api.put(
+                `${ENDPOINT}/${item._id}`,
+                {
+                    isActive: !visible,
+                    isPublished: !visible,
+                }
+            );
+
+            showToast(
+                visible
+                    ? "Partner hidden from the website."
+                    : "Partner is visible on the website."
+            );
+
+            load();
+
+        } catch (toggleError) {
+
+            showToast(
+                toggleError.message ||
+                    "Could not update visibility.",
+                "error"
+            );
+
+        } finally {
+
+            setTogglingId(null);
+
+        }
+
+    };
+
+
     const handleDelete = async () => {
 
         setDeletingBusy(true);
@@ -230,6 +274,12 @@ const GTMPartnersAdmin = () => {
             />
 
             <Alert message={error} />
+
+            <SectionVisibilityCard
+                field="gtmPartnersSectionVisible"
+                title="GTM Partners section"
+                description="Show or hide the partner logo strip on the home page. Partner records remain available in this list."
+            />
 
             <div className="admin-card">
 
@@ -343,19 +393,43 @@ const GTMPartnersAdmin = () => {
                                         <td>
                                             <span
                                                 className={`admin-badge ${
-                                                    item.isPublished
+                                                    item.isActive !==
+                                                    false
                                                         ? "admin-badge-success"
                                                         : "admin-badge-neutral"
                                                 }`}
                                             >
-                                                {item.isPublished
-                                                    ? "Published"
-                                                    : "Draft"}
+                                                {item.isActive !==
+                                                false
+                                                    ? "Visible"
+                                                    : "Hidden"}
                                             </span>
                                         </td>
 
                                         <td>
                                             <div className="admin-table-actions">
+
+                                                <button
+                                                    type="button"
+                                                    className="admin-btn admin-btn-ghost admin-btn-sm"
+                                                    onClick={() =>
+                                                        toggleVisibility(
+                                                            item
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        togglingId ===
+                                                        item._id
+                                                    }
+                                                >
+                                                    {togglingId ===
+                                                    item._id
+                                                        ? "Saving"
+                                                        : item.isActive !==
+                                                            false
+                                                            ? "Hide"
+                                                            : "Show"}
+                                                </button>
 
                                                 <button
                                                     type="button"
@@ -531,17 +605,22 @@ const GTMPartnersAdmin = () => {
                     <label className="admin-checkbox">
                         <input
                             type="checkbox"
-                            checked={form.isPublished}
-                            onChange={(e) =>
+                            checked={
+                                form.isActive !== false
+                            }
+                            onChange={(e) => {
+                                set(
+                                    "isActive",
+                                    e.target.checked
+                                );
                                 set(
                                     "isPublished",
                                     e.target.checked
-                                )
-                            }
+                                );
+                            }}
                         />
                         <span>
-                            Published on the
-                            website
+                            Visible on the website
                         </span>
                     </label>
 

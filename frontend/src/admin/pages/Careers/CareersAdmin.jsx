@@ -48,8 +48,6 @@ const emptyContent = {
         eyebrow: "",
         heading: "",
         description: "",
-        buttonLabel: "",
-        buttonHref: "",
     },
 };
 
@@ -60,9 +58,13 @@ const emptyJob = {
     department: "",
     location: "",
     type: "",
+    workMode: "",
+    experience: "",
     summary: "",
     description: "",
+    responsibilities: [],
     requirements: [],
+    preferredSkills: [],
     benefits: [],
     icon: "",
     isActive: true,
@@ -293,7 +295,9 @@ const CareersAdmin = () => {
             ...emptyJob,
             ...job,
             isActive: isVisible(job),
+            responsibilities: job.responsibilities || [],
             requirements: job.requirements || [],
+            preferredSkills: job.preferredSkills || [],
             benefits: job.benefits || [],
         });
 
@@ -781,29 +785,10 @@ const CareersAdmin = () => {
                                 />
                             </Field>
 
-                            <div className="admin-field-row">
-                                <Field label="Button label">
-                                    <input
-                                        type="text"
-                                        className="admin-input"
-                                        value={content.cta.buttonLabel}
-                                        onChange={(e) =>
-                                            patch("cta", "buttonLabel", e.target.value)
-                                        }
-                                    />
-                                </Field>
-
-                                <Field label="Button link">
-                                    <input
-                                        type="text"
-                                        className="admin-input"
-                                        value={content.cta.buttonHref}
-                                        onChange={(e) =>
-                                            patch("cta", "buttonHref", e.target.value)
-                                        }
-                                    />
-                                </Field>
-                            </div>
+                            <p className="admin-field-hint">
+                                The closing CTA now uses the shared Send Your
+                                Resume form configured on the website.
+                            </p>
                         </div>
 
                         <div className="admin-form-actions">
@@ -1027,6 +1012,33 @@ const CareersAdmin = () => {
                         </Field>
                     </div>
 
+                    <div className="admin-field-row">
+                        <Field
+                            label="Work mode"
+                            hint="Remote, Hybrid or On-site."
+                        >
+                            <input
+                                type="text"
+                                className="admin-input"
+                                value={form.workMode}
+                                placeholder="Remote"
+                                onChange={(e) => set("workMode", e.target.value)}
+                            />
+                        </Field>
+
+                        <Field
+                            label="Experience"
+                            hint="e.g. 2+ years, or leave blank."
+                        >
+                            <input
+                                type="text"
+                                className="admin-input"
+                                value={form.experience}
+                                onChange={(e) => set("experience", e.target.value)}
+                            />
+                        </Field>
+                    </div>
+
                     <Field label="Icon" hint="Lucide name, e.g. Code2">
                         <input
                             type="text"
@@ -1055,10 +1067,24 @@ const CareersAdmin = () => {
                     </Field>
 
                     <TextListInput
+                        label="Key responsibilities"
+                        values={form.responsibilities}
+                        placeholder="Add a responsibility"
+                        onChange={(values) => set("responsibilities", values)}
+                    />
+
+                    <TextListInput
                         label="Requirements"
                         values={form.requirements}
                         placeholder="Add a requirement"
                         onChange={(values) => set("requirements", values)}
+                    />
+
+                    <TextListInput
+                        label="Preferred skills"
+                        values={form.preferredSkills}
+                        placeholder="Add a preferred skill"
+                        onChange={(values) => set("preferredSkills", values)}
                     />
 
                     <TextListInput

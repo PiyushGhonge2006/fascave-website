@@ -1,4 +1,4 @@
-const Testimonial = require("../model/testimonial");
+const Service = require("../model/service");
 
 const {
   listAll,
@@ -18,44 +18,59 @@ const express = require("express");
 
 const router = express.Router();
 
+const publicFilter = {
+  isPublished: true,
+  isActive: { $ne: false },
+};
+
 
 router.get(
   "/",
-  listAll(Testimonial)
+  listAll(Service, {
+    publishedFilter: publicFilter,
+  })
 );
 
 
 router.post(
   "/reorder",
   protect,
-  reorder(Testimonial)
+  reorder(Service)
 );
 
 
 router.get(
   "/:id",
-  getOne(Testimonial)
+  getOne(Service, {
+    byField: "slug",
+    publishedFilter: publicFilter,
+  })
 );
 
 
 router.post(
   "/",
   protect,
-  create(Testimonial)
+  create(Service, {
+    slugFrom: "title",
+    orderFromMax: true,
+  })
 );
 
 
 router.put(
   "/:id",
   protect,
-  update(Testimonial)
+  update(Service, {
+    slugFrom: "title",
+  })
 );
 
 
 router.delete(
   "/:id",
   protect,
-  remove(Testimonial)
+  remove(Service)
 );
 
 

@@ -5,9 +5,9 @@ import { api } from "../../lib/apiClient";
 import {
     Alert,
     Field,
-    ImageInput,
     LoadingState,
     PageHeader,
+    SectionVisibilityCard,
     Toast,
     useToast,
 } from "../../components";
@@ -16,40 +16,49 @@ import "./HomeAdmin.css";
 
 
 const emptyForm = {
-    hero: {
-        eyebrow: "",
-        heading: "",
-        highlightText: "",
-        description: "",
-        ctaLabel: "",
-        ctaHref: "/contact",
-        image: "",
-    },
-    stats: [],
-    clients: [],
     seoTitle: "",
     seoDescription: "",
 };
 
 
-const mergeForm = (data) => {
-
-    if (!data) {
-        return emptyForm;
-    }
-
-    return {
-        ...emptyForm,
-        ...data,
-        hero: {
-            ...emptyForm.hero,
-            ...(data.hero || {}),
-        },
-        stats: data.stats || [],
-        clients: data.clients || [],
-    };
-
-};
+const SECTIONS = [
+    {
+        field: "servicesSectionVisible",
+        title: "Our Services",
+        description:
+            "The service cards and the path to individual service pages.",
+    },
+    {
+        field: "whyChooseUsSectionVisible",
+        title: "Why Choose Us",
+        description:
+            "The statistics and benefit boxes that explain your differentiators.",
+    },
+    {
+        field: "clientsSectionVisible",
+        title: "Our Clients",
+        description:
+            "The client logo strip beneath the Why Choose Us section.",
+    },
+    {
+        field: "portfolioSectionVisible",
+        title: "Portfolio",
+        description:
+            "The selected case studies shown on the home page.",
+    },
+    {
+        field: "gtmPartnersSectionVisible",
+        title: "GTM Partners",
+        description:
+            "The partner and technology logo strip.",
+    },
+    {
+        field: "faqSectionVisible",
+        title: "FAQ",
+        description:
+            "The frequently asked questions block at the bottom of the page.",
+    },
+];
 
 
 const HomeAdmin = () => {
@@ -74,7 +83,11 @@ const HomeAdmin = () => {
                 "/api/content/home"
             );
 
-            setForm(mergeForm(data));
+            setForm({
+                seoTitle: data?.seoTitle || "",
+                seoDescription:
+                    data?.seoDescription || "",
+            });
 
         } catch (loadError) {
 
@@ -98,20 +111,7 @@ const HomeAdmin = () => {
     }, []);
 
 
-    const setHero = (key, value) => {
-
-        setForm((prev) => ({
-            ...prev,
-            hero: {
-                ...prev.hero,
-                [key]: value,
-            },
-        }));
-
-    };
-
-
-    const setTop = (key, value) => {
+    const set = (key, value) => {
 
         setForm((prev) => ({
             ...prev,
@@ -120,100 +120,6 @@ const HomeAdmin = () => {
 
     };
 
-
-    // ---------------- STATS ----------------
-
-    const addStat = () => {
-
-        setForm((prev) => ({
-            ...prev,
-            stats: [
-                ...prev.stats,
-                { value: "", label: "" },
-            ],
-        }));
-
-    };
-
-    const updateStat = (index, key, value) => {
-
-        setForm((prev) => {
-
-            const stats =
-                [...prev.stats];
-
-            stats[index] = {
-                ...stats[index],
-                [key]: value,
-            };
-
-            return { ...prev, stats };
-
-        });
-
-    };
-
-    const removeStat = (index) => {
-
-        setForm((prev) => ({
-            ...prev,
-            stats: prev.stats.filter(
-                (_, i) => i !== index
-            ),
-        }));
-
-    };
-
-
-    // ---------------- CLIENTS ----------------
-
-    const addClient = () => {
-
-        setForm((prev) => ({
-            ...prev,
-            clients: [
-                ...prev.clients,
-                { name: "", logo: "", link: "" },
-            ],
-        }));
-
-    };
-
-    const updateClient = (
-        index,
-        key,
-        value
-    ) => {
-
-        setForm((prev) => {
-
-            const clients =
-                [...prev.clients];
-
-            clients[index] = {
-                ...clients[index],
-                [key]: value,
-            };
-
-            return { ...prev, clients };
-
-        });
-
-    };
-
-    const removeClient = (index) => {
-
-        setForm((prev) => ({
-            ...prev,
-            clients: prev.clients.filter(
-                (_, i) => i !== index
-            ),
-        }));
-
-    };
-
-
-    // ---------------- SAVE ----------------
 
     const handleSubmit = async (event) => {
 
@@ -229,9 +135,7 @@ const HomeAdmin = () => {
                 form
             );
 
-            showToast(
-                "Home content saved."
-            );
+            showToast("Homepage settings saved.");
 
         } catch (saveError) {
 
@@ -255,7 +159,7 @@ const HomeAdmin = () => {
 
         return (
             <div className="admin-page">
-                <LoadingState label="Loading home content" />
+                <LoadingState label="Loading homepage settings" />
             </div>
         );
 
@@ -266,362 +170,62 @@ const HomeAdmin = () => {
 
             <PageHeader
                 title="Home Page"
-                description="Control the hero section, headline stats and client logos shown on your landing page."
+                description="Control homepage section visibility and search metadata. The hero is fixed in the website design."
             />
 
             <Alert message={error} />
 
+            <div className="home-admin-note">
+
+                <span className="home-admin-note-mark">
+                    H
+                </span>
+
+                <div>
+                    <h2>Hero is hardcoded</h2>
+                    <p>
+                        The hero carousel is part of the
+                        website design and is no longer
+                        edited from the CMS. The settings
+                        below control the sections beneath
+                        it.
+                    </p>
+                </div>
+
+            </div>
+
+            <div className="home-visibility-heading">
+                <h2>Homepage sections</h2>
+                <p>
+                    Hide a section without deleting its
+                    content. Changes take effect on the
+                    public website immediately.
+                </p>
+            </div>
+
+            <div className="home-visibility-grid">
+
+                {SECTIONS.map((section) => (
+                    <SectionVisibilityCard
+                        key={section.field}
+                        field={section.field}
+                        title={section.title}
+                        description={section.description}
+                    />
+                ))}
+
+            </div>
+
             <form onSubmit={handleSubmit}>
 
-                {/* HERO */}
                 <div className="admin-card home-card">
 
                     <div className="admin-card-header">
                         <div>
-                            <h2>Hero section</h2>
+                            <h2>Search metadata</h2>
                             <p>
-                                The first thing
-                                visitors see.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="admin-card-body">
-
-                        <div className="admin-field-row">
-
-                            <Field label="Eyebrow">
-                                <input
-                                    type="text"
-                                    className="admin-input"
-                                    value={form.hero.eyebrow}
-                                    placeholder="Digital growth partner"
-                                    onChange={(e) =>
-                                        setHero(
-                                            "eyebrow",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                            </Field>
-
-                            <Field label="CTA link">
-                                <input
-                                    type="text"
-                                    className="admin-input"
-                                    value={form.hero.ctaHref}
-                                    placeholder="/contact"
-                                    onChange={(e) =>
-                                        setHero(
-                                            "ctaHref",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                            </Field>
-
-                        </div>
-
-                        <Field label="Heading">
-                            <input
-                                type="text"
-                                className="admin-input"
-                                value={form.hero.heading}
-                                placeholder="We build brands that"
-                                onChange={(e) =>
-                                    setHero(
-                                        "heading",
-                                        e.target.value
-                                    )
-                                }
-                            />
-                        </Field>
-
-                        <Field
-                            label="Highlighted words"
-                            hint="Rendered in accent colour, for example: compound"
-                        >
-                            <input
-                                type="text"
-                                className="admin-input"
-                                value={form.hero.highlightText}
-                                onChange={(e) =>
-                                    setHero(
-                                        "highlightText",
-                                        e.target.value
-                                    )
-                                }
-                            />
-                        </Field>
-
-                        <Field label="Description">
-                            <textarea
-                                className="admin-textarea"
-                                value={form.hero.description}
-                                onChange={(e) =>
-                                    setHero(
-                                        "description",
-                                        e.target.value
-                                    )
-                                }
-                            />
-                        </Field>
-
-                        <div className="admin-field-row">
-
-                            <Field label="CTA button label">
-                                <input
-                                    type="text"
-                                    className="admin-input"
-                                    value={form.hero.ctaLabel}
-                                    placeholder="Start a project"
-                                    onChange={(e) =>
-                                        setHero(
-                                            "ctaLabel",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                            </Field>
-
-                            <div />
-
-                        </div>
-
-                        <ImageInput
-                            label="Hero image"
-                            value={form.hero.image}
-                            onChange={(value) =>
-                                setHero("image", value)
-                            }
-                        />
-
-                    </div>
-                </div>
-
-                {/* STATS */}
-                <div className="admin-card home-card">
-
-                    <div className="admin-card-header">
-                        <div>
-                            <h2>Headline stats</h2>
-                            <p>
-                                Number counters
-                                shown near the hero.
-                            </p>
-                        </div>
-
-                        <button
-                            type="button"
-                            className="admin-btn admin-btn-secondary admin-btn-sm"
-                            onClick={addStat}
-                        >
-                            + Add stat
-                        </button>
-                    </div>
-
-                    <div className="admin-card-body">
-
-                        {form.stats.length === 0 && (
-                            <p className="admin-field-hint">
-                                No stats yet. Add your
-                                first counter.
-                            </p>
-                        )}
-
-                        {form.stats.map((stat, index) => (
-                            <div
-                                className="admin-subset-item"
-                                key={index}
-                            >
-
-                                <div className="admin-subset-item-header">
-                                    <strong>
-                                        Stat {index + 1}
-                                    </strong>
-
-                                    <div className="admin-subset-item-actions">
-                                        <button
-                                            type="button"
-                                            className="admin-btn admin-btn-ghost admin-btn-sm"
-                                            onClick={() =>
-                                                removeStat(
-                                                    index
-                                                )
-                                            }
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="admin-field-row">
-
-                                    <Field label="Value">
-                                        <input
-                                            type="text"
-                                            className="admin-input"
-                                            value={stat.value || ""}
-                                            placeholder="150+"
-                                            onChange={(e) =>
-                                                updateStat(
-                                                    index,
-                                                    "value",
-                                                    e.target
-                                                        .value
-                                                )
-                                            }
-                                        />
-                                    </Field>
-
-                                    <Field label="Label">
-                                        <input
-                                            type="text"
-                                            className="admin-input"
-                                            value={stat.label || ""}
-                                            placeholder="Projects delivered"
-                                            onChange={(e) =>
-                                                updateStat(
-                                                    index,
-                                                    "label",
-                                                    e.target
-                                                        .value
-                                                )
-                                            }
-                                        />
-                                    </Field>
-
-                                </div>
-
-                            </div>
-                        ))}
-
-                    </div>
-                </div>
-
-                {/* CLIENTS */}
-                <div className="admin-card home-card">
-
-                    <div className="admin-card-header">
-                        <div>
-                            <h2>Client logos</h2>
-                            <p>
-                                Brands shown in the
-                                client strip.
-                            </p>
-                        </div>
-
-                        <button
-                            type="button"
-                            className="admin-btn admin-btn-secondary admin-btn-sm"
-                            onClick={addClient}
-                        >
-                            + Add client
-                        </button>
-                    </div>
-
-                    <div className="admin-card-body">
-
-                        {form.clients.length === 0 && (
-                            <p className="admin-field-hint">
-                                No clients yet. Add
-                                your first logo.
-                            </p>
-                        )}
-
-                        {form.clients.map(
-                            (client, index) => (
-                                <div
-                                    className="admin-subset-item"
-                                    key={index}
-                                >
-
-                                    <div className="admin-subset-item-header">
-                                        <strong>
-                                            Client{" "}
-                                            {index + 1}
-                                        </strong>
-
-                                        <div className="admin-subset-item-actions">
-                                            <button
-                                                type="button"
-                                                className="admin-btn admin-btn-ghost admin-btn-sm"
-                                                onClick={() =>
-                                                    removeClient(
-                                                        index
-                                                    )
-                                                }
-                                            >
-                                                Remove
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className="admin-field-row">
-
-                                        <Field label="Name">
-                                            <input
-                                                type="text"
-                                                className="admin-input"
-                                                value={client.name || ""}
-                                                onChange={(e) =>
-                                                    updateClient(
-                                                        index,
-                                                        "name",
-                                                        e.target
-                                                            .value
-                                                    )
-                                                }
-                                            />
-                                        </Field>
-
-                                        <Field label="Website">
-                                            <input
-                                                type="text"
-                                                className="admin-input"
-                                                value={client.link || ""}
-                                                placeholder="https://"
-                                                onChange={(e) =>
-                                                    updateClient(
-                                                        index,
-                                                        "link",
-                                                        e.target
-                                                            .value
-                                                    )
-                                                }
-                                            />
-                                        </Field>
-
-                                    </div>
-
-                                    <ImageInput
-                                        label="Logo"
-                                        value={client.logo || ""}
-                                        onChange={(value) =>
-                                            updateClient(
-                                                index,
-                                                "logo",
-                                                value
-                                            )
-                                        }
-                                    />
-
-                                </div>
-                            )
-                        )}
-
-                    </div>
-                </div>
-
-                {/* SEO */}
-                <div className="admin-card home-card">
-
-                    <div className="admin-card-header">
-                        <div>
-                            <h2>SEO</h2>
-                            <p>
-                                Search snippet
-                                metadata.
+                                Title and description used by
+                                search engines.
                             </p>
                         </div>
                     </div>
@@ -634,7 +238,7 @@ const HomeAdmin = () => {
                                 className="admin-input"
                                 value={form.seoTitle}
                                 onChange={(e) =>
-                                    setTop(
+                                    set(
                                         "seoTitle",
                                         e.target.value
                                     )
@@ -647,7 +251,7 @@ const HomeAdmin = () => {
                                 className="admin-textarea"
                                 value={form.seoDescription}
                                 onChange={(e) =>
-                                    setTop(
+                                    set(
                                         "seoDescription",
                                         e.target.value
                                     )
@@ -656,14 +260,14 @@ const HomeAdmin = () => {
                         </Field>
 
                     </div>
+
                 </div>
 
                 <div className="admin-save-bar">
 
                     <span className="admin-form-note">
-                        Changes go live on the
-                        website immediately after
-                        saving.
+                        Section visibility is saved
+                        separately and updates instantly.
                     </span>
 
                     <button
@@ -681,8 +285,8 @@ const HomeAdmin = () => {
                         disabled={saving}
                     >
                         {saving
-                            ? "Saving…"
-                            : "Save changes"}
+                            ? "Saving..."
+                            : "Save SEO settings"}
                     </button>
 
                 </div>
@@ -698,5 +302,6 @@ const HomeAdmin = () => {
     );
 
 };
+
 
 export default HomeAdmin;

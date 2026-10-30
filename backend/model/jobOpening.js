@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 //
 // A collection, so an admin can add or retire roles without
 // touching code. Same shape conventions as Service / Faq /
-// Testimonial: `order` for sorting, `isActive` for public
+// GtmPartner: `order` for sorting, `isActive` for public
 // visibility.
 // ======================================================
 
@@ -56,7 +56,31 @@ const jobOpeningSchema = new mongoose.Schema(
       default: "",
     },
 
+    /* Optional details page fields. Existing records simply have
+       empty values, so their cards and pages keep working. */
+    workMode: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    experience: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    responsibilities: {
+      type: [String],
+      default: [],
+    },
+
     requirements: {
+      type: [String],
+      default: [],
+    },
+
+    preferredSkills: {
       type: [String],
       default: [],
     },

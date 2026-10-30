@@ -7,7 +7,11 @@ const PageHeader = ({
     return (
         <div className="admin-page-header">
 
-            <div>
+            <div className="admin-page-heading">
+                <span className="admin-page-eyebrow">
+                    FasCave CMS
+                </span>
+
                 <h1>{title}</h1>
 
                 {description && (

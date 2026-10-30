@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { apiUrl, publicPath } from "../utils/apiBase";
 
@@ -20,6 +20,40 @@ import { apiUrl, publicPath } from "../utils/apiBase";
 const useContent = (path, fallback, shape) => {
   const [data, setData] = useState(fallback);
   const [status, setStatus] = useState("loading");
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const reload = useCallback(() => {
+    setRefreshKey((key) => key + 1);
+  }, []);
+
+  /*
+   * Admin edits happen in another tab or browser session.
+   * Re-reading when the visitor comes back to the tab keeps
+   * the public site in sync without websockets or a rebuild.
+   */
+  useEffect(() => {
+    const handleFocus = () => reload();
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        reload();
+      }
+    };
+
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibility
+    );
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibility
+      );
+    };
+  }, [reload]);
 
   useEffect(() => {
     let active = true;
@@ -73,9 +107,9 @@ const useContent = (path, fallback, shape) => {
       active = false;
       controller.abort();
     };
-  }, [path, shape]);
+  }, [path, shape, refreshKey]);
 
-  return { data, status };
+  return { data, status, reload };
 };
 
 
@@ -86,13 +120,13 @@ const useContent = (path, fallback, shape) => {
 ====================================================== */
 
 export const useCollection = (path, fallback = []) => {
-  const { data, status } = useContent(
+  const { data, status, reload } = useContent(
     publicPath(path),
     fallback,
     "list"
   );
 
-  return { items: data, status };
+  return { items: data, status, reload };
 };
 
 
@@ -102,11 +136,11 @@ export const useCollection = (path, fallback = []) => {
 ====================================================== */
 
 export const useSingleton = (path, fallback = {}) => {
-  const { data, status } = useContent(
+  const { data, status, reload } = useContent(
     path,
     fallback,
     "object"
   );
 
-  return { data, status };
+  return { data, status, reload };
 };

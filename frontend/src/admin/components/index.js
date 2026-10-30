@@ -11,6 +11,7 @@ import ImageInput from "./ImageInput/ImageInput";
 import Field from "./Field/Field";
 import TextListInput from "./TextListInput/TextListInput";
 import Toast, { useToast } from "./Toast/Toast";
+import SectionVisibilityCard from "./SectionVisibilityCard/SectionVisibilityCard";
 
 export {
     PageHeader,
@@ -25,4 +26,5 @@ export {
     TextListInput,
     Toast,
     useToast,
+    SectionVisibilityCard,
 };
