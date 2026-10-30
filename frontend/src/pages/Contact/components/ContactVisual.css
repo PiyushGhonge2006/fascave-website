@@ -265,3 +265,250 @@
         box-shadow: none;
     }
 }
+
+/* ==========================================
+   MOBILE PROCESS TIMELINE - POSITION FIX
+========================================== */
+
+@media (max-width: 767px) {
+
+    .contact-process {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .contact-process .contact-inner {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 18px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    /* Heading */
+
+    .contact-process .contact-section__head {
+        width: 100%;
+        text-align: center;
+        margin: 0 auto 35px;
+    }
+
+    .contact-process .contact-section__title,
+    .contact-process .contact-section__subtitle {
+        text-align: center;
+    }
+
+    /* Timeline container */
+
+    .contact-process .contact-process__track {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+
+        position: relative !important;
+
+        width: 100% !important;
+        max-width: 350px !important;
+
+        margin: 0 auto !important;
+        padding: 0 !important;
+
+        list-style: none !important;
+        box-sizing: border-box;
+    }
+
+    /* Vertical connecting line */
+
+    .contact-process .contact-process__track::before {
+        content: "";
+        position: absolute;
+
+        top: 20px;
+        bottom: 48px;
+        left: 20px !important;
+
+        width: 2px;
+        height: auto;
+
+        background: linear-gradient(
+            to bottom,
+            #7774ee,
+            #a17ad9,
+            #d38b9f
+        );
+
+        z-index: 0;
+
+        transform-origin: top;
+        animation: mobileTimelineLine 1.5s ease forwards;
+    }
+
+    /* Each process item */
+
+    .contact-process .contact-process__item {
+        position: relative !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+
+        width: 100% !important;
+        min-width: 0;
+
+        padding: 0 0 38px 62px !important;
+        margin: 0 !important;
+
+        text-align: left !important;
+
+        box-sizing: border-box;
+
+        transform: none;
+    }
+
+    .contact-process .contact-process__item:last-child {
+        padding-bottom: 0 !important;
+    }
+
+    /* Icon positioning - MAIN FIX */
+
+    .contact-process .contact-process__node {
+        position: absolute !important;
+
+        top: 0 !important;
+        left: 0 !important;
+        right: auto !important;
+
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        transform: none !important;
+        translate: none !important;
+
+        border: 1px solid rgba(145, 137, 255, 0.5);
+        border-radius: 50%;
+
+        background: #1b1a27;
+
+        color: #c8d5ff;
+
+        box-shadow:
+            0 0 0 5px rgba(117, 108, 232, 0.08),
+            0 5px 18px rgba(0, 0, 0, 0.3);
+
+        z-index: 2;
+
+        animation: mobileNodePulse 3s ease-in-out infinite;
+    }
+
+    .contact-process .contact-process__node svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    /* Number */
+
+    .contact-process .contact-process__number {
+        display: block;
+
+        margin: 2px 0 7px !important;
+
+        color: #a9a0ff;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+    }
+
+    /* Title */
+
+    .contact-process .contact-process__title {
+        margin: 0 0 7px !important;
+
+        color: #fff;
+        font-size: 18px;
+        line-height: 1.35;
+        font-weight: 700;
+    }
+
+    /* Description */
+
+    .contact-process .contact-process__text {
+        width: 100%;
+        max-width: 270px;
+
+        margin: 0 !important;
+
+        color: #c4c7d3;
+        font-size: 13.5px;
+        line-height: 1.7;
+
+        overflow-wrap: anywhere;
+    }
+
+    /* Scroll reveal */
+
+    .contact-process[data-visible="true"]
+    .contact-process__item[data-reveal] {
+        opacity: 1;
+        transform: none !important;
+        animation: mobileStepReveal 0.65s ease both;
+        animation-delay: var(--ct-reveal-delay, 0ms);
+    }
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+@keyframes mobileTimelineLine {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes mobileNodePulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 5px rgba(117, 108, 232, 0.08),
+            0 5px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 8px rgba(117, 108, 232, 0.13),
+            0 0 22px rgba(117, 108, 232, 0.25);
+    }
+}
+
+@keyframes mobileStepReveal {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-process .contact-process__node,
+    .contact-process .contact-process__track::before,
+    .contact-process .contact-process__item {
+        animation: none !important;
+    }
+}

@@ -33,6 +33,13 @@ const emptyItem = {
     tags: [],
     readMinutes: 3,
     status: "draft",
+
+    seo: {
+        title: "",
+        description: "",
+        focusKeyword: "",
+        ogImage: "",
+    },
 };
 
 
@@ -89,7 +96,7 @@ const BlogAdmin = () => {
 
             setError(
                 loadError.message ||
-                    "Could not load posts."
+                "Could not load posts."
             );
 
         } finally {
@@ -139,16 +146,20 @@ const BlogAdmin = () => {
     };
 
     const openEdit = (item) => {
-
         setForm({
             ...emptyItem,
             ...item,
+
             tags: item.tags || [],
+
+            seo: {
+                ...emptyItem.seo,
+                ...(item.seo || {}),
+            },
         });
 
         setFormError("");
         setEditing(item);
-
     };
 
     const closeModal = () => {
@@ -242,7 +253,7 @@ const BlogAdmin = () => {
 
             showToast(
                 deleteError.message ||
-                    "Delete failed.",
+                "Delete failed.",
                 "error"
             );
 
@@ -433,7 +444,7 @@ const BlogAdmin = () => {
                                         >
                                             {formatDate(
                                                 item.publishedAt ||
-                                                    item.createdAt
+                                                item.createdAt
                                             )}
                                         </td>
 
@@ -672,6 +683,93 @@ const BlogAdmin = () => {
                             set("tags", values)
                         }
                     />
+                    <div className="blog-seo-section">
+
+                        <div className="blog-seo-heading">
+                            <h3>SEO Settings</h3>
+                            <p>
+                                Optimize your article for search engines
+                                and social media sharing.
+                            </p>
+                        </div>
+
+                        <Field
+                            label="SEO Title"
+                            hint="Recommended: up to 70 characters."
+                        >
+                            <input
+                                type="text"
+                                className="admin-input"
+                                maxLength={70}
+                                value={form.seo.title}
+                                placeholder="Enter SEO title"
+                                onChange={(e) =>
+                                    set("seo", {
+                                        ...form.seo,
+                                        title: e.target.value,
+                                    })
+                                }
+                            />
+
+                            <small>
+                                {form.seo.title.length}/70 characters
+                            </small>
+                        </Field>
+
+                        <Field
+                            label="Meta Description"
+                            hint="Recommended: up to 160 characters."
+                        >
+                            <textarea
+                                className="admin-textarea"
+                                maxLength={160}
+                                value={form.seo.description}
+                                placeholder="Write a short search description..."
+                                onChange={(e) =>
+                                    set("seo", {
+                                        ...form.seo,
+                                        description: e.target.value,
+                                    })
+                                }
+                            />
+
+                            <small>
+                                {form.seo.description.length}/160 characters
+                            </small>
+                        </Field>
+
+                        <Field label="Focus Keyword">
+                            <input
+                                type="text"
+                                className="admin-input"
+                                value={form.seo.focusKeyword}
+                                placeholder="e.g. Web Development"
+                                onChange={(e) =>
+                                    set("seo", {
+                                        ...form.seo,
+                                        focusKeyword: e.target.value,
+                                    })
+                                }
+                            />
+                        </Field>
+
+                        <Field
+                            label="Social Sharing Image URL"
+                            hint="Paste an existing image URL if you prefer."
+                        >
+                            <ImageInput
+                                label="Social Sharing Image"
+                                value={form.seo.ogImage}
+                                onChange={(value) =>
+                                    set("seo", {
+                                        ...form.seo,
+                                        ogImage: value,
+                                    })
+                                }
+                            />
+                        </Field>
+
+                    </div>
 
                 </form>
 
@@ -683,9 +781,8 @@ const BlogAdmin = () => {
                 onConfirm={handleDelete}
                 isBusy={deletingBusy}
                 title="Delete post"
-                message={`This will permanently delete "${
-                    deleting?.title || ""
-                }". This cannot be undone.`}
+                message={`This will permanently delete "${deleting?.title || ""
+                    }". This cannot be undone.`}
             />
 
             <Toast

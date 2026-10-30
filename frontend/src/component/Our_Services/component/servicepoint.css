@@ -716,3 +716,54 @@
     transition: none !important;
   }
 }
+
+/* =========================================
+   WHY CHOOSE US - DESKTOP SPACING FIX
+========================================= */
+
+@media (min-width: 651px) {
+
+  .fc-network-stage {
+    height: 540px;
+  }
+
+  /* Side cards - more horizontal breathing space */
+  .fc-feature-card {
+    width: 34%;
+  }
+
+  /* Top center card */
+  .fc-top {
+    width: 36%;
+  }
+
+  /* Upper left and right cards */
+  .fc-left-top,
+  .fc-right-top {
+    top: 30%;
+  }
+
+  /* Bottom cards */
+  .fc-left-bottom,
+  .fc-right-bottom {
+    bottom: 0;
+  }
+
+}
+
+/* Tablet adjustment */
+@media (min-width: 651px) and (max-width: 1000px) {
+
+  .fc-network-stage {
+    height: 530px;
+  }
+
+  .fc-feature-card {
+    width: 35%;
+  }
+
+  .fc-top {
+    width: 40%;
+  }
+
+}
