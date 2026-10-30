@@ -96,8 +96,8 @@ function HomePage() {
    * open public tab in sync when the toggle is changed in
    * another browser session.
    */
-  const portfolioSectionVisible =
-    homeContent?.portfolioSectionVisible !== false;
+  const sectionVisible = (key) =>
+    homeContent?.[key] !== false;
 
   useEffect(() => {
     const timer = window.setInterval(reload, 30000);
@@ -111,34 +111,45 @@ function HomePage() {
         <Hero />
       </section>
 
-      <section>
-        <Features />
-      </section>
+      {sectionVisible("servicesSectionVisible") && (
+        <section>
+          <Features />
+        </section>
+      )}
 
-      <section>
-        <Why_chooseus />
-      </section>
+      {sectionVisible("whyChooseUsSectionVisible") && (
+        <section>
+          <Why_chooseus />
+        </section>
+      )}
 
-      <section>
-        <OurClients />
-      </section>
+      {sectionVisible("clientsSectionVisible") && (
+        <section>
+          <OurClients />
+        </section>
+      )}
 
       <section>
         <Whatwe_do />
       </section>
-      {portfolioSectionVisible && (
+
+      {sectionVisible("portfolioSectionVisible") && (
         <section>
           <Portfolio />
         </section>
       )}
 
-      <section>
-        <GTMPartner />
-      </section>
+      {sectionVisible("gtmPartnersSectionVisible") && (
+        <section>
+          <GTMPartner />
+        </section>
+      )}
 
-      <section>
-        <FAQ />
-      </section>
+      {sectionVisible("faqSectionVisible") && (
+        <section>
+          <FAQ />
+        </section>
+      )}
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
     LoadingState,
     Modal,
     PageHeader,
+    SectionVisibilityCard,
     Toast,
     useToast,
 } from "../../components";
@@ -29,6 +30,7 @@ const emptyItem = {
     image: "",
     features: [],
     isPublished: true,
+    isActive: true,
 };
 
 
@@ -45,6 +47,7 @@ const ServicesAdmin = () => {
 
     const [deleting, setDeleting] = useState(null);
     const [deletingBusy, setDeletingBusy] = useState(false);
+    const [togglingId, setTogglingId] = useState(null);
 
     const { toast, showToast, closeToast } =
         useToast();
@@ -226,6 +229,47 @@ const ServicesAdmin = () => {
     };
 
 
+    const toggleVisibility = async (item) => {
+
+        const visible = item.isActive !== false;
+
+        setTogglingId(item._id);
+
+        try {
+
+            await api.put(
+                `${ENDPOINT}/${item._id}`,
+                {
+                    isActive: !visible,
+                    isPublished: !visible,
+                }
+            );
+
+            showToast(
+                visible
+                    ? "Service hidden from the website."
+                    : "Service is visible on the website."
+            );
+
+            load();
+
+        } catch (toggleError) {
+
+            showToast(
+                toggleError.message ||
+                    "Could not update visibility.",
+                "error"
+            );
+
+        } finally {
+
+            setTogglingId(null);
+
+        }
+
+    };
+
+
     const handleDelete = async () => {
 
         setDeletingBusy(true);
@@ -275,6 +319,12 @@ const ServicesAdmin = () => {
             />
 
             <Alert message={error} />
+
+            <SectionVisibilityCard
+                field="servicesSectionVisible"
+                title="Services section"
+                description="Show or hide the Our Services block on the home page. Individual service visibility is controlled in the list below."
+            />
 
             <div className="admin-card">
 
@@ -388,19 +438,43 @@ const ServicesAdmin = () => {
                                         <td>
                                             <span
                                                 className={`admin-badge ${
-                                                    item.isPublished
+                                                    item.isActive !==
+                                                    false
                                                         ? "admin-badge-success"
                                                         : "admin-badge-neutral"
                                                 }`}
                                             >
-                                                {item.isPublished
-                                                    ? "Published"
-                                                    : "Draft"}
+                                                {item.isActive !==
+                                                false
+                                                    ? "Visible"
+                                                    : "Hidden"}
                                             </span>
                                         </td>
 
                                         <td>
                                             <div className="admin-table-actions">
+
+                                                <button
+                                                    type="button"
+                                                    className="admin-btn admin-btn-ghost admin-btn-sm"
+                                                    onClick={() =>
+                                                        toggleVisibility(
+                                                            item
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        togglingId ===
+                                                        item._id
+                                                    }
+                                                >
+                                                    {togglingId ===
+                                                    item._id
+                                                        ? "Saving"
+                                                        : item.isActive !==
+                                                            false
+                                                            ? "Hide"
+                                                            : "Show"}
+                                                </button>
 
                                                 <button
                                                     type="button"
@@ -675,17 +749,22 @@ const ServicesAdmin = () => {
                     <label className="admin-checkbox">
                         <input
                             type="checkbox"
-                            checked={form.isPublished}
-                            onChange={(e) =>
+                            checked={
+                                form.isActive !== false
+                            }
+                            onChange={(e) => {
+                                set(
+                                    "isActive",
+                                    e.target.checked
+                                );
                                 set(
                                     "isPublished",
                                     e.target.checked
-                                )
-                            }
+                                );
+                            }}
                         />
                         <span>
-                            Published on the
-                            website
+                            Visible on the website
                         </span>
                     </label>
 

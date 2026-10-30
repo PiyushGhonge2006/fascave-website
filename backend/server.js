@@ -36,8 +36,8 @@ const gtmRoutes =
 const faqRoutes =
   require("./routes/faqRoutes");
 
-const testimonialRoutes =
-  require("./routes/testimonialRoutes");
+const adminFaqRoutes =
+  require("./routes/adminFaqRoutes");
 
 const blogRoutes =
   require("./routes/blogRoutes");
@@ -254,6 +254,7 @@ app.use(
   portfolioRoutes
 );
 
+
 app.use(
   "/api/content/gtm-partners",
   gtmRoutes
@@ -286,6 +287,7 @@ app.get(
       const faqs =
         await Faq.find({
           isPublished: true,
+          isActive: { $ne: false },
         }).sort({
           order: 1,
           createdAt: 1,
@@ -337,10 +339,9 @@ app.use(
   faqRoutes
 );
 
-
 app.use(
-  "/api/content/testimonials",
-  testimonialRoutes
+  "/api/admin/faq",
+  adminFaqRoutes
 );
 
 app.use(

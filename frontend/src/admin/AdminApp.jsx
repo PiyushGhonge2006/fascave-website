@@ -8,12 +8,11 @@ import AdminLayout from "./components/AdminLayout/AdminLayout";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import HomeAdmin from "./pages/Home/HomeAdmin";
+import ClientsAdmin from "./pages/Clients/ClientsAdmin";
 import AboutAdmin from "./pages/About/AboutAdmin";
-import ServicesAdmin from "./pages/Services/ServicesAdmin";
 import PortfolioAdmin from "./pages/Portfolio/PortfolioAdmin";
 import GTMPartnersAdmin from "./pages/GTMPartners/GTMPartnersAdmin";
 import FAQAdmin from "./pages/FAQ/FAQAdmin";
-import TestimonialsAdmin from "./pages/Testimonials/TestimonialsAdmin";
 import WhyChooseUsAdmin from "./pages/WhyChooseUs/WhyChooseUsAdmin";
 import BlogAdmin from "./pages/Blog/BlogAdmin";
 import CareersAdmin from "./pages/Careers/CareersAdmin";
@@ -71,14 +70,15 @@ const AdminGate = () => {
                 />
 
                 <Route
+                    path="/clients"
+                    element={<ClientsAdmin />}
+                />
+
+                <Route
                     path="/about"
                     element={<AboutAdmin />}
                 />
 
-                <Route
-                    path="/services"
-                    element={<ServicesAdmin />}
-                />
 
                 <Route
                     path="/portfolio"
@@ -93,11 +93,6 @@ const AdminGate = () => {
                 <Route
                     path="/faq"
                     element={<FAQAdmin />}
-                />
-
-                <Route
-                    path="/testimonials"
-                    element={<TestimonialsAdmin />}
                 />
 
                 <Route

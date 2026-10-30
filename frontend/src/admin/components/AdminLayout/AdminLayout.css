@@ -1,29 +1,46 @@
 .admin-layout {
     min-height: 100vh;
-    background: #f5f7fb;
+    background:
+        radial-gradient(
+            1100px 620px at 8% -12%,
+            rgba(41, 38, 99, 0.1),
+            transparent 62%
+        ),
+        radial-gradient(
+            900px 520px at 100% 0%,
+            rgba(94, 89, 201, 0.08),
+            transparent 58%
+        ),
+        #f4f5f9;
 }
 
 .admin-shell {
     min-height: 100vh;
 
-    margin-left: 260px;
+    margin-left: 268px;
 
     display: flex;
     flex-direction: column;
-
 }
 
 .admin-main-content {
     flex: 1;
 
-    padding: 30px;
+    padding: 34px;
 
     min-width: 0;
-
 }
 
 
 /* Responsive */
+
+@media (max-width: 1100px) {
+
+    .admin-main-content {
+        padding: 28px;
+    }
+
+}
 
 @media (max-width: 1000px) {
 

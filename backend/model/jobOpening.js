@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 //
 // A collection, so an admin can add or retire roles without
 // touching code. Same shape conventions as Service / Faq /
-// Testimonial: `order` for sorting, `isActive` for public
+// GtmPartner: `order` for sorting, `isActive` for public
 // visibility.
 // ======================================================
 

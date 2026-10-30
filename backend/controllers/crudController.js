@@ -63,7 +63,11 @@ const listAll = (
 const getOne =
   (
     Model,
-    { byField = "slug", publishedFilter } = {}
+    {
+      byField = "slug",
+      publishedOnly,
+      publishedFilter,
+    } = {}
   ) => {
 
     return async (req, res) => {
@@ -81,10 +85,14 @@ const getOne =
           ? { _id: key }
           : { [byField]: key };
 
-        /* A public request (`?published=true`) must not be able
-           to read a hidden item by guessing its id or slug. */
+        /* A public request must not be able to read a hidden
+           item by guessing its id or slug. */
+        const onlyPublished =
+          publishedOnly ||
+          req.query.published === "true";
+
         if (
-          req.query.published === "true" &&
+          onlyPublished &&
           publishedFilter
         ) {
 

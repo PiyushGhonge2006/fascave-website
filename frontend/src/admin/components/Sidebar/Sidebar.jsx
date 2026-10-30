@@ -1,7 +1,23 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import {
+    BadgeCheck,
+    Briefcase,
+    FileText,
+    FolderKanban,
+    Handshake,
+    HelpCircle,
+    Home,
+    Info,
+    LayoutDashboard,
+    Mail,
+    MessageSquare,
+    Users,
+    X,
+} from "lucide-react";
 
 import "./Sidebar.css";
+
 
 const MENU_GROUPS = [
     {
@@ -10,77 +26,83 @@ const MENU_GROUPS = [
             {
                 label: "Dashboard",
                 path: "/admin",
-                icon: "▦",
+                icon: LayoutDashboard,
                 end: true,
             },
             {
                 label: "Messages",
                 path: "/admin/messages",
-                icon: "✉",
+                icon: MessageSquare,
             },
         ],
     },
     {
-        title: "Management",
+        title: "Website content",
         items: [
             {
                 label: "Home",
                 path: "/admin/home",
-                icon: "⌂",
+                icon: Home,
             },
             {
                 label: "About Us",
                 path: "/admin/about",
-                icon: "ⓘ",
-            },
-            {
-                label: "Services",
-                path: "/admin/services",
-                icon: "▣",
+                icon: Info,
             },
             {
                 label: "Portfolio",
                 path: "/admin/portfolio",
-                icon: "▤",
+                icon: FolderKanban,
             },
             {
-                label: "GTM Partners",
-                path: "/admin/gtm-partners",
-                icon: "◇",
-            },
-            {
-                label: "FAQ",
-                path: "/admin/faq",
-                icon: "?",
-            },
-            {
-                label: "Testimonials",
-                path: "/admin/testimonials",
-                icon: "★",
+                label: "Our Clients",
+                path: "/admin/clients",
+                icon: Users,
             },
             {
                 label: "Why Choose Us",
                 path: "/admin/why-choose-us",
-                icon: "◐",
+                icon: BadgeCheck,
+            },
+        ],
+    },
+    {
+        title: "Marketing",
+        items: [
+            {
+                label: "GTM Partners",
+                path: "/admin/gtm-partners",
+                icon: Handshake,
+            },
+            {
+                label: "FAQ",
+                path: "/admin/faq",
+                icon: HelpCircle,
             },
             {
                 label: "Blog",
                 path: "/admin/blog",
-                icon: "✎",
+                icon: FileText,
             },
+        ],
+    },
+    {
+        title: "Operations",
+        items: [
             {
                 label: "Careers",
                 path: "/admin/careers",
-                icon: "◈",
+                icon: Briefcase,
             },
             {
                 label: "Contact",
                 path: "/admin/contact",
-                icon: "☎",
+                icon: Mail,
             },
         ],
     },
 ];
+
 
 const Sidebar = ({
     isOpen,
@@ -97,9 +119,8 @@ const Sidebar = ({
             )}
 
             <aside
-                className={`admin-sidebar ${
-                    isOpen ? "is-open" : ""
-                }`}
+                className={`admin-sidebar ${isOpen ? "is-open" : ""
+                    }`}
             >
 
                 <div className="admin-sidebar-logo">
@@ -120,7 +141,7 @@ const Sidebar = ({
                         onClick={onClose}
                         aria-label="Close navigation"
                     >
-                        ×
+                        <X size={17} strokeWidth={2} />
                     </button>
                 </div>
 
@@ -136,31 +157,40 @@ const Sidebar = ({
                                 {group.title}
                             </div>
 
-                            {group.items.map((item) => (
-                                <NavLink
-                                    key={item.path}
-                                    to={item.path}
-                                    end={item.end}
-                                    onClick={onClose}
-                                    className={({
-                                        isActive,
-                                    }) =>
-                                        isActive
-                                            ? "admin-menu-item active"
-                                            : "admin-menu-item"
-                                    }
-                                >
-                                    <span
-                                        className="admin-menu-icon"
-                                    >
-                                        {item.icon}
-                                    </span>
+                            {group.items.map((item) => {
 
-                                    <span className="admin-menu-label">
-                                        {item.label}
-                                    </span>
-                                </NavLink>
-                            ))}
+                                const Icon = item.icon;
+
+                                return (
+                                    <NavLink
+                                        key={item.path}
+                                        to={item.path}
+                                        end={item.end}
+                                        onClick={onClose}
+                                        className={({
+                                            isActive,
+                                        }) =>
+                                            isActive
+                                                ? "admin-menu-item active"
+                                                : "admin-menu-item"
+                                        }
+                                    >
+                                        <span className="admin-menu-icon">
+                                            <Icon
+                                                size={17}
+                                                strokeWidth={
+                                                    1.8
+                                                }
+                                            />
+                                        </span>
+
+                                        <span className="admin-menu-label">
+                                            {item.label}
+                                        </span>
+                                    </NavLink>
+                                );
+
+                            })}
 
                         </div>
                     ))}

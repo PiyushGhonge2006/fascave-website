@@ -50,21 +50,29 @@ const Ourclients = () => {
       ? homeContent.clients
       : [];
 
-    const formattedClients = clientList
-      .filter((client) => client?.logo)
+    if (!clientList.length) {
+      return fallbackClients;
+    }
+
+    return clientList
+      .filter(
+        (client) =>
+          client?.logo &&
+          client?.isActive !== false
+      )
       .map((client, index) => ({
         id: client._id || index,
         name: client.name || "Client",
         image: imageUrl(client.logo),
         link: client.link || "",
       }));
-
-    return formattedClients.length
-      ? formattedClients
-      : fallbackClients;
   }, [homeContent]);
 
   const logos = clients;
+
+  if (!logos.length) {
+    return null;
+  }
 
   return (
     <section className="our-clients" ref={sectionRef}>

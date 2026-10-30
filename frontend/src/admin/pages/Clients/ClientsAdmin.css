@@ -1,0 +1,142 @@
+.clients-admin-panel {
+    overflow: hidden;
+}
+
+.clients-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 22px;
+    background:
+        linear-gradient(180deg, #fbfbfd 0%, #ffffff 100%);
+}
+
+.client-admin-card {
+    position: relative;
+    padding: 18px;
+    border: 1px solid #e7e6ee;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 10px 24px rgba(29, 27, 63, 0.05);
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        opacity 160ms ease;
+}
+
+.client-admin-card:hover {
+    border-color: rgba(41, 38, 99, 0.22);
+    box-shadow: 0 14px 30px rgba(29, 27, 63, 0.08);
+}
+
+.client-admin-card.is-hidden {
+    background: #fafafa;
+    opacity: 0.76;
+}
+
+.client-admin-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.client-admin-card-head > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.client-admin-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: #292663;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.client-admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+}
+
+.client-admin-remove {
+    color: #b42318;
+}
+
+.client-admin-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.clients-admin-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 54px 24px;
+    text-align: center;
+}
+
+.clients-admin-empty-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 14px;
+    border-radius: 16px;
+    background: #f0eff8;
+    color: #292663;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.clients-admin-empty h3 {
+    margin: 0 0 6px;
+    color: #1d1b3f;
+    font-size: 18px;
+}
+
+.clients-admin-empty p {
+    max-width: 400px;
+    margin: 0 0 18px;
+    color: #6b6b7a;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 920px) {
+    .clients-admin-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .clients-admin-grid {
+        padding: 16px;
+    }
+
+    .client-admin-card-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .client-admin-actions {
+        justify-content: flex-start;
+    }
+
+    .client-admin-fields {
+        grid-template-columns: 1fr;
+    }
+}

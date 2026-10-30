@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 
 import { useLocation } from "react-router-dom";
 
+import {
+    ChevronDown,
+    ExternalLink,
+    LogOut,
+} from "lucide-react";
+
 import { useAdminAuth } from "../../context/AdminAuthContext";
 
 import "./Topbar.css";
@@ -10,13 +16,16 @@ import "./Topbar.css";
 const PAGE_TITLES = {
     "/admin": "Dashboard",
     "/admin/home": "Home",
+    "/admin/clients": "Our Clients",
     "/admin/about": "About Us",
     "/admin/services": "Services",
     "/admin/portfolio": "Portfolio",
     "/admin/gtm-partners": "GTM Partners",
     "/admin/faq": "FAQ",
-    "/admin/testimonials": "Testimonials",
+    "/admin/why-choose-us": "Why Choose Us",
     "/admin/blog": "Blog",
+    "/admin/careers": "Careers",
+    "/admin/contact": "Contact",
     "/admin/messages": "Messages",
 };
 
@@ -119,7 +128,11 @@ const Topbar = ({
                     target="_blank"
                     rel="noreferrer"
                 >
-                    View site ↗
+                    <span>View site</span>
+                    <ExternalLink
+                        size={14}
+                        strokeWidth={2}
+                    />
                 </a>
 
                 <div className="admin-topbar-user">
@@ -157,7 +170,10 @@ const Topbar = ({
                             className="admin-topbar-caret"
                             aria-hidden="true"
                         >
-                            ▾
+                            <ChevronDown
+                                size={15}
+                                strokeWidth={2}
+                            />
                         </span>
                     </button>
 
@@ -192,6 +208,10 @@ const Topbar = ({
                                     role="menuitem"
                                     onClick={logout}
                                 >
+                                    <LogOut
+                                        size={15}
+                                        strokeWidth={2}
+                                    />
                                     Sign out
                                 </button>
 
