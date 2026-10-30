@@ -1,4 +1,4 @@
-import ContactCTA from "./components/ContactCTA";
+
 import ContactForm from "./components/ContactForm";
 import ContactHero from "./components/ContactHero";
 import ContactInfo from "./components/ContactInfo";
@@ -30,7 +30,7 @@ function Contact() {
 
       <ContactProcess />
 
-      <ContactCTA />
+      {/* <ContactCTA /> */}
     </main>
   );
 }

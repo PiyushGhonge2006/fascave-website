@@ -1,1 +1,31 @@
 /* Blog admin uses shared admin styles. */
+.blog-seo-section {
+    margin-top: 28px;
+    padding: 22px;
+    border: 1px solid #e5e5eb;
+    border-radius: 12px;
+    background: #fafafd;
+}
+
+.blog-seo-heading {
+    margin-bottom: 20px;
+}
+
+.blog-seo-heading h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: #24242d;
+}
+
+.blog-seo-heading p {
+    margin: 0;
+    font-size: 13px;
+    color: #777783;
+}
+
+.blog-seo-section small {
+    display: block;
+    margin-top: 5px;
+    color: #777783;
+    font-size: 11px;
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { useConsultationModal } from "../consultation/consultationModalContext";
+
 import fascaveLogo from "../../assets/Footer/FascaveLogo.png";
 import microsoftFascave from "../../assets/Footer/background.png";
 
@@ -24,7 +26,6 @@ function LinkedinIcon() {
     );
 }
 
-
 function InstagramIcon() {
     return (
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -43,7 +44,12 @@ function YoutubeIcon() {
     );
 }
 
+/* ================= FOOTER ================= */
+
 function Footer() {
+
+    const { openConsultation } = useConsultationModal();
+
     const scrollTop = () => {
         window.scrollTo({
             top: 0,
@@ -72,13 +78,20 @@ function Footer() {
 
                     <div className="footer-cta-buttons">
 
-                        <Link
-                            to="/contact"
+                        {/* START YOUR PROJECT - OPEN CONSULTATION POPUP */}
+
+                        <button
+                            type="button"
                             className="footer-cta-primary"
-                            onClick={scrollTop}
+                            onClick={() => {
+                                openConsultation();
+                                scrollTop();
+                            }}
                         >
                             Start Your Project <span>↗</span>
-                        </Link>
+                        </button>
+
+                        {/* CONTACT US */}
 
                         <Link
                             to="/contact"
@@ -92,7 +105,6 @@ function Footer() {
 
                 </div>
             </section>
-
 
             {/* ================= MAIN FOOTER ================= */}
 
@@ -135,7 +147,6 @@ function Footer() {
                                 <FacebookIcon />
                             </a>
 
-
                             <a
                                 href="https://www.linkedin.com/company/fascave/"
                                 target="_blank"
@@ -145,7 +156,6 @@ function Footer() {
                             >
                                 <LinkedinIcon />
                             </a>
-
 
                             <a
                                 href="https://www.instagram.com/fascave.it/"
@@ -170,7 +180,6 @@ function Footer() {
                         </div>
 
                     </div>
-
 
                     {/* ================= SERVICES ================= */}
 
@@ -206,7 +215,6 @@ function Footer() {
                         </nav>
 
                     </div>
-
 
                     {/* ================= CONTACT ================= */}
 
@@ -247,7 +255,6 @@ function Footer() {
 
                     </div>
 
-
                     {/* ================= PARTNER ================= */}
 
                     <div className="footer-column footer-partner">
@@ -266,7 +273,6 @@ function Footer() {
                     </div>
 
                 </div>
-
 
                 {/* ================= BOTTOM ================= */}
 

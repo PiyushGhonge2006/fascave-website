@@ -46,13 +46,6 @@ const slides = [
   },
 ];
 
-const stats = [ 
-  { icon: "◇", value: "150+", label: "Projects Delivered" },
-  { icon: "♧", value: "4+", label: "Years of Experience" },
-  { icon: "◎", value: "50+", label: "Global Clients" },
-  { icon: "♬", value: "24/7", label: "Support & Maintenance" },
-];
-
 export default function HeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -133,21 +126,6 @@ export default function HeroCarousel() {
               {slide.secondary}
             </a>
           </div>
-        </div>
-
-        <div className="hero-stats">
-          {stats.map((stat) => (
-            <div className="hero-stat" key={stat.label}>
-              <span className="hero-stat-icon" aria-hidden="true">
-                {stat.icon}
-              </span>
-
-              <div>
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
 

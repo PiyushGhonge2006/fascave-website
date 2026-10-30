@@ -7,7 +7,7 @@ const features = [
     id: "responsive",
     title: "Modern & Responsive",
     description:
-      "Beautiful, user-friendly and responsive designs that work seamlessly on all devices.",
+      "User-friendly and responsive designs that work on all devices.",
     icon: "monitor",
     position: "top",
   },
@@ -15,7 +15,7 @@ const features = [
     id: "scalable",
     title: "Scalable Architecture",
     description:
-      "Built with clean and scalable architecture to grow with your business needs.",
+      "Built with clean and scalable architecture",
     icon: "layers",
     position: "left-top",
   },
@@ -23,7 +23,7 @@ const features = [
     id: "performance",
     title: "High Performance",
     description:
-      "Optimized for speed, security and reliability to deliver a seamless user experience.",
+      "Optimized for speed, security and reliability.",
     icon: "zap",
     position: "right-top",
   },

@@ -6,6 +6,7 @@
    the shared animation classes.
    ========================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "./styles/tokens.css";
 @import "./styles/components.css";
 @import "./styles/motion.css";
@@ -45,4 +46,28 @@ html {
   html {
     scroll-behavior: auto;
   }
+}
+/* =================================
+   GLOBAL TYPOGRAPHY - FASCAVE
+================================= */
+
+/* Body Text */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* All Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+/* Global paragraph and normal content font size */
+
+p:not(:has(strong, b)),
+li:not(:has(strong, b)) {
+  font-size: 17px !important;
 }

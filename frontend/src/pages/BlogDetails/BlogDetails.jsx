@@ -1,140 +1,157 @@
+
 import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import useRevealOnScroll from "../../hooks/useRevealOnScroll";
 import { usePosts } from "../../hooks/usePosts";
+
 import "./BlogDetails.css";
 
-
 const BlogDetails = () => {
-    const { id } = useParams();
+  const { id } = useParams();
 
-    const [pageRef] = useRevealOnScroll();
+  const [pageRef] = useRevealOnScroll();
 
-    const posts = usePosts();
+  const { posts, status } = usePosts();
 
-    const post = posts.find((item) => item.id === id);
+  const post = posts.find(
+    (item) => item.id === id || item.slug === id
+  );
 
-    /* The browser tab follows the article title. */
-    useEffect(() => {
+  useEffect(() => {
+    if (!post?.title) return;
 
-        if (!post?.title) {
-            return;
-        }
+    const previousTitle = document.title;
 
-        const previous = document.title;
-        document.title = post.title;
+    document.title = `${post.title} | FasCave`;
 
-        return () => {
-            document.title = previous;
-        };
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [post?.title]);
 
-    }, [post?.title]);
-
-
-    if (!post) {
-        return (
-            <main className="blog-details-page">
-
-                <div
-                    className="blog-details-container"
-                    data-reveal="blur"
-                >
-
-                    <Link
-                        to="/blog"
-                        className="blog-back-link"
-                    >
-                        ← Back to Blog
-                    </Link>
-
-                    <h1>Article not found</h1>
-
-                    <p>
-                        This article may have been unpublished or its link may
-                        have changed.
-                    </p>
-
-                    <Link
-                        to="/blog"
-                        className="blog-read-button"
-                    >
-                        Read other articles <span>→</span>
-                    </Link>
-
-                </div>
-
-            </main>
-        );
-    }
-
-
-    /* The body is plain text from the CMS, so paragraphs are
-       split on blank lines rather than injected as HTML. */
-    const paragraphs = post.content
-        .split(/\n\s*\n/)
-        .map((block) => block.trim())
-        .filter(Boolean);
-
-
+  if (!post && status === "loading") {
     return (
-        <main className="blog-details-page" ref={pageRef}>
+      <main className="blog-details-page">
+        <div className="blog-details-container">
+          <p className="blog-details-loading">
+            Loading article...
+          </p>
+        </div>
+      </main>
+    );
+  }
 
-            <div
-                className="blog-details-container"
-                data-reveal="blur"
-            >
+  if (!post) {
+    return (
+      <main className="blog-details-page">
+        <div className="blog-details-container blog-not-found">
+          <span className="blog-small-label">
+            ARTICLE NOT FOUND
+          </span>
 
-                <Link
-                    to="/blog"
-                    className="blog-back-link"
-                >
-                    ← Back to Blog
-                </Link>
+          <h1>This article is unavailable.</h1>
 
-                {post.category && (
-                    <p className="blog-details-category">
-                        {post.category}
-                    </p>
-                )}
+          <p>
+            This article may have been unpublished,
+            deleted or its link may have changed.
+          </p>
 
-                <h1>
-                    {post.title}
-                </h1>
+          <Link to="/blog" className="blog-details-back-button">
+            ← Back to Blog
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
-                <p className="blog-details-meta">
-                    {[
-                        post.date,
-                        post.author,
-                        `${post.readMinutes} min read`,
-                    ]
-                        .filter(Boolean)
-                        .join(" · ")}
-                </p>
+  return (
+    <main className="blog-details-page" ref={pageRef}>
+      <div className="blog-details-container">
 
-                {post.image && (
-                    <div className="blog-details-image">
-                        <img
-                            src={post.image}
-                            alt={post.title}
-                        />
-                    </div>
-                )}
+        {/* BACK LINK */}
+        <Link to="/blog" className="blog-back-link">
+          <span>←</span> Back to Insights
+        </Link>
 
-                <article className="blog-details-content">
+        {/* ARTICLE HEADER */}
+        <header className="blog-details-header">
+          <span className="blog-details-category">
+            {post.category}
+          </span>
 
-                    {paragraphs.map((paragraph, index) => (
-                        <p key={`${index}-${paragraph.slice(0, 12)}`}>
-                            {paragraph}
-                        </p>
-                    ))}
+          <h1>{post.title}</h1>
 
-                </article>
+          {post.description && (
+            <p className="blog-details-excerpt">
+              {post.description}
+            </p>
+          )}
 
+          <div className="blog-details-meta">
+            <div className="blog-details-author">
+              <span className="blog-author-avatar">
+                {(post.author || "F").charAt(0).toUpperCase()}
+              </span>
+
+              <div>
+                <strong>{post.author || "FasCave Team"}</strong>
+                <span>Author</span>
+              </div>
             </div>
 
-        </main>
-    );
+            <span>{post.date}</span>
+            <span>{post.readMinutes} min read</span>
+          </div>
+        </header>
+
+        {/* COVER IMAGE */}
+        {post.image && (
+          <div className="blog-details-image">
+            <img
+              src={post.image}
+              alt={post.title}
+            />
+          </div>
+        )}
+
+        {/* ARTICLE CONTENT */}
+        <article className="blog-details-content">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {post.content || post.description || ""}
+          </ReactMarkdown>
+        </article>
+
+        {/* TAGS */}
+        {post.tags?.length > 0 && (
+          <div className="blog-details-tags">
+            <span>TOPICS:</span>
+
+            {post.tags.map((tag) => (
+              <span className="blog-details-tag" key={tag}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* ARTICLE FOOTER */}
+        <div className="blog-details-footer">
+          <div>
+            <span>ENJOYED THIS ARTICLE?</span>
+            <h3>Explore more insights.</h3>
+          </div>
+
+          <Link to="/blog" className="blog-read-button">
+            More Articles <span>↗</span>
+          </Link>
+        </div>
+
+      </div>
+    </main>
+  );
 };
 
 export default BlogDetails;
