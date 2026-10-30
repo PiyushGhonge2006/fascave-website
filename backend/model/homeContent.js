@@ -80,11 +80,41 @@ const homeContentSchema =
             trim: true,
             default: "",
           },
+
+          isActive: {
+            type: Boolean,
+            default: true,
+          },
         },
       ],
 
-      // Overall Portfolio section visibility
+      // Overall home section visibility
       portfolioSectionVisible: {
+        type: Boolean,
+        default: true,
+      },
+
+      servicesSectionVisible: {
+        type: Boolean,
+        default: true,
+      },
+
+      clientsSectionVisible: {
+        type: Boolean,
+        default: true,
+      },
+
+      whyChooseUsSectionVisible: {
+        type: Boolean,
+        default: true,
+      },
+
+      gtmPartnersSectionVisible: {
+        type: Boolean,
+        default: true,
+      },
+
+      faqSectionVisible: {
         type: Boolean,
         default: true,
       },

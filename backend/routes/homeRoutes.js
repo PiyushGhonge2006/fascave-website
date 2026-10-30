@@ -42,8 +42,13 @@ const homeDefaults = {
 
   clients: [],
 
-  // Overall Portfolio section visibility
+  // Overall home section visibility
   portfolioSectionVisible: true,
+  servicesSectionVisible: true,
+  clientsSectionVisible: true,
+  whyChooseUsSectionVisible: true,
+  gtmPartnersSectionVisible: true,
+  faqSectionVisible: true,
 };
 
 router.get(

@@ -98,10 +98,10 @@ export const CAREER_ICONS = {
     Zap,
 };
 
-const DEFAULT_ICON = BriefcaseBusiness;
+export const DEFAULT_CAREER_ICON = BriefcaseBusiness;
 
-export const careerIcon = (name, fallback = DEFAULT_ICON) =>
-    CAREER_ICONS[name] || CAREER_ICONS[fallback] || DEFAULT_ICON;
+export const careerIcon = (name, fallback = DEFAULT_CAREER_ICON) =>
+    CAREER_ICONS[name] || CAREER_ICONS[fallback] || DEFAULT_CAREER_ICON;
 
 
 /* =========================================================
@@ -188,91 +188,9 @@ export const careersFallback = {
         heading: "Ready to Build the Future?",
         description: "Your next opportunity could start here.",
         buttonLabel: "Send Your Resume",
-        buttonHref: "/contact",
+        buttonHref: "",
     },
 };
-
-
-/* =========================================================
-   JOB OPENINGS — FALLBACKS
-   ------------------------------------------------------------
-   Job-shaped, so it can be handed straight to `useCollection`
-   as its fallback. Once the admin saves real roles these are
-   simply not used.
-   ========================================================= */
-
-export const jobsFallback = [
-    {
-        title: "Frontend Developer",
-        summary: "Build high-performance interfaces and experiences.",
-        location: "Remote",
-        type: "Full Time",
-        icon: "Code2",
-    },
-    {
-        title: "Backend Developer",
-        summary: "Craft reliable APIs, services and data layers at scale.",
-        location: "Pune",
-        type: "Full Time",
-        icon: "Server",
-    },
-    {
-        title: "Full Stack Developer",
-        summary: "Own complete products from database to deployment.",
-        location: "Hybrid",
-        type: "Full Time",
-        icon: "Layers",
-    },
-    {
-        title: "UI/UX Designer",
-        summary: "Design intuitive systems, flows and brand experiences.",
-        location: "Remote",
-        type: "Full Time",
-        icon: "Palette",
-    },
-    {
-        title: "3D Artist",
-        summary: "Create immersive visuals, models and real-time scenes.",
-        location: "Studio",
-        type: "Project",
-        icon: "Box",
-    },
-    {
-        title: "Motion Graphics Designer",
-        summary: "Animate product stories with crisp, premium motion.",
-        location: "Remote",
-        type: "Contract",
-        icon: "Clapperboard",
-    },
-    {
-        title: "Video Editor",
-        summary: "Shape raw footage into stories people remember.",
-        location: "Remote",
-        type: "Contract",
-        icon: "Feather",
-    },
-    {
-        title: "Digital Marketing Specialist",
-        summary: "Drive growth through campaigns, SEO and performance.",
-        location: "Hybrid",
-        type: "Full Time",
-        icon: "Megaphone",
-    },
-    {
-        title: "Cloud Engineer",
-        summary: "Build secure, resilient infrastructure that scales.",
-        location: "Remote",
-        type: "Full Time",
-        icon: "Cloud",
-    },
-    {
-        title: "AI/ML Engineer",
-        summary: "Turn intelligent models into useful product features.",
-        location: "Hybrid",
-        type: "Full Time",
-        icon: "Bot",
-    },
-];
 
 
 /* =========================================================

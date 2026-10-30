@@ -7,6 +7,7 @@ import {
     Field,
     LoadingState,
     PageHeader,
+    SectionVisibilityCard,
     Toast,
     useToast,
 } from "../../components";
@@ -170,6 +171,12 @@ const WhyChooseUsAdmin = () => {
             />
 
             <Alert message={error} />
+
+            <SectionVisibilityCard
+                field="whyChooseUsSectionVisible"
+                title="Why Choose Us section"
+                description="Show or hide the Why Choose Us block on the home page. Its content stays saved while hidden."
+            />
 
             <div className="admin-card">
 

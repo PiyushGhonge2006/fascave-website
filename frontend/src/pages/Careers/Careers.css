@@ -273,6 +273,37 @@
     outline-offset: 3px;
 }
 
+.careers-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+.careers-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.careers-btn--primary:disabled:hover::after {
+    transform: translateX(-120%);
+}
+
+.careers-resume-action {
+    display: contents;
+}
+
+.careers-resume-note {
+    display: block;
+    flex-basis: 100%;
+    width: 100%;
+    margin-top: 4px;
+
+    color: var(--cr-text-dim);
+    font-size: 13px;
+    line-height: 1.55;
+    text-align: center;
+}
+
 
 /* =========================================================
    SCROLL REVEAL
@@ -840,44 +871,69 @@
 
 
 /* =========================================================
-   OPEN POSITIONS MARQUEE
+   OPEN POSITIONS GRID
 ========================================= */
 
 .careers-roles {
     padding-bottom: clamp(60px, 7vw, 100px);
 }
 
-.careers-marquee {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-
-    padding: 8px 0 18px;
-
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
-}
-
-.careers-marquee__track {
-    display: flex;
-    width: max-content;
-    animation: crMarquee 48s linear infinite;
-}
-
-.careers-marquee:hover .careers-marquee__track {
-    animation-play-state: paused;
-}
-
-.careers-marquee__group {
-    display: flex;
+.careers-roles__grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 280px), 1fr)
+    );
     gap: 22px;
-    padding-right: 22px;
+    align-items: stretch;
+}
+
+.careers-roles__state {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    min-height: 240px;
+    padding: clamp(38px, 6vw, 60px) 24px;
+
+    border: 1px dashed var(--cr-line);
+    border-radius: var(--cr-radius);
+    background: var(--cr-glass);
+
+    text-align: center;
+}
+
+.careers-roles__state h3 {
+    font-size: clamp(19px, 2vw, 24px);
+    letter-spacing: -0.01em;
+}
+
+.careers-roles__state p {
+    max-width: 480px;
+    color: var(--cr-text-soft);
+    font-size: 14.5px;
+    line-height: 1.7;
+}
+
+.careers-roles__spinner {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--cr-line);
+    border-top-color: var(--cr-cyan);
+
+    animation: crSpin 0.85s linear infinite;
 }
 
 .careers-role-card {
     position: relative;
-    width: 320px;
-    flex: none;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -893,15 +949,17 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
 
-    transform: perspective(1000px)
-        rotateX(var(--rx, 0deg))
-        rotateY(var(--ry, 0deg))
-        translateZ(0);
+    transform: translateY(0);
 
     transition:
         transform 0.4s var(--cr-ease),
         box-shadow 0.4s var(--cr-ease),
         border-color 0.4s var(--cr-ease);
+}
+
+.careers-role-card:focus-visible {
+    outline: 2px solid var(--cr-cyan);
+    outline-offset: 4px;
 }
 
 /* animated gradient border */
@@ -939,6 +997,7 @@
     mask-composite: exclude;
 
     opacity: 0.3;
+    pointer-events: none;
     transition: opacity 0.45s var(--cr-ease);
 
     animation: crBorderSpin 8s linear infinite;
@@ -961,10 +1020,7 @@
 }
 
 .careers-role-card:hover {
-    transform: perspective(1000px)
-        rotateX(var(--rx, 0deg))
-        rotateY(var(--ry, 0deg))
-        translateY(-10px);
+    transform: translateY(-6px);
 
     border-color: transparent;
     box-shadow: 0 40px 70px -34px rgba(0, 0, 0, 0.95);
@@ -979,6 +1035,7 @@
     display: flex;
     align-items: center;
     gap: 13px;
+    min-width: 0;
 }
 
 .careers-role-card__icon {
@@ -1005,8 +1062,12 @@
 }
 
 .careers-role-card__title {
+    flex: 1;
+    min-width: 0;
+
     font-size: 18px;
     letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
 }
 
 .careers-role-card__text {
@@ -1014,10 +1075,12 @@
     color: var(--cr-text-soft);
     font-size: 14px;
     line-height: 1.7;
+    overflow-wrap: anywhere;
 }
 
 .careers-role-card__meta {
     align-self: flex-start;
+    max-width: 100%;
     padding: 5px 12px;
     border-radius: 999px;
     border: 1px solid var(--cr-line-soft);
@@ -1026,8 +1089,10 @@
     color: var(--cr-text-dim);
     font-size: 11.5px;
     font-weight: 600;
+    line-height: 1.4;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    overflow-wrap: anywhere;
 }
 
 .careers-role-card__cta {
@@ -1036,12 +1101,20 @@
     gap: 8px;
     align-self: flex-start;
     margin-top: 4px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--cr-line);
 
     color: #a9c6ff;
     font-size: 14px;
     font-weight: 700;
 
-    transition: color 0.3s var(--cr-ease), gap 0.3s var(--cr-ease);
+    background: rgba(255, 255, 255, 0.04);
+
+    transition:
+        color 0.3s var(--cr-ease),
+        background-color 0.3s var(--cr-ease),
+        border-color 0.3s var(--cr-ease);
 }
 
 .careers-role-card__cta svg {
@@ -1050,7 +1123,8 @@
 
 .careers-role-card:hover .careers-role-card__cta {
     color: #ffffff;
-    gap: 12px;
+    border-color: rgba(110, 105, 225, 0.55);
+    background: rgba(94, 89, 201, 0.22);
 }
 
 .careers-role-card:hover .careers-role-card__cta svg {
@@ -1619,6 +1693,11 @@
     to   { opacity: 1; transform: none; }
 }
 
+@keyframes crSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
 @keyframes crScaleIn {
     from { opacity: 0; transform: translateY(26px) scale(0.97); }
     to   { opacity: 1; transform: none; }
@@ -1821,14 +1900,6 @@
         display: none;
     }
 
-    .careers-role-card {
-        width: 286px;
-    }
-
-    .careers-marquee__track {
-        animation-duration: 38s;
-    }
-
     .careers-scroll {
         display: none;
     }
@@ -1916,10 +1987,6 @@
         display: none;
     }
 
-    .careers-role-card {
-        width: 262px;
-    }
-
     .careers-culture__field {
         min-height: 230px;
     }
@@ -1944,31 +2011,6 @@
     .careers-page [data-reveal] {
         opacity: 1;
         transform: none;
-    }
-
-    /* Marquee off → static, scrollable grid */
-    .careers-marquee {
-        overflow-x: auto;
-        -webkit-mask-image: none;
-        mask-image: none;
-        padding-bottom: 8px;
-    }
-
-    .careers-marquee__track {
-        animation: none;
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .careers-marquee__group {
-        display: contents;
-        padding-right: 0;
-    }
-
-    .careers-marquee__group[aria-hidden="true"] {
-        display: none;
     }
 
     .careers-stats.is-active .careers-stat {

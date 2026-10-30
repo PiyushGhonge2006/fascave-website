@@ -18,10 +18,17 @@ const express = require("express");
 
 const router = express.Router();
 
+const publicFilter = {
+  isPublished: true,
+  isActive: { $ne: false },
+};
+
 
 router.get(
   "/",
-  listAll(GtmPartner)
+  listAll(GtmPartner, {
+    publishedFilter: publicFilter,
+  })
 );
 
 
@@ -34,7 +41,9 @@ router.post(
 
 router.get(
   "/:id",
-  getOne(GtmPartner)
+  getOne(GtmPartner, {
+    publishedFilter: publicFilter,
+  })
 );
 
 

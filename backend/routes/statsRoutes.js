@@ -10,8 +10,6 @@ const GtmPartner = require("../model/gtmPartner");
 
 const Faq = require("../model/faq");
 
-const Testimonial = require("../model/testimonial");
-
 const JobOpening = require("../model/jobOpening");
 
 const {
@@ -33,7 +31,7 @@ router.get(
 
       const since = new Date(
         Date.now() -
-          7 * 24 * 60 * 60 * 1000
+        7 * 24 * 60 * 60 * 1000
       );
 
       const [
@@ -43,11 +41,9 @@ router.get(
         last7DaysMessages,
         draftPosts,
         publishedPosts,
-        services,
         portfolioItems,
         partners,
         faqs,
-        testimonials,
         jobOpenings,
         hiddenPortfolioItems,
         recentMessages,
@@ -69,11 +65,9 @@ router.get(
         BlogPost.countDocuments({
           status: "published",
         }),
-        Service.countDocuments(),
         PortfolioItem.countDocuments(),
         GtmPartner.countDocuments(),
         Faq.countDocuments(),
-        Testimonial.countDocuments(),
         JobOpening.countDocuments(),
         PortfolioItem.countDocuments({
           isActive: false,
@@ -110,11 +104,9 @@ router.get(
           },
 
           content: {
-            services,
             portfolioItems,
             partners,
             faqs,
-            testimonials,
             jobOpenings,
             hiddenPortfolioItems,
           },
