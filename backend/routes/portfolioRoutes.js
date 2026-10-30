@@ -22,13 +22,17 @@ const router = express.Router();
 /* The public site asks for `?published=true`, which narrows the
    list to visible items only. The admin panel omits the flag and
    therefore still receives hidden items so they can be shown
-   again. `$ne: false` keeps pre-`isActive` records visible. */
+   again. `$ne: false` keeps records created before these flags
+   existed visible, while either flag being false hides an item. */
+const publicFilter = {
+  isActive: { $ne: false },
+  isPublished: { $ne: false },
+};
+
 router.get(
   "/",
   listAll(PortfolioItem, {
-    publishedFilter: {
-      isActive: { $ne: false },
-    },
+    publishedFilter: publicFilter,
   })
 );
 
@@ -44,6 +48,7 @@ router.get(
   "/:id",
   getOne(PortfolioItem, {
     byField: "slug",
+    publishedFilter: publicFilter,
   })
 );
 
@@ -53,6 +58,7 @@ router.post(
   protect,
   create(PortfolioItem, {
     slugFrom: "title",
+    orderFromMax: true,
   })
 );
 

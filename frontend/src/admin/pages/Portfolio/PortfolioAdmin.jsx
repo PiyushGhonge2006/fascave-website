@@ -32,14 +32,44 @@ const emptyItem = {
     projectUrl: "",
     techStack: [],
     isActive: true,
+    isPublished: true,
 };
 
 /*
- * Records created before the isActive field existed carry no
- * value at all. The backend treats a missing value as visible,
- * so the admin list has to do the same.
+ * The public API requires both flags to be true. Records created
+ * before either field existed carry no value, so a missing flag
+ * counts as visible.
  */
-const isVisible = (item) => item?.isActive !== false;
+const isVisible = (item) =>
+    item?.isActive !== false &&
+    item?.isPublished !== false;
+
+/*
+ * Only send editable fields back to the API. Spreading the whole
+ * list row would also send _id, __v and timestamps.
+ */
+const toForm = (item) => {
+    const visible = isVisible(item);
+
+    return {
+        title: item?.title || "",
+        slug: item?.slug || "",
+        clientName: item?.clientName || "",
+        category: item?.category || "",
+        description: item?.description || "",
+        coverImage: item?.coverImage || item?.image || "",
+        gallery: (item?.gallery || []).map((image) => ({
+            url: image?.url || "",
+            caption: image?.caption || "",
+        })),
+        projectUrl: item?.projectUrl || item?.link || "",
+        techStack: Array.isArray(item?.techStack)
+            ? [...item.techStack]
+            : [],
+        isActive: visible,
+        isPublished: visible,
+    };
+};
 
 const PortfolioAdmin = () => {
     const [items, setItems] = useState([]);
@@ -56,6 +86,9 @@ const PortfolioAdmin = () => {
 
     // Existing individual project visibility
     const [togglingId, setTogglingId] = useState(null);
+
+    // Ordering controls
+    const [reordering, setReordering] = useState(false);
 
     // Overall Portfolio section visibility
     const [portfolioSectionVisible, setPortfolioSectionVisible] =
@@ -101,7 +134,6 @@ const PortfolioAdmin = () => {
                     "Could not load Portfolio section visibility:",
                     loadError
                 );
-                setPortfolioSectionVisible(true);
             }
         },
         []
@@ -113,20 +145,13 @@ const PortfolioAdmin = () => {
     }, [load, loadPortfolioSectionVisibility]);
 
     const openCreate = () => {
-        setForm(emptyItem);
+        setForm({ ...emptyItem, gallery: [], techStack: [] });
         setFormError("");
         setEditing("new");
     };
 
     const openEdit = (item) => {
-        setForm({
-            ...emptyItem,
-            ...item,
-            isActive: isVisible(item),
-            gallery: item.gallery || [],
-            techStack: item.techStack || [],
-        });
-
+        setForm(toForm(item));
         setFormError("");
         setEditing(item);
     };
@@ -187,29 +212,55 @@ const PortfolioAdmin = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (saving) {
+            return;
+        }
+
         if (!form.title.trim()) {
             setFormError("Title is required.");
             return;
         }
+
+        const payload = {
+            ...form,
+            title: form.title.trim(),
+            slug: form.slug.trim(),
+            clientName: form.clientName.trim(),
+            category: form.category.trim(),
+            projectUrl: form.projectUrl.trim(),
+            coverImage: form.coverImage.trim(),
+            isPublished: form.isActive,
+            techStack: form.techStack
+                .map((technology) =>
+                    String(technology).trim()
+                )
+                .filter(Boolean),
+            gallery: form.gallery.map((image) => ({
+                url: String(image.url || "").trim(),
+                caption: String(
+                    image.caption || ""
+                ).trim(),
+            })),
+        };
 
         setSaving(true);
         setFormError("");
 
         try {
             if (editing === "new") {
-                await api.post(ENDPOINT, form);
+                await api.post(ENDPOINT, payload);
                 showToast("Project created.");
             } else {
                 await api.put(
                     `${ENDPOINT}/${editing._id}`,
-                    form
+                    payload
                 );
 
                 showToast("Project updated.");
             }
 
             closeModal();
-            load();
+            await load();
         } catch (saveError) {
             const message =
                 saveError.message ||
@@ -223,16 +274,24 @@ const PortfolioAdmin = () => {
     };
 
     const handleDelete = async () => {
+        if (!deleting || deletingBusy) {
+            return;
+        }
+
+        const id = deleting._id;
+
         setDeletingBusy(true);
 
         try {
-            await api.del(
-                `${ENDPOINT}/${deleting._id}`
+            await api.del(`${ENDPOINT}/${id}`);
+
+            setItems((prev) =>
+                prev.filter((entry) => entry._id !== id)
             );
 
             showToast("Project deleted.");
             setDeleting(null);
-            load();
+            await load();
         } catch (deleteError) {
             showToast(
                 deleteError.message ||
@@ -257,6 +316,10 @@ const PortfolioAdmin = () => {
         item,
         nextVisible
     ) => {
+        if (togglingId) {
+            return;
+        }
+
         setTogglingId(item._id);
 
         try {
@@ -298,6 +361,64 @@ const PortfolioAdmin = () => {
 
     /*
      * ======================================================
+     * PROJECT ORDER
+     * ======================================================
+     *
+     * The backend already exposes POST /reorder and the public
+     * list sorts by `order`. Sending the full id list keeps the
+     * saved order deterministic.
+     */
+
+    const handleMove = async (index, direction) => {
+        if (reordering) {
+            return;
+        }
+
+        const targetIndex = index + direction;
+
+        if (
+            targetIndex < 0 ||
+            targetIndex >= items.length
+        ) {
+            return;
+        }
+
+        const previous = items;
+        const next = [...items];
+        const [moved] = next.splice(index, 1);
+
+        next.splice(targetIndex, 0, moved);
+
+        setItems(next);
+        setReordering(true);
+
+        try {
+            const saved = await api.post(
+                `${ENDPOINT}/reorder`,
+                {
+                    ids: next.map((item) => item._id),
+                }
+            );
+
+            if (Array.isArray(saved)) {
+                setItems(saved);
+            }
+
+            showToast("Project order updated.");
+        } catch (reorderError) {
+            setItems(previous);
+            showToast(
+                reorderError.message ||
+                "Could not change the project order.",
+                "error"
+            );
+        } finally {
+            setReordering(false);
+        }
+    };
+
+    /*
+     * ======================================================
      * OVERALL PORTFOLIO SECTION HIDE / SHOW
      * ======================================================
      *
@@ -307,16 +428,29 @@ const PortfolioAdmin = () => {
      */
 
     const handleTogglePortfolioSection = async () => {
+        if (portfolioSectionSaving) {
+            return;
+        }
+
         const prevVisible = portfolioSectionVisible;
         const nextVisible = !portfolioSectionVisible;
 
         setPortfolioSectionSaving(true);
 
         try {
-            await api.put(HOME_ENDPOINT, {
+            const saved = await api.put(HOME_ENDPOINT, {
                 portfolioSectionVisible: nextVisible,
             });
-            setPortfolioSectionVisible(nextVisible);
+
+            const savedVisible =
+                saved?.portfolioSectionVisible;
+
+            setPortfolioSectionVisible(
+                typeof savedVisible === "boolean"
+                    ? savedVisible
+                    : nextVisible
+            );
+
             showToast(
                 nextVisible
                     ? "Portfolio section is now visible on the website."
@@ -410,9 +544,24 @@ const PortfolioAdmin = () => {
 
                 {loading ? (
                     <LoadingState label="Loading projects" />
+                ) : error && items.length === 0 ? (
+                    <EmptyState
+                        icon="!"
+                        title="Could not load projects"
+                        description={error}
+                        action={
+                            <button
+                                type="button"
+                                className="admin-btn admin-btn-primary"
+                                onClick={load}
+                            >
+                                Retry
+                            </button>
+                        }
+                    />
                 ) : items.length === 0 ? (
                     <EmptyState
-                        icon="▤"
+                        icon="P"
                         title="No projects yet"
                         description="Add your first case study to fill the portfolio section."
                         action={
@@ -443,7 +592,7 @@ const PortfolioAdmin = () => {
 
                             <tbody>
 
-                                {items.map((item) => (
+                                {items.map((item, index) => (
 
                                     <tr key={item._id}>
 
@@ -461,7 +610,7 @@ const PortfolioAdmin = () => {
                                                     />
                                                 ) : (
                                                     <span className="admin-table-thumb portfolio-thumb-placeholder">
-                                                        ▤
+                                                        P
                                                     </span>
                                                 )}
 
@@ -514,6 +663,46 @@ const PortfolioAdmin = () => {
                                         <td>
 
                                             <div className="admin-table-actions">
+
+                                                <button
+                                                    type="button"
+                                                    className="admin-btn admin-btn-ghost admin-btn-sm"
+                                                    title="Move up"
+                                                    aria-label={`Move ${item.title} up`}
+                                                    disabled={
+                                                        reordering ||
+                                                        index === 0
+                                                    }
+                                                    onClick={() =>
+                                                        handleMove(
+                                                            index,
+                                                            -1
+                                                        )
+                                                    }
+                                                >
+                                                    ↑
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    className="admin-btn admin-btn-ghost admin-btn-sm"
+                                                    title="Move down"
+                                                    aria-label={`Move ${item.title} down`}
+                                                    disabled={
+                                                        reordering ||
+                                                        index ===
+                                                            items.length -
+                                                                1
+                                                    }
+                                                    onClick={() =>
+                                                        handleMove(
+                                                            index,
+                                                            1
+                                                        )
+                                                    }
+                                                >
+                                                    ↓
+                                                </button>
 
                                                 <button
                                                     type="button"
@@ -871,10 +1060,13 @@ const PortfolioAdmin = () => {
                             type="checkbox"
                             checked={form.isActive}
                             onChange={(e) =>
-                                set(
-                                    "isActive",
-                                    e.target.checked
-                                )
+                                setForm((prev) => ({
+                                    ...prev,
+                                    isActive:
+                                        e.target.checked,
+                                    isPublished:
+                                        e.target.checked,
+                                }))
                             }
                         />
 

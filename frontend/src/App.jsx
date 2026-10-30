@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -31,7 +31,7 @@ import Contact from "./pages/Contact/Contact";
 
 import AdminApp from "./admin/AdminApp";
 import RouteTransition from "./component/common/RouteTransition";
-import { api } from "./admin/lib/apiClient";
+import { useSingleton } from "./hooks/useContent";
 
 import "./App.css";
 
@@ -85,31 +85,26 @@ function PageTheme({ children }) {
    ========================================================= */
 
 function HomePage() {
-  const [portfolioSectionVisible, setPortfolioSectionVisible] =
-    useState(true);
+  const { data: homeContent, reload } = useSingleton(
+    "/api/content/home",
+    {}
+  );
 
-  const [loadingHomeContent, setLoadingHomeContent] =
-    useState(true);
+  /*
+   * Section visibility lives in the same Home Content document
+   * the admin panel edits. A periodic re-read keeps an already
+   * open public tab in sync when the toggle is changed in
+   * another browser session.
+   */
+  const portfolioSectionVisible =
+    homeContent?.portfolioSectionVisible !== false;
 
   useEffect(() => {
-    const loadHomeContent = async () => {
-      try {
-        const data = await api.get("/api/content/home");
-        const visible =
-          data?.portfolioSectionVisible ??
-          data?.data?.portfolioSectionVisible ??
-          true;
-        setPortfolioSectionVisible(visible !== false);
-      } catch (error) {
-        console.error("Failed to load home content:", error);
-        setPortfolioSectionVisible(true);
-      } finally {
-        setLoadingHomeContent(false);
-      }
-    };
+    const timer = window.setInterval(reload, 30000);
 
-    loadHomeContent();
-  }, []);
+    return () => window.clearInterval(timer);
+  }, [reload]);
+
   return (
     <div className="website-sections">
       <section className="home-hero-section">
@@ -166,7 +161,19 @@ function PublicFooter() {
 
   return <Footer />;
 }
+function PublicNavbar() {
+  const location = useLocation();
 
+  const isAdminPage =
+    location.pathname === "/admin" ||
+    location.pathname.startsWith("/admin/");
+
+  if (isAdminPage) {
+    return null;
+  }
+
+  return <Navbar />;
+}
 /* =========================================================
    APP
    ========================================================= */
@@ -174,7 +181,7 @@ function PublicFooter() {
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <PublicNavbar />
 
       <RouteTransition>
         <PageTheme>

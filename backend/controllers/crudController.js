@@ -61,7 +61,10 @@ const listAll = (
 
 
 const getOne =
-  (Model, { byField = "slug" } = {}) => {
+  (
+    Model,
+    { byField = "slug", publishedFilter } = {}
+  ) => {
 
     return async (req, res) => {
 
@@ -77,6 +80,20 @@ const getOne =
         const filter = isObjectId
           ? { _id: key }
           : { [byField]: key };
+
+        /* A public request (`?published=true`) must not be able
+           to read a hidden item by guessing its id or slug. */
+        if (
+          req.query.published === "true" &&
+          publishedFilter
+        ) {
+
+          Object.assign(
+            filter,
+            publishedFilter
+          );
+
+        }
 
         const item =
           await Model.findOne(filter);
@@ -111,7 +128,10 @@ const getOne =
 
 
 const create =
-  (Model, { slugFrom } = {}) => {
+  (
+    Model,
+    { slugFrom, orderFromMax = false } = {}
+  ) => {
 
     return async (req, res) => {
 
@@ -143,10 +163,28 @@ const create =
           payload.order === undefined
         ) {
 
-          const count =
-            await Model.countDocuments();
+          if (orderFromMax) {
 
-          payload.order = count;
+            /* Counting documents breaks once an item in the
+               middle is deleted, because the next insert
+               reuses an existing order value. Read the
+               highest order instead so new items always go
+               to the end. */
+            const last = await Model.findOne()
+              .sort({ order: -1 })
+              .select("order");
+
+            payload.order =
+              typeof last?.order === "number"
+                ? last.order + 1
+                : 0;
+
+          } else {
+
+            payload.order =
+              await Model.countDocuments();
+
+          }
 
         }
 
@@ -176,6 +214,17 @@ const create =
             payload.tags
               .map((tag) =>
                 String(tag).trim()
+              )
+              .filter(Boolean);
+
+        }
+
+        if (Array.isArray(payload.techStack)) {
+
+          payload.techStack =
+            payload.techStack
+              .map((technology) =>
+                String(technology).trim()
               )
               .filter(Boolean);
 
@@ -296,6 +345,17 @@ const update =
             payload.tags
               .map((tag) =>
                 String(tag).trim()
+              )
+              .filter(Boolean);
+
+        }
+
+        if (Array.isArray(payload.techStack)) {
+
+          payload.techStack =
+            payload.techStack
+              .map((technology) =>
+                String(technology).trim()
               )
               .filter(Boolean);
 
@@ -424,8 +484,27 @@ const reorder = (Model) => {
 
       }
 
+      const uniqueIds = [
+        ...new Set(ids.map(String)),
+      ];
 
-      const operations = ids.map(
+      if (
+        uniqueIds.some(
+          (id) =>
+            !mongoose.isValidObjectId(id)
+        )
+      ) {
+
+        return res.status(400).json({
+          success: false,
+          message:
+            "One or more item ids are invalid.",
+        });
+
+      }
+
+
+      const operations = uniqueIds.map(
         (id, index) => ({
           updateOne: {
             filter: { _id: id },

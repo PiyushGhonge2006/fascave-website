@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import useRevealOnScroll from "../../hooks/useRevealOnScroll";
+import { useSingleton } from "../../hooks/useContent";
 import { imageUrl } from "../../utils/apiBase";
 import "./Ourclient.css";
 
@@ -25,49 +26,45 @@ const fallbackClients = [
   { id: 9, name: "Wake UP Water", image: wakeUpLogo },
 ];
 
+const fallbackLogo = (name) =>
+  fallbackClients.find(
+    (client) =>
+      client.name.toLowerCase() ===
+      String(name || "").toLowerCase()
+  )?.image || apvaLogo;
+
 const Ourclients = () => {
   const [sectionRef] = useRevealOnScroll();
-  const [clients, setClients] = useState([]);
+  const { data: homeContent } = useSingleton(
+    "/api/content/home",
+    {}
+  );
 
-  useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const response = await fetch("/api/clients");
+  /*
+   * Client logos live in the Home Content document the admin
+   * panel already manages. There is no separate /api/clients
+   * endpoint, so read the existing source instead.
+   */
+  const clients = useMemo(() => {
+    const clientList = Array.isArray(homeContent?.clients)
+      ? homeContent.clients
+      : [];
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch clients: ${response.status}`);
-        }
+    const formattedClients = clientList
+      .filter((client) => client?.logo)
+      .map((client, index) => ({
+        id: client._id || index,
+        name: client.name || "Client",
+        image: imageUrl(client.logo),
+        link: client.link || "",
+      }));
 
-        const data = await response.json();
+    return formattedClients.length
+      ? formattedClients
+      : fallbackClients;
+  }, [homeContent]);
 
-        const clientList = Array.isArray(data)
-          ? data
-          : data?.clients || data?.data || [];
-
-        const formattedClients = clientList
-          .filter((client) => client?.logo)
-          .map((client, index) => ({
-            id: client._id || index,
-            name: client.name || "Client",
-            image: imageUrl(client.logo),
-            link: client.link || "",
-          }));
-
-        setClients(
-          formattedClients.length
-            ? formattedClients
-            : fallbackClients
-        );
-      } catch (error) {
-        console.error("Error fetching clients:", error);
-        setClients(fallbackClients);
-      }
-    };
-
-    fetchClients();
-  }, []);
-
-  const logos = clients.length ? clients : fallbackClients;
+  const logos = clients;
 
   return (
     <section className="our-clients" ref={sectionRef}>
@@ -97,7 +94,7 @@ const Ourclients = () => {
                 alt={client.name}
                 loading="lazy"
                 onError={(e) => {
-                  e.currentTarget.src = apvaLogo;
+                  e.currentTarget.src = fallbackLogo(client.name);
                 }}
               />
             </div>
@@ -114,7 +111,7 @@ const Ourclients = () => {
                 alt={client.name}
                 loading="lazy"
                 onError={(e) => {
-                  e.currentTarget.src = apvaLogo;
+                  e.currentTarget.src = fallbackLogo(client.name);
                 }}
               />
             </div>
