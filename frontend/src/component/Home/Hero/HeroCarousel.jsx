@@ -1,11 +1,19 @@
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
+import { Link } from "react-router-dom";
 import Typewriter from "./Typewriter";
 import "./Herocarousel.css";
 
 import heroSlide1 from "../../../assets/Herosectionimg/HeroSlide-1.png";
 import heroSlide2 from "../../../assets/Herosectionimg/HeroSlide-2.png";
 import heroSlide3 from "../../../assets/Herosectionimg/HeroSlide-3.png";
+import heroSlide4 from "../../../assets/Herosectionimg/HeroSlide-4.png";
 
 const slides = [
   {
@@ -14,10 +22,6 @@ const slides = [
     highlight: "for Growth",
     description:
       "FasCave IT Solutions helps businesses transform ideas into powerful digital products with strategy, design and technology.",
-    primary: "Get Started",
-    secondary: "Explore Services",
-    primaryHref: "#contact",
-    secondaryHref: "#services",
     image: heroSlide1,
   },
   {
@@ -26,10 +30,6 @@ const slides = [
     highlight: "Digital Experiences",
     description:
       "From strategy and design to development and ongoing support, we help businesses grow in the digital world.",
-    primary: "Start a Project",
-    secondary: "View Portfolio",
-    primaryHref: "#contact",
-    secondaryHref: "#portfolio",
     image: heroSlide2,
   },
   {
@@ -38,11 +38,15 @@ const slides = [
     highlight: "Smarter Tomorrow",
     description:
       "We blend strategy, design and technology to build scalable digital products for modern businesses.",
-    primary: "Get Started",
-    secondary: "Our Services",
-    primaryHref: "#contact",
-    secondaryHref: "#services",
     image: heroSlide3,
+  },
+  {
+    eyebrow: "DIGITAL TRANSFORMATION",
+    before: "Build Smarter. ",
+    highlight: "Grow Faster.",
+    description:
+      "Scalable digital solutions that transform ideas into business growth through technology and innovation.",
+    image: heroSlide4,
   },
 ];
 
@@ -51,34 +55,76 @@ export default function HeroCarousel() {
   const [paused, setPaused] = useState(false);
   const [typingKey, setTypingKey] = useState(0);
 
+  const touchStart = useRef(null);
+
   const slide = slides[activeIndex];
 
+  // Change slide
   const goToSlide = useCallback((index) => {
     setActiveIndex((index + slides.length) % slides.length);
     setTypingKey((key) => key + 1);
   }, []);
 
+  // Previous slide
   const previous = useCallback(() => {
     goToSlide(activeIndex - 1);
   }, [activeIndex, goToSlide]);
 
+  // Next slide
   const next = useCallback(() => {
     goToSlide(activeIndex + 1);
   }, [activeIndex, goToSlide]);
 
+  // Auto-slide every 3.5 seconds
   useEffect(() => {
     if (paused) return undefined;
 
-    const timer = window.setTimeout(next, 7000);
+    const timer = window.setTimeout(next, 5000);
+
     return () => window.clearTimeout(timer);
   }, [activeIndex, paused, next]);
+
+  // Touch swipe start
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  // Touch swipe end
+  const handleTouchEnd = (event) => {
+    if (!touchStart.current) return;
+
+    const touch = event.changedTouches[0];
+
+    const deltaX = touch.clientX - touchStart.current.x;
+    const deltaY = touch.clientY - touchStart.current.y;
+
+    if (
+      Math.abs(deltaX) > 50 &&
+      Math.abs(deltaX) > Math.abs(deltaY)
+    ) {
+      if (deltaX < 0) {
+        next();
+      } else {
+        previous();
+      }
+    }
+
+    touchStart.current = null;
+  };
 
   return (
     <section
       className="hero-carousel"
       aria-label="Featured services"
       aria-roledescription="carousel"
-      style={{ backgroundImage: `url("${slide.image}")` }}
+      style={{
+        backgroundImage: `url("${slide.image}")`,
+      }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -87,11 +133,19 @@ export default function HeroCarousel() {
           setPaused(false);
         }
       }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={() => {
+        touchStart.current = null;
+      }}
     >
       <div className="hero-background-overlay" />
 
       <div className="hero-content">
-        <div className="hero-copy" key={`${activeIndex}-${typingKey}`}>
+        <div
+          className="hero-copy"
+          key={`${activeIndex}-${typingKey}`}
+        >
           <p className="hero-eyebrow">
             <span className="hero-eyebrow-dot" />
             {slide.eyebrow}
@@ -110,25 +164,29 @@ export default function HeroCarousel() {
             {slide.description}
           </p>
 
+          {/* Contact Us and Services Buttons */}
           <div className="hero-actions">
-            <a
-              className="hero-button hero-button-primary"
-              href={slide.primaryHref}
-            >
-              {slide.primary}
-              <span aria-hidden="true">→</span>
-            </a>
 
-            <a
-              className="hero-button hero-button-secondary"
-              href={slide.secondaryHref}
+            <Link
+              className="hero-button hero-button-primary"
+              to="/contact"
             >
-              {slide.secondary}
-            </a>
+              Let's Connect
+              <span aria-hidden="true">→</span>
+            </Link>
+
+            <Link
+              className="hero-button hero-button-secondary"
+              to="/features"
+            >
+              Services
+            </Link>
+
           </div>
         </div>
       </div>
 
+      {/* Previous Slide */}
       <button
         type="button"
         className="hero-arrow hero-arrow-prev"
@@ -138,6 +196,7 @@ export default function HeroCarousel() {
         ‹
       </button>
 
+      {/* Next Slide */}
       <button
         type="button"
         className="hero-arrow hero-arrow-next"
@@ -147,8 +206,14 @@ export default function HeroCarousel() {
         ›
       </button>
 
+      {/* Slide Dots and Counter */}
       <div className="hero-carousel-bottom">
-        <div className="hero-dots" role="group" aria-label="Choose slide">
+
+        <div
+          className="hero-dots"
+          role="group"
+          aria-label="Choose slide"
+        >
           {slides.map((item, index) => (
             <button
               type="button"
@@ -158,7 +223,9 @@ export default function HeroCarousel() {
               }`}
               onClick={() => goToSlide(index)}
               aria-label={`Show slide ${index + 1}`}
-              aria-current={index === activeIndex ? "true" : undefined}
+              aria-current={
+                index === activeIndex ? "true" : undefined
+              }
             />
           ))}
         </div>
@@ -167,6 +234,7 @@ export default function HeroCarousel() {
           {String(activeIndex + 1).padStart(2, "0")} /{" "}
           {String(slides.length).padStart(2, "0")}
         </span>
+
       </div>
     </section>
   );
