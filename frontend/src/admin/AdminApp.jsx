@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { AdminAuthProvider, useAdminAuth } from "./context/AdminAuthContext";
+import CareerApplicationsAdmin from "./pages/Careers/CareerApplicationsAdmin";
 
 import AdminLayout from "./components/AdminLayout/AdminLayout";
 
@@ -108,6 +109,11 @@ const AdminGate = () => {
                 <Route
                     path="/careers"
                     element={<CareersAdmin />}
+                />
+
+                <Route
+                    path="/careers/applications"
+                    element={<CareerApplicationsAdmin />}
                 />
 
                 <Route

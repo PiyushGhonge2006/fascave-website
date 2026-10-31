@@ -404,12 +404,10 @@
     height: 150%;
     pointer-events: none;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(140, 180, 255, 0.09),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(140, 180, 255, 0.09),
+            transparent);
 
     transform: rotate(14deg);
     animation: crBeam 16s ease-in-out infinite;
@@ -455,13 +453,11 @@
     z-index: 2;
     pointer-events: none;
 
-    background: repeating-linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.024) 0px,
-        rgba(255, 255, 255, 0.024) 1px,
-        transparent 1px,
-        transparent 4px
-    );
+    background: repeating-linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.024) 0px,
+            rgba(255, 255, 255, 0.024) 1px,
+            transparent 1px,
+            transparent 4px);
 
     opacity: 0.55;
 }
@@ -499,15 +495,29 @@
     gap: 24px;
 }
 
-.careers-hero__copy > * {
+.careers-hero__copy>* {
     animation: crFadeUp 0.95s var(--cr-ease) backwards;
 }
 
-.careers-hero__copy > *:nth-child(1) { animation-delay: 0.06s; }
-.careers-hero__copy > *:nth-child(2) { animation-delay: 0.16s; }
-.careers-hero__copy > *:nth-child(3) { animation-delay: 0.28s; }
-.careers-hero__copy > *:nth-child(4) { animation-delay: 0.4s; }
-.careers-hero__copy > *:nth-child(5) { animation-delay: 0.52s; }
+.careers-hero__copy>*:nth-child(1) {
+    animation-delay: 0.06s;
+}
+
+.careers-hero__copy>*:nth-child(2) {
+    animation-delay: 0.16s;
+}
+
+.careers-hero__copy>*:nth-child(3) {
+    animation-delay: 0.28s;
+}
+
+.careers-hero__copy>*:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.careers-hero__copy>*:nth-child(5) {
+    animation-delay: 0.52s;
+}
 
 .careers-hero__title {
     font-size: clamp(40px, 6.2vw, 82px);
@@ -654,12 +664,10 @@
     border: 1px solid var(--cr-line);
     overflow: hidden;
 
-    background: linear-gradient(
-        150deg,
-        rgba(255, 255, 255, 0.085) 0%,
-        rgba(255, 255, 255, 0.02) 46%,
-        rgba(78, 74, 190, 0.08) 100%
-    );
+    background: linear-gradient(150deg,
+            rgba(255, 255, 255, 0.085) 0%,
+            rgba(255, 255, 255, 0.02) 46%,
+            rgba(78, 74, 190, 0.08) 100%);
 
     backdrop-filter: blur(20px) saturate(140%);
     -webkit-backdrop-filter: blur(20px) saturate(140%);
@@ -818,11 +826,25 @@
     animation-delay: calc(var(--careers-bar) * 0s);
 }
 
-.careers-console__bars span:nth-child(2) { animation-delay: 0.18s; }
-.careers-console__bars span:nth-child(3) { animation-delay: 0.36s; }
-.careers-console__bars span:nth-child(4) { animation-delay: 0.54s; }
-.careers-console__bars span:nth-child(5) { animation-delay: 0.72s; }
-.careers-console__bars span:nth-child(6) { animation-delay: 0.9s; }
+.careers-console__bars span:nth-child(2) {
+    animation-delay: 0.18s;
+}
+
+.careers-console__bars span:nth-child(3) {
+    animation-delay: 0.36s;
+}
+
+.careers-console__bars span:nth-child(4) {
+    animation-delay: 0.54s;
+}
+
+.careers-console__bars span:nth-child(5) {
+    animation-delay: 0.72s;
+}
+
+.careers-console__bars span:nth-child(6) {
+    animation-delay: 0.9s;
+}
 
 /* --- floating role chips --- */
 
@@ -880,10 +902,8 @@
 
 .careers-roles__grid {
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(min(100%, 280px), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit,
+            minmax(min(100%, 280px), 1fr));
     gap: 22px;
     align-items: stretch;
 }
@@ -976,16 +996,14 @@
     border-radius: inherit;
     padding: 1px;
 
-    background: conic-gradient(
-        from var(--careers-sweep),
-        rgba(78, 74, 190, 0) 0%,
-        rgba(78, 74, 190, 0.9) 16%,
-        rgba(110, 105, 225, 0.95) 34%,
-        rgba(94, 176, 224, 0.8) 50%,
-        rgba(214, 130, 62, 0.75) 66%,
-        rgba(78, 74, 190, 0) 84%,
-        rgba(78, 74, 190, 0) 100%
-    );
+    background: conic-gradient(from var(--careers-sweep),
+            rgba(78, 74, 190, 0) 0%,
+            rgba(78, 74, 190, 0.9) 16%,
+            rgba(110, 105, 225, 0.95) 34%,
+            rgba(94, 176, 224, 0.8) 50%,
+            rgba(214, 130, 62, 0.75) 66%,
+            rgba(78, 74, 190, 0) 84%,
+            rgba(78, 74, 190, 0) 100%);
 
     -webkit-mask:
         linear-gradient(#000 0 0) content-box,
@@ -1555,10 +1573,21 @@
     animation: crNodePulse 4.2s ease-in-out infinite;
 }
 
-.careers-timeline__step:nth-child(2) .careers-timeline__node { animation-delay: 0.4s; }
-.careers-timeline__step:nth-child(3) .careers-timeline__node { animation-delay: 0.8s; }
-.careers-timeline__step:nth-child(4) .careers-timeline__node { animation-delay: 1.2s; }
-.careers-timeline__step:nth-child(5) .careers-timeline__node { animation-delay: 1.6s; }
+.careers-timeline__step:nth-child(2) .careers-timeline__node {
+    animation-delay: 0.4s;
+}
+
+.careers-timeline__step:nth-child(3) .careers-timeline__node {
+    animation-delay: 0.8s;
+}
+
+.careers-timeline__step:nth-child(4) .careers-timeline__node {
+    animation-delay: 1.2s;
+}
+
+.careers-timeline__step:nth-child(5) .careers-timeline__node {
+    animation-delay: 1.6s;
+}
 
 .careers-timeline__stage {
     font-size: 19px;
@@ -1689,110 +1718,262 @@
 ========================================= */
 
 @keyframes crFadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to   { opacity: 1; transform: none; }
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 @keyframes crSpin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes crScaleIn {
-    from { opacity: 0; transform: translateY(26px) scale(0.97); }
-    to   { opacity: 1; transform: none; }
+    from {
+        opacity: 0;
+        transform: translateY(26px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 @keyframes crGridDrift {
-    from { background-position: 0 0, 0 0; }
-    to   { background-position: 0 62px, 62px 0; }
+    from {
+        background-position: 0 0, 0 0;
+    }
+
+    to {
+        background-position: 0 62px, 62px 0;
+    }
 }
 
 @keyframes crBeam {
-    0%, 100% { transform: translateX(-24%) rotate(14deg); opacity: 0.35; }
-    50%      { transform: translateX(34%) rotate(14deg);  opacity: 0.85; }
+
+    0%,
+    100% {
+        transform: translateX(-24%) rotate(14deg);
+        opacity: 0.35;
+    }
+
+    50% {
+        transform: translateX(34%) rotate(14deg);
+        opacity: 0.85;
+    }
 }
 
 @keyframes crRingSpin {
-    from { transform: translateY(-50%) rotate(0deg); }
-    to   { transform: translateY(-50%) rotate(360deg); }
+    from {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
 }
 
 @keyframes crFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-13px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-13px);
+    }
 }
 
 @keyframes crCountGlow {
-    0%, 100% { filter: drop-shadow(0 0 14px rgba(78, 74, 190, 0.35)); }
-    50%      { filter: drop-shadow(0 0 26px rgba(110, 105, 225, 0.6)); }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 14px rgba(78, 74, 190, 0.35));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 26px rgba(110, 105, 225, 0.6));
+    }
 }
 
 @keyframes crPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(94, 176, 224, 0.7); }
-    70%  { box-shadow: 0 0 0 16px rgba(94, 176, 224, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(94, 176, 224, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(94, 176, 224, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 16px rgba(94, 176, 224, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(94, 176, 224, 0);
+    }
 }
 
 @keyframes crBarRise {
-    0%, 100% { transform: scaleY(0.42); opacity: 0.55; }
-    50%      { transform: scaleY(1);    opacity: 1; }
+
+    0%,
+    100% {
+        transform: scaleY(0.42);
+        opacity: 0.55;
+    }
+
+    50% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
 }
 
 @keyframes crShine {
-    0%, 62% { background-position: 220% 0; }
-    100%    { background-position: -60% 0; }
+
+    0%,
+    62% {
+        background-position: 220% 0;
+    }
+
+    100% {
+        background-position: -60% 0;
+    }
 }
 
 @keyframes crOrbit {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes crChipFloat {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    50%      { transform: translate3d(0, -14px, 0); }
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(0, -14px, 0);
+    }
 }
 
 @keyframes crGradientSlide {
-    0%, 100% { background-position: 0% 50%; }
-    50%      { background-position: 100% 50%; }
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 @keyframes crBorderSpin {
-    to { --careers-sweep: 360deg; }
+    to {
+        --careers-sweep: 360deg;
+    }
 }
 
 @keyframes crScrollDot {
-    0%   { transform: translateY(0);   opacity: 0; }
-    30%  { opacity: 1; }
-    70%  { transform: translateY(18px); opacity: 1; }
-    100% { transform: translateY(18px); opacity: 0; }
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateY(18px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(18px);
+        opacity: 0;
+    }
 }
 
 @keyframes crCorePulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.85; }
-    50%      { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.85;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.12);
+        opacity: 1;
+    }
 }
 
 @keyframes crTagFloat {
-    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-    50%      { transform: translate(-50%, -50%) translateY(-18px); }
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-18px);
+    }
 }
 
 @keyframes crNodePulse {
-    0%, 100% { box-shadow: 0 0 0 6px rgba(78, 74, 190, 0.06); }
-    50%      { box-shadow: 0 0 0 12px rgba(110, 105, 225, 0.14); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 6px rgba(78, 74, 190, 0.06);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(110, 105, 225, 0.14);
+    }
 }
 
 @keyframes crArrowSlide {
-    0%, 100% { transform: translateX(0);    opacity: 0.55; }
-    50%      { transform: translateX(4px);  opacity: 1; }
+
+    0%,
+    100% {
+        transform: translateX(0);
+        opacity: 0.55;
+    }
+
+    50% {
+        transform: translateX(4px);
+        opacity: 1;
+    }
 }
 
 @keyframes crOrb {
-    0%, 100% { transform: translate(-50%, -50%) scale(1);     opacity: 0.85; }
-    50%      { transform: translate(-50%, -50%) scale(1.1);   opacity: 1; }
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.85;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
 }
 
 
@@ -1911,6 +2092,7 @@
 ========================================= */
 
 @media (max-width: 480px) {
+
     .careers-inner,
     .careers-hero__inner {
         width: 92%;
@@ -2065,5 +2247,245 @@
     .careers-role-card::before,
     .careers-stat::after {
         animation: none !important;
+    }
+}
+
+/* ==========================================
+   CAREERS APPLICATION SECTION
+   FASCAVE PREMIUM DESIGN
+========================================== */
+
+.careers-application-section {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    padding: 90px 5%;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 15% 85%,
+            rgba(89, 48, 220, 0.25),
+            transparent 38%),
+        radial-gradient(ellipse at 80% 15%,
+            rgba(74, 72, 180, 0.20),
+            transparent 40%),
+        linear-gradient(120deg, #090c1d, #10132c 55%, #0d1025);
+}
+
+.careers-application-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px);
+    background-size: 55px 55px;
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+.careers-application-section::after {
+    content: "";
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    left: -250px;
+    bottom: -330px;
+    z-index: -1;
+    background: rgba(91, 54, 230, 0.22);
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+.careers-application-inner {
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+    align-items: center;
+    gap: clamp(35px, 5vw, 75px);
+}
+
+/* LEFT CONTENT */
+
+.careers-application-copy {
+    position: relative;
+    z-index: 1;
+    padding: 25px 0;
+}
+
+.careers-application-copy .careers-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 17px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(127, 100, 255, 0.65);
+    border-radius: 50px;
+    background: rgba(100, 70, 220, 0.10);
+    color: #b9a4ff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.careers-application-copy h2 {
+    max-width: 580px;
+    margin: 0 0 22px;
+    color: #ffffff;
+    font-size: clamp(42px, 5vw, 67px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -2.5px;
+}
+
+.careers-application-copy h2 span {
+    display: inline-block;
+    background: linear-gradient(100deg,
+            #bb82ff,
+            #8c78ff 55%,
+            #6bbdff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.careers-application-copy>p {
+    max-width: 500px;
+    margin: 0;
+    color: #b8bdd2;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* BENEFITS */
+
+.careers-application-benefits {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 38px;
+}
+
+.careers-application-benefit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 11px;
+    min-width: 0;
+}
+
+.careers-application-benefit>span {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(119, 133, 255, 0.65);
+    border-radius: 50%;
+    background: rgba(84, 89, 210, 0.15);
+    color: #a9baff;
+    font-size: 21px;
+    box-shadow: 0 0 20px rgba(97, 86, 255, 0.12);
+}
+
+.careers-application-benefit:nth-child(even)>span {
+    color: #d1a3ff;
+    border-color: rgba(172, 106, 255, 0.65);
+    background: rgba(133, 73, 210, 0.14);
+}
+
+.careers-application-benefit p {
+    margin: 0;
+    color: #d7d9e9;
+    font-size: 11px;
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+/* RIGHT FORM */
+
+.careers-application-form-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-width: 0;
+}
+
+.careers-application-form-wrapper .career-application-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* TABLET */
+
+@media (max-width: 1050px) {
+    .careers-application-section {
+        padding: 75px 4%;
+    }
+
+    .careers-application-inner {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: 30px;
+    }
+
+    .careers-application-benefits {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+    }
+
+    .careers-application-copy h2 {
+        font-size: 45px;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+    .careers-application-section {
+        padding: 65px 18px;
+    }
+
+    .careers-application-inner {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .careers-application-copy {
+        padding: 0;
+    }
+
+    .careers-application-copy h2 {
+        font-size: clamp(38px, 10vw, 52px);
+        letter-spacing: -1.5px;
+    }
+
+    .careers-application-copy>p {
+        font-size: 14px;
+    }
+
+    .careers-application-benefits {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 28px;
+    }
+
+    .careers-application-benefit>span {
+        width: 40px;
+        height: 40px;
+    }
+
+    .careers-application-benefit p {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 420px) {
+    .careers-application-benefits {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
 }
