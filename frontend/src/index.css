@@ -5,12 +5,14 @@
    page stylesheet can rely on the custom properties and opt into
    the shared animation classes.
    ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 @import "./styles/tokens.css";
 @import "./styles/components.css";
 @import "./styles/motion.css";
 
+:root {
+  --fc-font-sans: 'Manrope', sans-serif;
+}
 * {
   box-sizing: border-box;
 }
@@ -50,13 +52,16 @@ html {
 /* =================================
    GLOBAL TYPOGRAPHY - FASCAVE
 ================================= */
+/* =================================
+   GLOBAL TYPOGRAPHY - FASCAVE
+================================= */
 
-/* Body Text */
+/* Body and normal content */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
-/* All Headings */
+/* Headings */
 h1,
 h2,
 h3,
@@ -65,9 +70,9 @@ h5,
 h6 {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
-/* Global paragraph and normal content font size */
 
+/* Paragraph and normal content size */
 p:not(:has(strong, b)),
 li:not(:has(strong, b)) {
-  font-size: 17px !important;
+  font-size: 18px !important;
 }

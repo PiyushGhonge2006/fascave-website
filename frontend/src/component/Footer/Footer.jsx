@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { useConsultationModal } from "../consultation/consultationModalContext";
-
-import fascaveLogo from "../../assets/Footer/FascaveLogo.png";
+import fascaveLogo from "../../assets/Footer/FascaveLogo.png"
 import microsoftFascave from "../../assets/Footer/background.png";
 
 import "./Footer.css";

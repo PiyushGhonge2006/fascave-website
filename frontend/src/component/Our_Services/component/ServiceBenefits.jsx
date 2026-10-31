@@ -109,33 +109,6 @@ const SERVICE_BENEFITS = {
     },
   ],
 
-  powerbi: [
-    {
-      icon: '📊',
-      title: 'Interactive Dashboards',
-      description:
-        'Create interactive dashboards that make complex business information easier to understand.',
-    },
-    {
-      icon: '📈',
-      title: 'Business Intelligence',
-      description:
-        'Transform business data into actionable insights for smarter and faster decisions.',
-    },
-    {
-      icon: '🔗',
-      title: 'Data Integration',
-      description:
-        'Connect multiple data sources and bring important business information into one place.',
-    },
-    {
-      icon: '💡',
-      title: 'Data-Driven Insights',
-      description:
-        'Discover trends, patterns, and opportunities through powerful visual data analysis.',
-    },
-  ],
-
   marketing: [
     {
       icon: '📱',
@@ -238,12 +211,6 @@ function getServiceType(title = '') {
 
   if (value.includes('seo')) {
     return 'seo'
-  }
-
-  if (value.includes('power bi') ||
-      value.includes('powerbi') ||
-      value.includes('visualization')) {
-    return 'powerbi'
   }
 
   if (value.includes('cloud') ||

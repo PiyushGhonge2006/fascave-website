@@ -1,3 +1,8 @@
+const CareerApplication = require("../model/careerApplication");
+const resumeUpload = require("../middleware/resumeUploadMiddleware");
+const fs = require("fs");
+const path = require("path");
+
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -205,6 +210,288 @@ router.delete(
   remove(JobOpening)
 );
 
+
+/* ======================================================
+   CAREER APPLICATIONS
+====================================================== */
+
+// PUBLIC: Submit career application
+
+router.post(
+  "/apply",
+  (req, res, next) => {
+    resumeUpload.array("resume", 5)(req, res, (error) => {
+      if (error) {
+        return res.status(400).json({
+          success: false,
+          message: error.message,
+        });
+      }
+      next();
+    });
+  },
+  async (req, res) => {
+    try {
+      const {
+        designation,
+        fullName,
+        gender,
+        email,
+        countryCode,
+        mobile,
+        dob,
+        city,
+        qualification,
+        branch,
+        college,
+        passoutYear,
+        experience,
+        company,
+        skills,
+        otherSkill,
+        source,
+        otherSource,
+        message,
+      } = req.body;
+
+      const files = req.files || [];
+
+      if (!files.length) {
+        return res.status(400).json({
+          success: false,
+          message: "Please upload your resume.",
+        });
+      }
+
+      const parsedSkills = JSON.parse(skills || "[]");
+
+      if (!Array.isArray(parsedSkills) || !parsedSkills.length) {
+        throw new Error("Please select at least one skill.");
+      }
+
+      const application = await CareerApplication.create({
+        designation,
+        fullName,
+        gender,
+        email,
+        countryCode,
+        mobile,
+        dob,
+        city,
+        qualification,
+        branch,
+        college,
+        passoutYear,
+        experience,
+        company,
+        skills: parsedSkills,
+        otherSkill,
+        source,
+        otherSource,
+        message,
+
+        resume: files.map((file) => ({
+          originalName: file.originalname,
+          filename: file.filename,
+          url: `/uploads/resumes/${file.filename}`,
+          mimeType: file.mimetype,
+          size: file.size,
+        })),
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: "Your career application has been submitted successfully.",
+        data: {
+          id: application._id,
+          fullName: application.fullName,
+          status: application.status,
+        },
+      });
+
+    } catch (error) {
+      console.error("CAREER APPLICATION ERROR:", error);
+
+      if (req.files?.length) {
+        req.files.forEach((file) => {
+          fs.unlink(file.path, () => { });
+        });
+      }
+
+      return res.status(400).json({
+        success: false,
+        message: error.message || "Application submission failed.",
+      });
+    }
+  }
+);
+
+
+// ADMIN: Get all applications
+
+router.get(
+  "/applications",
+  protect,
+  async (req, res) => {
+    try {
+      const applications = await CareerApplication.find()
+        .select("-__v")
+        .sort({ createdAt: -1 });
+
+      return res.status(200).json({
+        success: true,
+        count: applications.length,
+        data: applications,
+      });
+
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch career applications.",
+      });
+    }
+  }
+);
+
+
+// ADMIN: Get single application
+
+router.get(
+  "/applications/:id",
+  protect,
+  async (req, res) => {
+    try {
+      const application = await CareerApplication.findById(
+        req.params.id
+      );
+
+      if (!application) {
+        return res.status(404).json({
+          success: false,
+          message: "Application not found.",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        data: application,
+      });
+
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch application.",
+      });
+    }
+  }
+);
+
+
+// ADMIN: Update application status
+
+router.patch(
+  "/applications/:id/status",
+  protect,
+  async (req, res) => {
+    try {
+      const allowedStatuses = [
+        "New",
+        "Reviewing",
+        "Shortlisted",
+        "Rejected",
+      ];
+
+      const { status, adminNotes } = req.body;
+
+      if (!allowedStatuses.includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid application status.",
+        });
+      }
+
+      const application = await CareerApplication.findByIdAndUpdate(
+        req.params.id,
+        {
+          status,
+          ...(adminNotes !== undefined ? { adminNotes } : {}),
+        },
+        { new: true, runValidators: true }
+      );
+
+      if (!application) {
+        return res.status(404).json({
+          success: false,
+          message: "Application not found.",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Application updated successfully.",
+        data: application,
+      });
+
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to update application.",
+      });
+    }
+  }
+);
+
+
+// ADMIN: Delete application
+
+router.delete(
+  "/applications/:id",
+  protect,
+  async (req, res) => {
+    try {
+      const application = await CareerApplication.findById(
+        req.params.id
+      );
+
+      if (!application) {
+        return res.status(404).json({
+          success: false,
+          message: "Application not found.",
+        });
+      }
+
+      // Delete associated resume files
+      application.resume.forEach((resume) => {
+        const filePath = path.resolve(
+          __dirname,
+          "..",
+          process.env.UPLOAD_DIR || "uploads",
+          "resumes",
+          resume.filename
+        );
+
+        fs.unlink(filePath, (error) => {
+          if (error && error.code !== "ENOENT") {
+            console.error("Resume deletion error:", error);
+          }
+        });
+      });
+
+      await application.deleteOne();
+
+      return res.status(200).json({
+        success: true,
+        message: "Application deleted successfully.",
+      });
+
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to delete application.",
+      });
+    }
+  }
+);
 
 module.exports = router;
 module.exports.careerDefaults = careerDefaults;
