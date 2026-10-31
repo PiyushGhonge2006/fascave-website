@@ -1,20 +1,13 @@
+
 /* =========================================================
-   OUR CLIENTS
-   ---------------------------------------------------------
-   IMPORTANT:
-   All selectors are scoped specifically to the clients
-   section so this stylesheet does not affect Services
-   or any other page/section.
+   OUR CLIENTS — ENHANCED SIZE
    ========================================================= */
 
 .our-clients {
   width: 100%;
-  padding: 55px 0 35px;
+  padding: 95px 0 75px;
   overflow: hidden;
 
-  /* =======================================================
-     BLUISH-WHITE BACKGROUND EFFECT
-     ======================================================= */
   background:
     radial-gradient(
       circle at 15% 20%,
@@ -42,7 +35,7 @@
 .our-clients .clients-heading {
   width: 100%;
   padding: 0 var(--fc-container-pad);
-  margin: 0 0 35px;
+  margin: 0 0 60px;
   text-align: center;
 }
 
@@ -52,8 +45,8 @@
 
   color: var(--fc-ink);
 
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 800;
+  font-size: clamp(40px, 4vw, 54px);
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: var(--fc-tracking-display);
 
@@ -107,10 +100,10 @@
    ========================================================= */
 
 .our-clients .client-logo {
-  width: 190px;
-  height: 100px;
+  width: 290px;
+  height: 178px;
 
-  margin: 0 25px;
+  margin: 0 38px;
 
   display: flex;
   align-items: center;
@@ -128,8 +121,8 @@
   display: block;
 
   width: auto;
-  max-width: 155px;
-  max-height: 75px;
+  max-width: 215px;
+  max-height: 110px;
 
   object-fit: contain;
 
@@ -172,26 +165,26 @@
 @media (max-width: 900px) {
 
   .our-clients {
-    padding: 45px 0 30px;
+    padding: 70px 0 55px;
   }
 
   .our-clients .clients-heading {
-    margin-bottom: 30px;
+    margin-bottom: 45px;
   }
 
   .our-clients .clients-heading h2 {
-    font-size: 38px;
+    font-size: 46px;
   }
 
   .our-clients .client-logo {
-    width: 165px;
-    height: 85px;
-    margin: 0 20px;
+    width: 210px;
+    height: 115px;
+    margin: 0 25px;
   }
 
   .our-clients .client-logo img {
-    max-width: 135px;
-    max-height: 65px;
+    max-width: 175px;
+    max-height: 90px;
   }
 
   .our-clients .clients-track {
@@ -207,26 +200,26 @@
 @media (max-width: 600px) {
 
   .our-clients {
-    padding: 40px 0 25px;
+    padding: 50px 0 40px;
   }
 
   .our-clients .clients-heading {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
   }
 
   .our-clients .clients-heading h2 {
-    font-size: 32px;
+    font-size: 34px;
   }
 
   .our-clients .client-logo {
-    width: 135px;
-    height: 70px;
-    margin: 0 15px;
+    width: 165px;
+    height: 90px;
+    margin: 0 17px;
   }
 
   .our-clients .client-logo img {
-    max-width: 110px;
-    max-height: 50px;
+    max-width: 140px;
+    max-height: 70px;
   }
 
   .our-clients .clients-track {
