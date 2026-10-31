@@ -105,38 +105,6 @@ export const fallbackFeatures = [
     ],
   },
 
-  // 4. Power BI & Visualization
-  {
-    id: 'power-bi-visualization',
-    title: 'Power BI Visualization Services',
-    image: powerBI,
-
-    details:
-      'Transform your data into meaningful insights with interactive dashboards, reports and data visualization solutions.',
-
-    today: [
-      'Reports make important insights hard to find.',
-      'Data is scattered across multiple files.',
-      'Manual report creation delays business reviews.',
-      'Trends remain hidden in raw data.',
-    ],
-
-    outcome: [
-      'Interactive dashboards clarify key metrics.',
-      'Connected data brings information together.',
-      'Automated reports save preparation time.',
-      'Visual trends support informed decisions.',
-    ],
-
-    points: [
-      'Interactive',
-      'Data Driven',
-      'Real-Time',
-      'Easy to Understand',
-      'Business Focused',
-    ],
-  },
-
   // 5. Digital Marketing
   {
     id: 'digital-marketing',

@@ -29,8 +29,6 @@ function Contact() {
       <WhyContactUs />
 
       <ContactProcess />
-
-      {/* <ContactCTA /> */}
     </main>
   );
 }

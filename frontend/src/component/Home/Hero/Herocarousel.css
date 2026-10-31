@@ -13,7 +13,7 @@
   box-sizing: border-box;
   background-color: #020819;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: calc(50% - 27px) center;
   background-size: cover;
   color: #fff;
 }
@@ -341,22 +341,31 @@
 
 /* Mobile */
 
+/* Mobile Hero */
 @media (max-width: 480px) {
   .hero-carousel {
     height: 390px;
+    background-position: left center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-color: #020819;
+    touch-action: pan-y;
   }
+
+  /* Keep dark background and subtle existing visuals.
+     Crop out the device/person area on the right. */
 
   .hero-background-overlay {
     background: linear-gradient(
       90deg,
-      rgba(2, 8, 25, 0.78),
-      rgba(2, 8, 25, 0.38)
+      rgba(2, 8, 25, 0.48),
+      rgba(2, 8, 25, 0.18)
     );
   }
 
   .hero-content {
     justify-content: flex-start;
-    padding: 32px 9% 125px;
+    padding: 32px 9% 95px;
   }
 
   .hero-copy {
@@ -375,55 +384,49 @@
   .hero-description {
     margin-top: 10px;
     font-size: 11px;
+    line-height: 1.65;
   }
 
+  /* Hide CTA buttons on mobile */
   .hero-actions {
-    gap: 7px;
-    margin-top: 13px;
+    display: none !important;
   }
 
-  .hero-button {
-    min-height: 30px;
-    padding: 8px 11px;
-    font-size: 9px;
+  /* Hide previous and next arrows */
+  .hero-arrow {
+    display: none !important;
   }
 
-  .hero-stats {
-    right: 9%;
-    bottom: 24px;
-    left: 9%;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 12px;
-  }
-
-  .hero-stat {
-    gap: 7px;
-    padding: 0 6px;
-    border: 0;
-  }
-
-  .hero-stat:nth-child(odd) {
-    padding-left: 0;
-  }
-
-  .hero-stat-icon {
-    font-size: 17px;
-  }
-
-  .hero-stat strong {
-    font-size: 11px;
-  }
-
-  .hero-stat > div > span {
-    font-size: 8px;
-  }
-
+  /* Keep slide indicators */
   .hero-carousel-bottom {
     right: 9%;
     bottom: 7px;
     left: 9%;
   }
+
+  .hero-dots {
+    gap: 7px;
+  }
+
+  .hero-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .hero-dot.is-active {
+    width: 18px;
+  }
+
+  .hero-slide-counter {
+    font-size: 9px;
+  }
+
+  /* Hide desktop stats if present */
+  .hero-stats {
+    display: none;
+  }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   .hero-copy,
