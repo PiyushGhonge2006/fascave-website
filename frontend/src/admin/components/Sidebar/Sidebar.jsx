@@ -1,3 +1,4 @@
+
 import React from "react";
 import { NavLink } from "react-router-dom";
 import {
@@ -14,10 +15,10 @@ import {
     MessageSquare,
     Users,
     X,
+    ClipboardList,
 } from "lucide-react";
 
 import "./Sidebar.css";
-
 
 const MENU_GROUPS = [
     {
@@ -93,6 +94,12 @@ const MENU_GROUPS = [
                 label: "Careers",
                 path: "/admin/careers",
                 icon: Briefcase,
+                end: true,
+            },
+            {
+                label: "Career Applications",
+                path: "/admin/careers/applications",
+                icon: ClipboardList,
             },
             {
                 label: "Contact",
@@ -103,12 +110,7 @@ const MENU_GROUPS = [
     },
 ];
 
-
-const Sidebar = ({
-    isOpen,
-    onClose,
-}) => {
-
+const Sidebar = ({ isOpen, onClose }) => {
     return (
         <>
             {isOpen && (
@@ -122,7 +124,6 @@ const Sidebar = ({
                 className={`admin-sidebar ${isOpen ? "is-open" : ""
                     }`}
             >
-
                 <div className="admin-sidebar-logo">
                     <div className="admin-logo-box">
                         F
@@ -130,9 +131,7 @@ const Sidebar = ({
 
                     <div className="admin-logo-text">
                         <h2>FasCave</h2>
-                        <span>
-                            IT SOLUTIONS
-                        </span>
+                        <span>IT SOLUTIONS</span>
                     </div>
 
                     <button
@@ -146,19 +145,16 @@ const Sidebar = ({
                 </div>
 
                 <nav className="admin-sidebar-menu">
-
                     {MENU_GROUPS.map((group) => (
                         <div
                             className="admin-menu-group"
                             key={group.title}
                         >
-
                             <div className="admin-menu-title">
                                 {group.title}
                             </div>
 
                             {group.items.map((item) => {
-
                                 const Icon = item.icon;
 
                                 return (
@@ -167,9 +163,7 @@ const Sidebar = ({
                                         to={item.path}
                                         end={item.end}
                                         onClick={onClose}
-                                        className={({
-                                            isActive,
-                                        }) =>
+                                        className={({ isActive }) =>
                                             isActive
                                                 ? "admin-menu-item active"
                                                 : "admin-menu-item"
@@ -178,9 +172,7 @@ const Sidebar = ({
                                         <span className="admin-menu-icon">
                                             <Icon
                                                 size={17}
-                                                strokeWidth={
-                                                    1.8
-                                                }
+                                                strokeWidth={1.8}
                                             />
                                         </span>
 
@@ -189,12 +181,9 @@ const Sidebar = ({
                                         </span>
                                     </NavLink>
                                 );
-
                             })}
-
                         </div>
                     ))}
-
                 </nav>
 
                 <div className="admin-sidebar-bottom">
@@ -202,11 +191,9 @@ const Sidebar = ({
                         Admin Panel v1.0
                     </div>
                 </div>
-
             </aside>
         </>
     );
-
 };
 
 export default Sidebar;

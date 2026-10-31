@@ -1061,6 +1061,7 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
     .contact-enquiry *,
     .contact-enquiry *::before,
     .contact-enquiry *::after {
