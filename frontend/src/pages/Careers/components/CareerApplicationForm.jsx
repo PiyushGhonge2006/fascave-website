@@ -67,11 +67,8 @@ const SKILLS = [
     "HTML/CSS/Bootstrap",
     "Database",
     "Android",
-    "Data Analytics",
     "AWS",
     "DevOps",
-    "Marketing Skills",
-    "None of the Above",
     "Other",
 ];
 
@@ -184,28 +181,12 @@ const CareerApplicationForm = ({ onSubmit }) => {
     // ========================================
 
     const toggleSkill = (skill) => {
-        setFormData((prev) => {
-            let updatedSkills;
-
-            if (skill === "None of the Above") {
-                updatedSkills = prev.skills.includes(skill)
-                    ? []
-                    : [skill];
-            } else {
-                updatedSkills = prev.skills.filter(
-                    (item) => item !== "None of the Above"
-                );
-
-                updatedSkills = updatedSkills.includes(skill)
-                    ? updatedSkills.filter((item) => item !== skill)
-                    : [...updatedSkills, skill];
-            }
-
-            return {
-                ...prev,
-                skills: updatedSkills,
-            };
-        });
+        setFormData((prev) => ({
+            ...prev,
+            skills: prev.skills.includes(skill)
+                ? prev.skills.filter((item) => item !== skill)
+                : [...prev.skills, skill],
+        }));
     };
 
     // ========================================
@@ -226,6 +207,14 @@ const CareerApplicationForm = ({ onSubmit }) => {
 
         return true;
     };
+
+    // ========================================
+    // STEP NAVIGATION
+    // ========================================
+
+    // ========================================
+    // STEP NAVIGATION
+    // ========================================
 
     const nextStep = () => {
         if (!validateStep()) return;
@@ -347,6 +336,13 @@ const CareerApplicationForm = ({ onSubmit }) => {
             await onSubmit(applicationData);
 
             setSubmitted(true);
+
+            requestAnimationFrame(() => {
+                window.scrollTo({
+                    top: document.getElementById("careers-apply")?.offsetTop || 0,
+                    behavior: "smooth",
+                });
+            });
         } catch (error) {
             console.error("Career application error:", error);
 
@@ -591,16 +587,18 @@ const CareerApplicationForm = ({ onSubmit }) => {
                                         type="tel"
                                         inputMode="numeric"
                                         autoComplete="tel-national"
-                                        pattern="[0-9]{7,15}"
-                                        maxLength={15}
-                                        placeholder="Enter mobile number"
+                                        pattern="[0-9]{10}"
+                                        minLength={10}
+                                        maxLength={10}
+                                        placeholder="Enter 10 digit mobile number"
                                         value={formData.mobile}
                                         onChange={(e) =>
                                             updateField(
                                                 "mobile",
-                                                e.target.value.replace(/\D/g, "")
+                                                e.target.value.replace(/\D/g, "").slice(0, 10)
                                             )
                                         }
+                                        title="Please enter exactly 10 digits."
                                     />
 
                                 </div>
@@ -897,6 +895,8 @@ const CareerApplicationForm = ({ onSubmit }) => {
 
                             {/* SOURCE */}
 
+                            {/* SOURCE */}
+
                             <div className="career-field full-width">
 
                                 <label>
@@ -906,7 +906,7 @@ const CareerApplicationForm = ({ onSubmit }) => {
                                     </span>
                                 </label>
 
-                                <div className="career-option-list">
+                                <div className="career-option-list career-source-list">
 
                                     {SOURCES.map((item) => (
                                         <label key={item}>
@@ -929,7 +929,6 @@ const CareerApplicationForm = ({ onSubmit }) => {
                                 </div>
 
                                 {formData.source === "Other" && (
-
                                     <input
                                         type="text"
                                         placeholder="Please specify (Optional)"
@@ -938,7 +937,6 @@ const CareerApplicationForm = ({ onSubmit }) => {
                                             updateField("otherSource", e.target.value)
                                         }
                                     />
-
                                 )}
 
                             </div>
