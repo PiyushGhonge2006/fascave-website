@@ -181,10 +181,11 @@
 
 .footer-logo {
     display: block;
-    width: 270px;
-    height: 100px;
+    width: 180px;
+    height: 60px;
     object-fit: contain;
     object-position: left center;
+
 
     /*
        Slightly bigger than previous version.
