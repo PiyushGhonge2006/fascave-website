@@ -1,4 +1,11 @@
+
 import { useEffect } from "react";
+
+import {
+    Link,
+    useNavigate,
+    useParams,
+} from "react-router-dom";
 
 import {
     ArrowLeft,
@@ -12,20 +19,19 @@ import {
     Sparkles,
 } from "lucide-react";
 
-import { Link, useParams } from "react-router-dom";
-
 import { useJobOpening } from "../../hooks/useJobOpening";
-import ResumeButton from "./components/ResumeButton";
 
 import "./Careers.css";
 import "./CareerDetails.css";
 
+// ========================================
+// SMALL HELPERS
+// ========================================
 
 const asList = (value) =>
     Array.isArray(value)
         ? value.map((item) => String(item || "").trim()).filter(Boolean)
         : [];
-
 
 const splitTitle = (value) => {
     const text = String(value || "").trim();
@@ -48,7 +54,6 @@ const splitTitle = (value) => {
     };
 };
 
-
 const getSummary = (job) => {
     const summary = String(job.summary || "").trim();
 
@@ -60,7 +65,6 @@ const getSummary = (job) => {
         .split(/\n\s*\n/)[0]
         .trim();
 };
-
 
 const getFacts = (job) => {
     const location = String(job.location || "").trim();
@@ -95,6 +99,9 @@ const getFacts = (job) => {
         .filter((fact) => fact.value);
 };
 
+// ========================================
+// INFO PANEL
+// ========================================
 
 function InfoPanel({ facts }) {
     if (!facts.length) return null;
@@ -105,7 +112,10 @@ function InfoPanel({ facts }) {
                 const Icon = fact.icon;
 
                 return (
-                    <div className="careers-detail__info-item" key={fact.label}>
+                    <div
+                        className="careers-detail__info-item"
+                        key={fact.label}
+                    >
                         <span className="careers-detail__info-icon">
                             <Icon
                                 size={18}
@@ -113,6 +123,7 @@ function InfoPanel({ facts }) {
                                 aria-hidden="true"
                             />
                         </span>
+
                         <div className="careers-detail__info-copy">
                             <dt>{fact.label}</dt>
                             <dd>{fact.value}</dd>
@@ -124,6 +135,9 @@ function InfoPanel({ facts }) {
     );
 }
 
+// ========================================
+// DETAIL CARD
+// ========================================
 
 function DetailCard({
     title,
@@ -142,6 +156,7 @@ function DetailCard({
                 <span className="careers-detail__card-icon">
                     <Icon size={19} strokeWidth={1.8} aria-hidden="true" />
                 </span>
+
                 <h2>{title}</h2>
             </header>
 
@@ -161,6 +176,9 @@ function DetailCard({
     );
 }
 
+// ========================================
+// DETAIL STATE
+// ========================================
 
 function DetailState({ title, children, tone = "default" }) {
     return (
@@ -178,12 +196,17 @@ function DetailState({ title, children, tone = "default" }) {
     );
 }
 
+// ========================================
+// CAREER DETAILS PAGE
+// ========================================
 
 const CareerDetails = () => {
     const { slug } = useParams();
+    const navigate = useNavigate();
 
     const { job, status } = useJobOpening(slug);
 
+    // Update document title
     useEffect(() => {
         if (!job?.title) return undefined;
 
@@ -195,17 +218,20 @@ const CareerDetails = () => {
         };
     }, [job?.title]);
 
-
+    // Loading state
     if (status === "loading") {
         return (
             <DetailState title="Loading role">
-                <span className="careers-detail__spinner" aria-hidden="true" />
+                <span
+                    className="careers-detail__spinner"
+                    aria-hidden="true"
+                />
                 <p>Fetching the latest details for this opening.</p>
             </DetailState>
         );
     }
 
-
+    // Not found state
     if (status === "notfound") {
         return (
             <DetailState title="Role not found" tone="muted">
@@ -213,7 +239,11 @@ const CareerDetails = () => {
                     This role may have been closed or removed. Browse our
                     current openings to find another opportunity.
                 </p>
-                <Link className="careers-btn careers-btn--primary" to="/careers">
+
+                <Link
+                    className="careers-btn careers-btn--primary"
+                    to="/careers"
+                >
                     <ArrowLeft size={16} strokeWidth={2.2} aria-hidden="true" />
                     Back to Careers
                 </Link>
@@ -221,15 +251,22 @@ const CareerDetails = () => {
         );
     }
 
-
+    // Error state
     if (status === "error" || !job) {
         return (
-            <DetailState title="We could not load this role" tone="error">
+            <DetailState
+                title="We could not load this role"
+                tone="error"
+            >
                 <p>
                     Please check your connection and refresh the page, or
                     return to the Careers page to see all openings.
                 </p>
-                <Link className="careers-btn careers-btn--primary" to="/careers">
+
+                <Link
+                    className="careers-btn careers-btn--primary"
+                    to="/careers"
+                >
                     <ArrowLeft size={16} strokeWidth={2.2} aria-hidden="true" />
                     Back to Careers
                 </Link>
@@ -237,7 +274,7 @@ const CareerDetails = () => {
         );
     }
 
-
+    // Prepare job data
     const heading = splitTitle(job.title);
     const summary = getSummary(job);
     const facts = getFacts(job);
@@ -249,23 +286,39 @@ const CareerDetails = () => {
 
     const preferredSkills = asList(job.preferredSkills);
 
+    // ========================================
+    // PAGE JSX
+    // ========================================
 
     return (
         <main className="careers-page careers-detail">
+
+            {/* HERO SECTION */}
+
             <section className="careers-detail__hero">
                 <div className="careers-inner">
-                    <Link className="careers-detail__back" to="/careers">
-                        <ArrowLeft size={16} strokeWidth={2.2} aria-hidden="true" />
+
+                    <Link
+                        className="careers-detail__back"
+                        to="/careers"
+                    >
+                        <ArrowLeft
+                            size={16}
+                            strokeWidth={2.2}
+                            aria-hidden="true"
+                        />
                         Back to Careers
                     </Link>
 
                     <header className="careers-detail__heading">
+
                         <span className="careers-detail__eyebrow">
                             FasCave Careers
                         </span>
 
                         <h1>
                             {heading.lead}
+
                             <span className="careers-detail__title-accent">
                                 {heading.accent}
                             </span>
@@ -276,19 +329,24 @@ const CareerDetails = () => {
                                 {summary}
                             </p>
                         )}
+
                     </header>
 
                     <hr className="careers-detail__divider" />
 
                     <InfoPanel facts={facts} />
+
                 </div>
             </section>
 
+            {/* JOB DETAILS */}
 
             <section className="careers-detail__content">
                 <div className="careers-inner careers-detail__stack">
+
                     {paragraphs.length > 0 && (
                         <section className="careers-detail__card">
+
                             <header className="careers-detail__card-head">
                                 <span className="careers-detail__card-icon">
                                     <FileText
@@ -297,6 +355,7 @@ const CareerDetails = () => {
                                         aria-hidden="true"
                                     />
                                 </span>
+
                                 <h2>About the Role</h2>
                             </header>
 
@@ -307,10 +366,12 @@ const CareerDetails = () => {
                                     </p>
                                 ))}
                             </div>
+
                         </section>
                     )}
 
                     <div className="careers-detail__grid">
+
                         <DetailCard
                             title="Key Responsibilities"
                             icon={ListChecks}
@@ -333,19 +394,23 @@ const CareerDetails = () => {
                                 className="careers-detail__card--full"
                             />
                         )}
+
                     </div>
                 </div>
             </section>
 
+            {/* APPLY NOW SECTION */}
 
             <section className="careers-detail__apply">
                 <div className="careers-inner">
+
                     <div className="careers-detail__apply-card">
+
                         <span className="careers-detail__apply-eyebrow">
                             Interested in this position?
                         </span>
 
-                        <h2>Send Your Resume</h2>
+                        <h2>Apply Now</h2>
 
                         <p>
                             Share your portfolio and tell us what you have
@@ -353,10 +418,22 @@ const CareerDetails = () => {
                             out if there is a fit.
                         </p>
 
-                        <ResumeButton />
+                        <button
+                            type="button"
+                            className="careers-btn careers-btn--primary"
+                            onClick={() => navigate("/careers#careers-apply")}
+                        >
+                            Apply Now
+                            <ArrowLeft
+                                size={16}
+                                style={{ transform: "rotate(180deg)" }}
+                            />
+                        </button>
+
                     </div>
                 </div>
             </section>
+
         </main>
     );
 };

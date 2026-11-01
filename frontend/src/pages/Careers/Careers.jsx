@@ -20,7 +20,7 @@ import {
     Workflow,
 } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
     prefersReducedMotion,
@@ -197,6 +197,33 @@ function RoleCard({ role }) {
 ========================================================= */
 
 function Careers() {
+    const location = useLocation();
+
+    /* =====================================================
+       APPLY NOW AUTO SCROLL FIX
+    ===================================================== */
+
+    useEffect(() => {
+        if (location.hash !== "#careers-apply") return undefined;
+
+        let firstFrame;
+        let secondFrame;
+
+        firstFrame = requestAnimationFrame(() => {
+            secondFrame = requestAnimationFrame(() => {
+                document.getElementById("careers-apply")?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            });
+        });
+
+        return () => {
+            cancelAnimationFrame(firstFrame);
+            cancelAnimationFrame(secondFrame);
+        };
+    }, [location.pathname, location.hash]);
+
 
     /* =====================================================
        CMS CONTENT
@@ -1279,8 +1306,8 @@ function Careers() {
 
 
                         <h2>
-                            Build Your Career With
-                            <span> FasCave</span>
+                            Build Your Career
+                            <span> With FasCave</span>
                         </h2>
 
 
