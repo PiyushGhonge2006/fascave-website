@@ -35,10 +35,7 @@ import { useSingleton } from "./hooks/useContent";
 
 import "./App.css";
 
-/* =========================================================
-   GLOBAL PAGE THEME
-   Wave animation is applied only to light/white pages.
-   ========================================================= */
+/* GLOBAL PAGE THEME */
 
 function PageTheme({ children }) {
   const location = useLocation();
@@ -60,9 +57,7 @@ function PageTheme({ children }) {
   return (
     <div
       className={
-        isLightPage
-          ? "light-page-theme"
-          : "normal-page-theme"
+        isLightPage ? "light-page-theme" : "normal-page-theme"
       }
     >
       {isLightPage && (
@@ -73,16 +68,12 @@ function PageTheme({ children }) {
         </>
       )}
 
-      <div className="page-theme-content">
-        {children}
-      </div>
+      <div className="page-theme-content">{children}</div>
     </div>
   );
 }
 
-/* =========================================================
-   HOME PAGE
-   ========================================================= */
+/* HOME PAGE */
 
 function HomePage() {
   const { data: homeContent, reload } = useSingleton(
@@ -90,12 +81,6 @@ function HomePage() {
     {}
   );
 
-  /*
-   * Section visibility lives in the same Home Content document
-   * the admin panel edits. A periodic re-read keeps an already
-   * open public tab in sync when the toggle is changed in
-   * another browser session.
-   */
   const sectionVisible = (key) =>
     homeContent?.[key] !== false;
 
@@ -104,6 +89,203 @@ function HomePage() {
 
     return () => window.clearInterval(timer);
   }, [reload]);
+
+
+  // HOME PAGE COMPLETE SEO METADATA
+  useEffect(() => {
+    if (!homeContent) return;
+
+    const setMeta = (selector, attribute, key, value) => {
+      let element = document.head.querySelector(selector);
+
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+
+      if (value) {
+        element.setAttribute("content", value);
+      }
+    };
+
+    const setLink = (rel, href) => {
+      if (!href) return;
+
+      let element = document.head.querySelector(
+        `link[rel="${rel}"]`
+      );
+
+      if (!element) {
+        element = document.createElement("link");
+        element.rel = rel;
+        document.head.appendChild(element);
+      }
+
+      element.href = href;
+    };
+
+    const absoluteUrl = (url) => {
+      if (!url) return "";
+
+      try {
+        return new URL(url, window.location.origin).href;
+      } catch {
+        return url;
+      }
+    };
+
+    // BASIC SEO
+    document.title =
+      homeContent.seoTitle || "FasCave IT Solution";
+
+    setMeta(
+      'meta[name="description"]',
+      "name",
+      "description",
+      homeContent.seoDescription
+    );
+
+    setMeta(
+      'meta[name="keywords"]',
+      "name",
+      "keywords",
+      homeContent.seoKeywords
+    );
+
+    setMeta(
+      'meta[name="author"]',
+      "name",
+      "author",
+      homeContent.seoAuthor
+    );
+
+    setMeta(
+      'meta[name="robots"]',
+      "name",
+      "robots",
+      homeContent.seoRobots
+    );
+
+    setLink(
+      "canonical",
+      homeContent.seoCanonicalUrl
+    );
+
+    // OPEN GRAPH
+    setMeta(
+      'meta[property="og:type"]',
+      "property",
+      "og:type",
+      homeContent.ogType || "website"
+    );
+
+    setMeta(
+      'meta[property="og:site_name"]',
+      "property",
+      "og:site_name",
+      homeContent.ogSiteName
+    );
+
+    setMeta(
+      'meta[property="og:title"]',
+      "property",
+      "og:title",
+      homeContent.ogTitle || homeContent.seoTitle
+    );
+
+    setMeta(
+      'meta[property="og:description"]',
+      "property",
+      "og:description",
+      homeContent.ogDescription || homeContent.seoDescription
+    );
+
+    setMeta(
+      'meta[property="og:url"]',
+      "property",
+      "og:url",
+      homeContent.ogUrl || homeContent.seoCanonicalUrl
+    );
+
+    const ogImage = absoluteUrl(homeContent.ogImage);
+
+    setMeta(
+      'meta[property="og:image"]',
+      "property",
+      "og:image",
+      ogImage
+    );
+
+    setMeta(
+      'meta[property="og:image:secure_url"]',
+      "property",
+      "og:image:secure_url",
+      ogImage
+    );
+
+    setMeta(
+      'meta[property="og:image:alt"]',
+      "property",
+      "og:image:alt",
+      homeContent.ogImageAlt
+    );
+
+    // TWITTER / X
+    setMeta(
+      'meta[name="twitter:card"]',
+      "name",
+      "twitter:card",
+      homeContent.twitterCard || "summary_large_image"
+    );
+
+    setMeta(
+      'meta[name="twitter:title"]',
+      "name",
+      "twitter:title",
+      homeContent.twitterTitle || homeContent.seoTitle
+    );
+
+    setMeta(
+      'meta[name="twitter:description"]',
+      "name",
+      "twitter:description",
+      homeContent.twitterDescription || homeContent.seoDescription
+    );
+
+    const twitterImage = absoluteUrl(
+      homeContent.twitterImage || homeContent.ogImage
+    );
+
+    setMeta(
+      'meta[name="twitter:image"]',
+      "name",
+      "twitter:image",
+      twitterImage
+    );
+
+    setMeta(
+      'meta[name="twitter:image:alt"]',
+      "name",
+      "twitter:image:alt",
+      homeContent.twitterImageAlt || homeContent.ogImageAlt
+    );
+
+    // WEBSITE APPEARANCE
+    setMeta(
+      'meta[name="theme-color"]',
+      "name",
+      "theme-color",
+      homeContent.themeColor || "#061b33"
+    );
+
+    setLink(
+      "icon",
+      homeContent.favicon || "/favicon.svg"
+    );
+
+  }, [homeContent]);
+
 
   return (
     <div className="website-sections">
@@ -154,10 +336,7 @@ function HomePage() {
   );
 }
 
-/* =========================================================
-   PUBLIC WEBSITE FOOTER
-   Hide footer on admin routes.
-   ========================================================= */
+/* PUBLIC WEBSITE FOOTER */
 
 function PublicFooter() {
   const location = useLocation();
@@ -166,12 +345,11 @@ function PublicFooter() {
     location.pathname === "/admin" ||
     location.pathname.startsWith("/admin/");
 
-  if (isAdminPage) {
-    return null;
-  }
+  if (isAdminPage) return null;
 
   return <Footer />;
 }
+
 function PublicNavbar() {
   const location = useLocation();
 
@@ -179,15 +357,12 @@ function PublicNavbar() {
     location.pathname === "/admin" ||
     location.pathname.startsWith("/admin/");
 
-  if (isAdminPage) {
-    return null;
-  }
+  if (isAdminPage) return null;
 
   return <Navbar />;
 }
-/* =========================================================
-   APP
-   ========================================================= */
+
+/* APP */
 
 function App() {
   return (
@@ -197,13 +372,8 @@ function App() {
       <RouteTransition>
         <PageTheme>
           <Routes>
-            {/* HOME */}
-            <Route
-              path="/"
-              element={<HomePage />}
-            />
+            <Route path="/" element={<HomePage />} />
 
-            {/* SERVICES */}
             <Route
               path="/features"
               element={
@@ -222,45 +392,32 @@ function App() {
               }
             />
 
-            {/* ABOUT */}
-            <Route
-              path="/about-us"
-              element={<About />}
-            />
 
-            {/* BLOG */}
-            <Route
-              path="/blog"
-              element={<Blog />}
-            />
+            <Route path="/about-us" element={<About />} />
 
             <Route
-              path="/blog/:id"
-              element={<BlogDetails />}
+              path="/portfolio"
+              element={
+                <div className="page-root">
+                  <Portfolio />
+                </div>
+              }
             />
 
-            {/* CAREERS */}
-            <Route
-              path="/careers"
-              element={<Careers />}
-            />
+            <Route path="/blog" element={<Blog />} />
+
+            <Route path="/blog/:id" element={<BlogDetails />} />
+
+            <Route path="/careers" element={<Careers />} />
 
             <Route
               path="/careers/:slug"
               element={<CareerDetails />}
             />
 
-            {/* CONTACT */}
-            <Route
-              path="/contact"
-              element={<Contact />}
-            />
+            <Route path="/contact" element={<Contact />} />
 
-            {/* ADMIN */}
-            <Route
-              path="/admin/*"
-              element={<AdminApp />}
-            />
+            <Route path="/admin/*" element={<AdminApp />} />
           </Routes>
         </PageTheme>
       </RouteTransition>

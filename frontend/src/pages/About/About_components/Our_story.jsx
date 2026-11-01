@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Eye,
   Target,
@@ -94,7 +95,7 @@ function Our_story() {
           ================================================= */}
 
           <a
-            href="/services"
+            href="/features"
             className="our-story-section__button"
           >
             <span>

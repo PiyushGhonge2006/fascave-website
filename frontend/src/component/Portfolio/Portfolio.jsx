@@ -1,18 +1,21 @@
+
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import useRevealOnScroll from "../../hooks/useRevealOnScroll";
 import { useCollection } from "../../hooks/useContent";
 import { imageUrl } from "../../utils/apiBase";
 import "./Portfolio.css";
 
-const PROJECTS_PAGE_URL = "https://www.fascave.com/projects";
 const REFRESH_INTERVAL_MS = 30000;
 
 const toArray = (value) => {
     if (Array.isArray(value)) return value;
+
     if (typeof value === "string" && value.trim()) {
         return value.split(",").map((item) => item.trim()).filter(Boolean);
     }
+
     return [];
 };
 
@@ -104,7 +107,7 @@ function PortfolioCard({ project }) {
                         <span className="portfolio-date">
                             {[project.year, project.duration]
                                 .filter(Boolean)
-                                .join(" \u00b7 ")}
+                                .join(" · ")}
                         </span>
                     )}
                 </div>
@@ -254,20 +257,14 @@ function Portfolio() {
                         technology solutions across web, mobile, cloud and data.
                     </p>
 
-                    <button
-                        type="button"
+                    {/* View All Projects */}
+                    <Link
+                        to="/portfolio"
                         className="portfolio-button portfolio-button-solid"
-                        onClick={() =>
-                            window.open(
-                                PROJECTS_PAGE_URL,
-                                "_blank",
-                                "noopener,noreferrer"
-                            )
-                        }
                     >
                         View All Projects
                         <span aria-hidden="true">&#8599;</span>
-                    </button>
+                    </Link>
                 </div>
 
                 {showLoading && (
@@ -280,9 +277,11 @@ function Portfolio() {
                             className="portfolio-spinner"
                             aria-hidden="true"
                         />
+
                         <h3 className="portfolio-state-title">
                             Loading projects
                         </h3>
+
                         <p className="portfolio-state-text">
                             Fetching the latest FasCave case studies.
                         </p>
@@ -297,9 +296,11 @@ function Portfolio() {
                         <h3 className="portfolio-state-title">
                             We could not load our projects
                         </h3>
+
                         <p className="portfolio-state-text">
                             Please check your connection and try again.
                         </p>
+
                         <button
                             type="button"
                             className="portfolio-button portfolio-button-solid"
@@ -318,6 +319,7 @@ function Portfolio() {
                         <h3 className="portfolio-state-title">
                             No projects to show yet
                         </h3>
+
                         <p className="portfolio-state-text">
                             New case studies will appear here as soon as
                             they are published.

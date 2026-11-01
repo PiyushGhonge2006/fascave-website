@@ -15,7 +15,6 @@ import {
 import { Link, useParams } from "react-router-dom";
 
 import { useJobOpening } from "../../hooks/useJobOpening";
-import ResumeButton from "./components/ResumeButton";
 
 import "./Careers.css";
 import "./CareerDetails.css";
@@ -345,15 +344,24 @@ const CareerDetails = () => {
                             Interested in this position?
                         </span>
 
-                        <h2>Send Your Resume</h2>
+                        <h2>Apply Now</h2>
 
                         <p>
-                            Share your portfolio and tell us what you have
-                            built. We read every application and will reach
-                            out if there is a fit.
+                            Interested in joining our team? Share your details
+                            and apply for this position through our application form.
                         </p>
 
-                        <ResumeButton />
+                        <Link
+                            to="/careers#careers-apply"
+                            className="careers-btn careers-btn--primary"
+                        >
+                            Apply Now
+                            <ArrowLeft
+                                size={16}
+                                strokeWidth={2.2}
+                                aria-hidden="true"
+                            />
+                        </Link>
                     </div>
                 </div>
             </section>

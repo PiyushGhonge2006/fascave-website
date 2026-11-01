@@ -20,7 +20,7 @@ import {
     Workflow,
 } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
     prefersReducedMotion,
@@ -197,6 +197,24 @@ function RoleCard({ role }) {
 ========================================================= */
 
 function Careers() {
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.hash === "#careers-apply") {
+            const timer = setTimeout(() => {
+                const applySection = document.getElementById("careers-apply");
+
+                if (applySection) {
+                    applySection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                }
+            }, 300);
+
+            return () => clearTimeout(timer);
+        }
+    }, [location.hash]);
 
     /* =====================================================
        CMS CONTENT
@@ -417,8 +435,10 @@ function Careers() {
             );
         }
 
-        if (!response.ok) {
-            throw new Error(result.message || "Unable to submit your application.");
+        if (!response.ok || result.success === false) {
+            throw new Error(
+                result.message || "Unable to submit your application."
+            );
         }
 
         return result;

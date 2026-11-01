@@ -52,7 +52,6 @@ const slides = [
 
 export default function HeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
   const [typingKey, setTypingKey] = useState(0);
 
   const touchStart = useRef(null);
@@ -61,28 +60,42 @@ export default function HeroCarousel() {
 
   // Change slide
   const goToSlide = useCallback((index) => {
-    setActiveIndex((index + slides.length) % slides.length);
+    const nextIndex = (index + slides.length) % slides.length;
+
+    setActiveIndex(nextIndex);
     setTypingKey((key) => key + 1);
   }, []);
 
   // Previous slide
   const previous = useCallback(() => {
-    goToSlide(activeIndex - 1);
-  }, [activeIndex, goToSlide]);
+    setActiveIndex((currentIndex) => {
+      return (currentIndex - 1 + slides.length) % slides.length;
+    });
+
+    setTypingKey((key) => key + 1);
+  }, []);
 
   // Next slide
   const next = useCallback(() => {
-    goToSlide(activeIndex + 1);
-  }, [activeIndex, goToSlide]);
+    setActiveIndex((currentIndex) => {
+      return (currentIndex + 1) % slides.length;
+    });
 
-  // Auto-slide every 3.5 seconds
+    setTypingKey((key) => key + 1);
+  }, []);
+
+  // Auto-slide every 4 seconds
   useEffect(() => {
-    if (paused) return undefined;
+    const timer = window.setInterval(() => {
+      setActiveIndex((currentIndex) => {
+        return (currentIndex + 1) % slides.length;
+      });
 
-    const timer = window.setTimeout(next, 5000);
+      setTypingKey((key) => key + 1);
+    }, 4000);
 
-    return () => window.clearTimeout(timer);
-  }, [activeIndex, paused, next]);
+    return () => window.clearInterval(timer);
+  }, []);
 
   // Touch swipe start
   const handleTouchStart = (event) => {
@@ -122,23 +135,26 @@ export default function HeroCarousel() {
       className="hero-carousel"
       aria-label="Featured services"
       aria-roledescription="carousel"
-      style={{
-        backgroundImage: `url("${slide.image}")`,
-      }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) {
-          setPaused(false);
-        }
-      }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={() => {
         touchStart.current = null;
       }}
     >
+      {/* Smooth Background Image Transition */}
+      <div className="hero-slide-backgrounds" aria-hidden="true">
+        {slides.map((item, index) => (
+          <div
+            key={item.eyebrow}
+            className={`hero-slide-background ${index === activeIndex ? "is-active" : ""
+              }`}
+            style={{
+              backgroundImage: `url("${item.image}")`,
+            }}
+          />
+        ))}
+      </div>
+
       <div className="hero-background-overlay" />
 
       <div className="hero-content">
@@ -166,7 +182,6 @@ export default function HeroCarousel() {
 
           {/* Contact Us and Services Buttons */}
           <div className="hero-actions">
-
             <Link
               className="hero-button hero-button-primary"
               to="/contact"
@@ -181,7 +196,6 @@ export default function HeroCarousel() {
             >
               Services
             </Link>
-
           </div>
         </div>
       </div>
@@ -208,7 +222,6 @@ export default function HeroCarousel() {
 
       {/* Slide Dots and Counter */}
       <div className="hero-carousel-bottom">
-
         <div
           className="hero-dots"
           role="group"
@@ -218,9 +231,8 @@ export default function HeroCarousel() {
             <button
               type="button"
               key={item.eyebrow}
-              className={`hero-dot ${
-                index === activeIndex ? "is-active" : ""
-              }`}
+              className={`hero-dot ${index === activeIndex ? "is-active" : ""
+                }`}
               onClick={() => goToSlide(index)}
               aria-label={`Show slide ${index + 1}`}
               aria-current={
@@ -234,7 +246,6 @@ export default function HeroCarousel() {
           {String(activeIndex + 1).padStart(2, "0")} /{" "}
           {String(slides.length).padStart(2, "0")}
         </span>
-
       </div>
     </section>
   );

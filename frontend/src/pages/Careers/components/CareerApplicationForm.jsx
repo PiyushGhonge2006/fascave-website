@@ -1,5 +1,4 @@
-
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { apiUrl } from "../../../utils/apiBase";
 import {
     ArrowLeft,
@@ -138,7 +137,8 @@ const CareerApplicationForm = ({ onSubmit }) => {
 
     const formRef = useRef(null);
     const fileInputRef = useRef(null);
-
+    const formCardRef = useRef(null);
+    const scrollTimerRef = useRef(null);
     // ========================================
     // FORM DATA
     // ========================================
@@ -227,16 +227,38 @@ const CareerApplicationForm = ({ onSubmit }) => {
         return true;
     };
 
+    const scrollToForm = () => {
+        if (scrollTimerRef.current) {
+            clearTimeout(scrollTimerRef.current);
+        }
+
+        scrollTimerRef.current = setTimeout(() => {
+            if (formCardRef.current) {
+                const top =
+                    formCardRef.current.getBoundingClientRect().top +
+                    window.scrollY -
+                    110;
+
+                window.scrollTo({
+                    top,
+                    behavior: "smooth",
+                });
+            }
+        }, 150);
+    };
+
     const nextStep = () => {
         if (!validateStep()) return;
 
         setSubmitError("");
         setStep((prev) => Math.min(prev + 1, 3));
+        scrollToForm();
     };
 
     const previousStep = () => {
         setSubmitError("");
         setStep((prev) => Math.max(prev - 1, 0));
+        scrollToForm();
     };
 
     // ========================================
@@ -360,6 +382,18 @@ const CareerApplicationForm = ({ onSubmit }) => {
     };
 
     // ========================================
+    // CLEANUP
+    // ========================================
+
+    useEffect(() => {
+        return () => {
+            if (scrollTimerRef.current) {
+                clearTimeout(scrollTimerRef.current);
+            }
+        };
+    }, []);
+
+    // ========================================
     // SUCCESS SCREEN
     // ========================================
 
@@ -383,7 +417,7 @@ const CareerApplicationForm = ({ onSubmit }) => {
     // ========================================
 
     return (
-        <div className="career-application-card">
+        <div className="career-application-card" ref={formCardRef}>
 
             {/* FORM HEADER */}
 
@@ -591,8 +625,8 @@ const CareerApplicationForm = ({ onSubmit }) => {
                                         type="tel"
                                         inputMode="numeric"
                                         autoComplete="tel-national"
-                                        pattern="[0-9]{7,15}"
-                                        maxLength={15}
+                                        pattern="[0-9]{7,10}"
+                                        maxLength={10}
                                         placeholder="Enter mobile number"
                                         value={formData.mobile}
                                         onChange={(e) =>

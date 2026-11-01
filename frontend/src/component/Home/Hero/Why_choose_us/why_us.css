@@ -24,27 +24,19 @@
   z-index: -1;
   pointer-events: none;
   background-image:
-    linear-gradient(
-      to right,
+    linear-gradient(to right,
       rgba(255, 255, 255, 0.045) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
+      transparent 1px),
+    linear-gradient(to bottom,
       rgba(255, 255, 255, 0.045) 1px,
-      transparent 1px
-    );
+      transparent 1px);
   background-size: 68px 68px;
-  -webkit-mask-image: radial-gradient(
-    120% 80% at 50% 0%,
-    #000 0%,
-    transparent 72%
-  );
-  mask-image: radial-gradient(
-    120% 80% at 50% 0%,
-    #000 0%,
-    transparent 72%
-  );
+  -webkit-mask-image: radial-gradient(120% 80% at 50% 0%,
+      #000 0%,
+      transparent 72%);
+  mask-image: radial-gradient(120% 80% at 50% 0%,
+      #000 0%,
+      transparent 72%);
 }
 
 .why-container {
@@ -140,7 +132,8 @@
 
 .why-stats {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit,
+      minmax(min(100%, 190px), 1fr));
   gap: clamp(12px, 1.4vw, 20px);
   margin-top: clamp(32px, 4vw, 52px);
 }
@@ -201,7 +194,8 @@
 
 .why-features {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit,
+      minmax(min(100%, 240px), 1fr));
   gap: clamp(12px, 1.4vw, 20px);
   margin-top: clamp(12px, 1.4vw, 20px);
 }
@@ -315,6 +309,7 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .why-stat-card,
   .why-feature-card,
   .why-button,
@@ -331,4 +326,11 @@
   .why-button:hover svg {
     transform: none;
   }
+}
+
+/* TEMPORARY VISIBILITY TEST */
+.why-feature-card[data-reveal] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
 }

@@ -174,13 +174,12 @@ export default function WhyChooseUs() {
   const { data } = useSingleton("/api/why-choose-us", {});
 
   const content = useMemo(() => {
-    const stats =
-      Array.isArray(data?.stats) && data.stats.length
-        ? data.stats
-        : fallback.stats;
+    const stats = Array.isArray(data?.stats)
+      ? data.stats
+      : fallback.stats;
 
     const features =
-      Array.isArray(data?.features) && data.features.length
+      Array.isArray(data?.features) && data.features.length > 0
         ? data.features
         : fallback.features;
 
@@ -194,7 +193,8 @@ export default function WhyChooseUs() {
       features,
     };
   }, [data]);
-
+  console.log("WHY CHOOSE US DATA:", data);
+  console.log("WHY FEATURES:", content.features);
   return (
     <section
       className="why-section fc-section--dark"
